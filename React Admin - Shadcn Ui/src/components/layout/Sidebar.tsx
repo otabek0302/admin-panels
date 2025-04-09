@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -7,8 +9,14 @@ import { Activity, Bell, ChartBar, HomeIcon, LogOut, Package, Settings, Truck, U
 import { Button } from "@/components/ui/button";
 
 const Sidebar = () => {
+  
+  // Sign out function
+  const signOut = () => {
+    alert("Signing out");
+  };
+
   return (
-    <aside className="flex h-screen w-64 flex-col justify-start overflow-y-auto border-r bg-background px-4">
+    <aside className="flex w-64 flex-col justify-start overflow-y-auto border-r bg-background px-4">
       {/* Logo */}
       <div className="flex items-center justify-center gap-10 border-b">
         <Link href="/">
@@ -92,11 +100,9 @@ const Sidebar = () => {
               <span>Profile</span>
             </Link>
           </Button>
-          <Button variant="ghost" iconSize="md" className="w-full justify-start gap-4" asChild>
-            <Link href="/logout">
-              <LogOut className="text-primary" />
-              <span>Logout</span>
-            </Link>
+          <Button variant="ghost" iconSize="md" className="w-full justify-start gap-4" onClick={signOut}>
+            <LogOut className="text-primary" />
+            <span>Logout</span>
           </Button>
         </div>
       </div>
