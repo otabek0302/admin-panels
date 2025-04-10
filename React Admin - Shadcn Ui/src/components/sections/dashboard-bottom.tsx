@@ -1,5 +1,5 @@
 import React from 'react'
-import DataTable from '../custom-ui/data-table'
+import DataTable from '../custom-ui/datashboard-table'
 
 const DashboardBottom = () => {
   return (

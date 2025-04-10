@@ -1,61 +1,53 @@
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { dashboard_data } from "@/data/data";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Label, User } from "@/interfaces/interfaces";
+import { Eye } from "lucide-react";
 
-interface OrderItem {
-  trackingId: string;
-  product: string;
-  customer: string;
-  date: string;
-  amount: string;
-  paymentMethod: string;
-  status: string;
+interface DataTableProps {
+  labels: Label[];
+  data: User[];
 }
 
-const DataTable = () => {
-  const totalAmount = dashboard_data.reduce((sum: number, item: OrderItem) => {
-    const amountValue = parseFloat(item.amount.replace(/[^0-9.-]+/g, ""));
-    return sum + (isNaN(amountValue) ? 0 : amountValue);
-  }, 0);
-
+const DataTable = ({ labels, data }: DataTableProps) => {
   return (
-    <div className="flex flex-col gap-4">
-      
-      <div className="flex items-center justify-between px-2 py-4">
-        <h3 className="text-2xl font-bold">Last orders</h3>
-      </div>
-      
-      <div className="border rounded-md">
+    <div className="w-full">
+      <div className="rounded-md border">
         <Table>
           <TableHeader className="px-4 h-12">
             <TableRow className="bg-muted text-muted-foreground text-base">
-              <TableHead className="px-6 w-[120px]">Tracking ID</TableHead>
-              <TableHead className="px-6">Product</TableHead>
-              <TableHead className="px-6">Customer</TableHead>
-              <TableHead className="px-6">Date</TableHead>
-              <TableHead className="px-6">Payment Method</TableHead>
-              <TableHead className="px-6">Status</TableHead>
-              <TableHead className="px-6 text-right">Amount</TableHead>
+              {labels.map((label, index) => (
+                <TableHead className="px-6" key={index}>
+                  {label.label}
+                </TableHead>
+              ))}
+              <TableHead className="px-6">
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="text-sm">
-            {dashboard_data.map((item) => (
-              <TableRow key={item.trackingId}>
-                <TableCell className="px-6 py-4 font-medium">{item.trackingId}</TableCell>
-                <TableCell className="px-6 py-4">{item.product}</TableCell>
-                <TableCell className="px-6 py-4">{item.customer}</TableCell>
-                <TableCell className="px-6 py-4">{item.date}</TableCell>
-                <TableCell className="px-6 py-4">{item.paymentMethod}</TableCell>
-                <TableCell className="px-6 py-4">{item.status}</TableCell>
-                <TableCell className="px-6 py-4 text-right">{item.amount}</TableCell>
+            {data.map((row, rowIndex) => (
+              <TableRow key={rowIndex} className="hover:bg-muted/50 cursor-pointer">
+                {labels.map((label, colIndex) => (
+                  <TableCell className="px-6 py-2 font-medium" key={colIndex}>
+                    {row[label.value as keyof User]}
+                  </TableCell>
+                ))}
+                <TableCell className="px-6 py-2 font-medium">
+                  <Button variant="ghost" size="icon" className="ml-2">
+                    <Eye className="h-4 w-4" />
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
+            {data.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={labels.length} className="h-24 text-center">
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
-          <TableFooter>
-            <TableRow className="text-base h-12">
-              <TableCell className="px-6" colSpan={6}>Total</TableCell>
-              <TableCell className="px-6 text-right">${totalAmount.toFixed(2)}</TableCell>
-            </TableRow>
-          </TableFooter>
         </Table>
       </div>
     </div>

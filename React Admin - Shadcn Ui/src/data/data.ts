@@ -1,3 +1,5 @@
+import { ArrowDown, ArrowRight, ArrowUp, HelpCircle, Circle, Timer, CheckCircle, CircleOff } from "lucide-react";
+
 export const dashboard_data = [
     {
         trackingId: "TRK001",
@@ -63,3 +65,112 @@ export const dashboard_data = [
         status: "Processing",
     },
 ];
+
+export const users_data = [
+    {
+        id: 1,
+        firstName: "John",
+        lastName: "Doe",
+        email: "john@doe.com",
+        phone: "+1234567890",
+        address: "123 Main St, Anytown, USA",
+        country: "USA",
+        status: "Active",
+        createdAt: "2024-07-15",
+        updatedAt: "2024-07-15",
+    },
+    {
+        id: 2,
+        firstName: "Jane",
+        lastName: "Doe",
+        email: "jane@doe.com",
+        phone: "+1234567890",
+        address: "123 Main St, Anytown, USA",
+        country: "USA",
+        status: "Active",
+        createdAt: "2024-07-15",
+        updatedAt: "2024-07-15",
+    },
+
+];
+
+export const users_labels = [
+    {
+        value: "id",
+        label: "ID",
+    },
+    {
+        value: "firstName",
+        label: "First Name",
+    },
+    {
+        value: "lastName",
+        label: "Last Name",
+    },
+    {
+        value: "email",
+        label: "Email",
+    },
+    {
+        value: "phone",
+        label: "Phone",
+    },
+    {
+        value: "address",
+        label: "Address",
+    },
+    {
+        value: "country",
+        label: "Country",
+    },
+    {
+        value: "status",
+        label: "Status",
+    }
+]
+
+export const statuses = [
+    {
+        value: "backlog",
+        label: "Backlog",
+        icon: HelpCircle,
+    },
+    {
+        value: "todo",
+        label: "Todo",
+        icon: Circle,
+    },
+    {
+        value: "in progress",
+        label: "In Progress",
+        icon: Timer,
+    },
+    {
+        value: "done",
+        label: "Done",
+        icon: CheckCircle,
+    },
+    {
+        value: "canceled",
+        label: "Canceled",
+        icon: CircleOff,
+    },
+]
+
+export const priorities = [
+    {
+        label: "Low",
+        value: "low",
+        icon: ArrowDown,
+    },
+    {
+        label: "Medium",
+        value: "medium",
+        icon: ArrowRight,
+    },
+    {
+        label: "High",
+        value: "high",
+        icon: ArrowUp,
+    },
+]
