@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 import { Logo } from "@/assets";
-import { Activity, Bell, ChartBar, HomeIcon, LogOut, Package, Settings, Truck, User, Users } from "lucide-react";
+import { Activity, Bell, ChartBar, HomeIcon, LogOut, Package, Settings, User, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Sidebar = () => {
@@ -53,12 +53,6 @@ const Sidebar = () => {
             <Link href="/orders">
               <Package className="text-primary" />
               <span>Orders</span>
-            </Link>
-          </Button>
-          <Button variant="ghost" iconSize="md" className="w-full justify-start gap-4" asChild>
-            <Link href="/delivery">
-              <Truck className="text-primary" />
-              <span>Delivery</span>
             </Link>
           </Button>
         </div>

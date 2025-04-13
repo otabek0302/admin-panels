@@ -4,26 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DataPaginationProps } from "@/interfaces/interfaces";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react";
 import { useState } from "react";
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address: string;
-  country: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface DataPaginationProps {
-  data: User[];
-  setFilteredData: (data: User[]) => void;
-}
 
 const DataPagination = ({ data, setFilteredData }: DataPaginationProps) => {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,11 +1,11 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Label, User } from "@/interfaces/interfaces";
+import { Label } from "@/interfaces/interfaces";
 import { Eye } from "lucide-react";
 
 interface DataTableProps {
   labels: Label[];
-  data: User[];
+  data: object[];
 }
 
 const DataTable = ({ labels, data }: DataTableProps) => {
@@ -30,7 +30,7 @@ const DataTable = ({ labels, data }: DataTableProps) => {
               <TableRow key={rowIndex} className="hover:bg-muted/50 cursor-pointer">
                 {labels.map((label, colIndex) => (
                   <TableCell className="px-6 py-2 font-medium" key={colIndex}>
-                    {row[label.value as keyof User]}
+                    {row[label.value as keyof object]}
                   </TableCell>
                 ))}
                 <TableCell className="px-6 py-2 font-medium">

@@ -5,29 +5,28 @@ import DataExport from "./data-export";
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { priorities, statuses } from "@/data/data";
-import { User } from "@/interfaces/interfaces";
+import { DataTableToolbarProps } from "@/interfaces/interfaces";
 
-
-interface DataTableToolbarProps {
-  data: User[];
-  setFilteredData: (data: User[]) => void;
-}
-
-const DataTableToolbar = ({ data, setFilteredData }: DataTableToolbarProps) => {
+const DataTableToolbar = ({ data, setFilteredData, statuses = [], priorities = [], search = [] }: DataTableToolbarProps) => {
   const [selectedPriorities, setSelectedPriorities] = useState<Set<string>>(new Set());
   const [selectedStatuses, setSelectedStatuses] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
-
+  
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchQuery(value);
-    applyFilters(value, selectedStatuses, selectedPriorities);
+    
+    // If search is cleared and no other filters are active, reset data
+    if (value === "" && selectedStatuses.size === 0 && selectedPriorities.size === 0) {
+      setFilteredData([...data]);
+    } else {
+      applyFilters(value, selectedStatuses, selectedPriorities);
+    }
   };
 
   const handleStatusChange = (value: string) => {
     const newStatuses = new Set(selectedStatuses);
-    
+
     if (newStatuses.has(value)) {
       newStatuses.delete(value);
     } else {
@@ -49,26 +48,38 @@ const DataTableToolbar = ({ data, setFilteredData }: DataTableToolbarProps) => {
     applyFilters(searchQuery, selectedStatuses, newPriorities);
   };
 
-  const applyFilters = (search: string, statuses: Set<string>, priorities: Set<string>) => {
+  const applyFilters = (query: string, status: Set<string>, priority: Set<string>) => {
     let filtered = [...data];
 
     // Apply search filter
-    if (search) {
-      filtered = filtered.filter((item) => 
-        item.firstName.toLowerCase().includes(search.toLowerCase()) ||
-        item.lastName.toLowerCase().includes(search.toLowerCase()) ||
-        item.email.toLowerCase().includes(search.toLowerCase())
+    if (query && query.length > 0 && search.length > 0) {
+      filtered = filtered.filter((item: object) =>
+        search.some((field: string) => {
+          const value = item[field as keyof typeof item];
+          return value ? String(value).toLowerCase().includes(query.toLowerCase()) : false;
+        })
       );
     }
 
     // Apply status filter
-    if (statuses.size > 0) {
-      filtered = filtered.filter((item) => statuses.has(item.status));
+    if (status.size > 0) {
+      filtered = filtered.filter((item: object) => {
+        const itemStatus = (item as { status?: string }).status;
+        return itemStatus ? status.has(itemStatus) : false;
+      });
     }
 
-    // Apply priority filter (if needed)
-    if (priorities.size > 0) {
-      // filtered = filtered.filter((item) => priorities.has(item.priority));
+    // Apply priority filter
+    if (priority.size > 0) {
+      filtered = filtered.filter((item: object) => {
+        const itemPriority = (item as { priority?: string }).priority;
+        return itemPriority ? priority.has(itemPriority) : false;
+      });
+    }
+
+    // If no filters are active, show all data
+    if (!query && status.size === 0 && priority.size === 0) {
+      filtered = [...data];
     }
 
     setFilteredData(filtered);
@@ -77,24 +88,23 @@ const DataTableToolbar = ({ data, setFilteredData }: DataTableToolbarProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
-        <Input 
-          placeholder="Filter users..." 
-          value={searchQuery}
-          onChange={handleFilterChange} 
-          className="h-10 w-[150px] lg:w-[250px]" 
-        />
-        <DataFilter 
-          title="Status"
-          options={statuses} 
-          selectedValues={new Set(selectedStatuses)}
-          onToggleDataOption={handleStatusChange} 
-        />
-        <DataFilter 
-          title="Priority"
-          options={priorities} 
-          selectedValues={new Set(selectedPriorities)}
-          onToggleDataOption={handlePriorityChange} 
-        />
+        {search.length > 0 && <Input placeholder="Filter..." value={searchQuery} onChange={handleFilterChange} className="h-10 w-[150px] lg:w-[250px]" />}
+        {statuses.length > 0 && (
+          <DataFilter 
+            title="Status" 
+            options={statuses.map(status => ({ value: status, label: status }))} 
+            selectedValues={selectedStatuses} 
+            onToggleDataOption={handleStatusChange} 
+          />
+        )}
+        {priorities.length > 0 && (
+          <DataFilter 
+            title="Priority" 
+            options={priorities.map(priority => ({ value: priority, label: priority }))} 
+            selectedValues={selectedPriorities} 
+            onToggleDataOption={handlePriorityChange} 
+          />
+        )}
       </div>
       <DataExport />
     </div>

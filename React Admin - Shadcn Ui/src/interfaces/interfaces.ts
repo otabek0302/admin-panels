@@ -37,3 +37,36 @@ export interface DataOption {
   icon?: React.ComponentType<{ className?: string }>;
 }
 
+export interface DataTableToolbarProps {
+  data: object[];
+  setFilteredData: (data: object[]) => void;
+  statuses?: string[];
+  priorities?: string[];
+  search?: string[];
+}
+
+export interface DataPaginationProps {
+  data: object[];
+  setFilteredData: (data: object[]) => void;
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  price: string;
+  status: string;
+  discount: string;
+  category: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Activity {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+  time: string;
+  status: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
