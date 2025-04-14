@@ -52,7 +52,7 @@ const ProfilePage = () => {
               </Button>
             </div>
           </div>
-          <Button className="bg-black text-white hover:bg-black/90">Update profile</Button>
+          <Button className="bg-primary text-white hover:bg-primary/90">Update profile</Button>
         </div>
         <div className="rounded-lg border">
           <div className="p-6">

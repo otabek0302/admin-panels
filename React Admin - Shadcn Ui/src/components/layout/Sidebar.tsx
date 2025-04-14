@@ -16,7 +16,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="flex w-64 flex-col justify-start overflow-y-auto border-r bg-background px-4">
+    <aside className="flex w-64 h-screen flex-col justify-start overflow-y-auto border-r bg-background px-4">
       {/* Logo */}
       <div className="flex items-center justify-center gap-10 border-b">
         <Link href="/">
