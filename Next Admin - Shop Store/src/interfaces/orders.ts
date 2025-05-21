@@ -19,6 +19,7 @@ export interface OrderItem {
     product: OrderProduct;
     quantity: number;
     price: number;
+    discount: number;
     total: number;
     createdAt: string;
     updatedAt: string;
@@ -29,6 +30,7 @@ export interface Order {
     total: number;
     status: OrderStatus;
     orderItems: OrderItem[];
+    discount: number;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -40,6 +42,7 @@ export interface CreateOrderDTO {
         price: number;
     }[];
     status: OrderStatus;
+    discount?: number;
 }
 
 export interface UpdateOrderDTO {
@@ -49,6 +52,7 @@ export interface UpdateOrderDTO {
         price: number;
     }[];
     status?: OrderStatus;
+    discount?: number;
 }
 
 export interface OrderTableToolbarProps {

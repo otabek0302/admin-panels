@@ -45,35 +45,63 @@ export const useProductStore = create<ProductState>((set, get) => ({
         }
     },
     deleteProduct: async (id: string) => {
-        const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
-        if (res.ok) {
-            get().fetchProducts();
+        try {
+            const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
+            const data = await res.json();
+            
+            if (!res.ok) {
+                if (res.status === 400) {
+                    // This is the case where product has active orders
+                    throw new Error(data.error);
+                }
+                throw new Error('Failed to delete product');
+            }
+            
+            await get().fetchProducts();
             get().setDeleteData(null);
+        } catch (error) {
+            console.error("[DELETE_PRODUCT_ERROR]", error);
+            throw error;
         }
     },
-    editProduct: async (id: string, data) => {
-        const res = await fetch(`/api/products/${id}`, { 
-            method: "PATCH", 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) 
-        });
-        if (res.ok) {
-            get().fetchProducts();
-            get().setEditData(null);
+    editProduct: async (id, data) => {
+        set({ loading: true });
+        try {
+            const res = await fetch(`/api/products/${id}`, {
+                method: "PATCH",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) {
+                await get().fetchProducts();
+                get().setEditData(null);
+            }
+        } catch (error) {
+            console.error("[EDIT_PRODUCT_ERROR]", error);
+        } finally {
+            set({ loading: false });
         }
     },
     createProduct: async (data) => {
-        const res = await fetch(`/api/products`, { 
-            method: "POST", 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) 
-        });
-        if (res.ok) {
-            get().fetchProducts();
+        set({ loading: true });
+        try {
+            const res = await fetch(`/api/products`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (!res.ok) {
+                const error = await res.json();
+                throw new Error(error.error || 'Failed to create product');
+            }
+
+            await get().fetchProducts();
+        } catch (error) {
+            console.error("[CREATE_PRODUCT_ERROR]", error);
+            throw error;
+        } finally {
+            set({ loading: false });
         }
-    },
+    }
 }));
