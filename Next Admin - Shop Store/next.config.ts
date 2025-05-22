@@ -1,9 +1,14 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
-const nextConfig: NextConfig = {
+const config: NextConfig = {
+  reactStrictMode: true,
   images: {
     domains: ['res.cloudinary.com'],
   },
-};
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false, net: false, tls: false }
+    return config
+  }
+}
 
-export default nextConfig;
+export default config

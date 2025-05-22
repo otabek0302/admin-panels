@@ -2,6 +2,9 @@
   "app-page": {},
   "orders-page": {},
   "not-found-page": {},
+  "common": {
+    "loading": "Loading..."
+  },
   "admin-page": {
     "categories-page": {},
     "products-page": {},

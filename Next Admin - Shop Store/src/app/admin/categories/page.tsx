@@ -1,6 +1,6 @@
 "use client";
 
-import CategoryTableToolbar from "@/components/admin-ui/categories/category-toolbar";
+import CategoryToolbar from "@/components/admin-ui/categories/category-toolbar";
 import CategoryList from "@/components/admin-ui/categories/category-list";
 import Pagination from "@/components/ui/pagination";
 
@@ -16,7 +16,7 @@ const CategoriesPage = () => {
 
   return (
     <div className="h-full space-y-4 p-4 flex flex-col justify-between">
-      <CategoryTableToolbar />
+      <CategoryToolbar />
       <CategoryList />
       <Pagination page={page} setPage={setPage} total={total} perPage={10} />
     </div>

@@ -6,7 +6,7 @@ import { useModalStore } from '@/store/modal-store';
 import { useCategoryStore } from '@/store/category-store';
 import { useTranslation } from 'react-i18next';
 
-const CategoryTableToolbar = () => {
+const CategoryToolbar = () => {
   const { setOpen } = useModalStore();
   const { search, setSearch, setEditData } = useCategoryStore();
   const { t } = useTranslation();
@@ -32,4 +32,4 @@ const CategoryTableToolbar = () => {
   );
 };
 
-export default CategoryTableToolbar;
+export default CategoryToolbar;

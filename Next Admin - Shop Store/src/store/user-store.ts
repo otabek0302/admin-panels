@@ -1,31 +1,27 @@
+import { User } from "@/interfaces/user";
 import { create } from "zustand";
 
-interface User {
-    id: string;
-    name: string;
-    email?: string;
-    role?: string;
-    phone?: string;
-    createdAt?: string;
-    updatedAt?: string;
-}
 
 interface UserStore {
     users: User[];
-    total: number;
-    page: number;
-    search: string;
-    deleteData: User | null;
-    editData: User | null;
     loading: boolean;
-    setDeleteData: (data: User | null) => void;
-    setEditData: (data: User | null) => void;
+    error: string | null;
+    search: string;
+    page: number;
+    total: number;
+    perPage: number;
+    editData: User | null;
+    deleteData: User | null;
     setSearch: (search: string) => void;
     setPage: (page: number) => void;
+    setTotal: (total: number) => void;
+    setEditData: (data: User | null) => void;
+    setDeleteData: (data: User | null) => void;
     fetchUsers: () => Promise<void>;
     deleteUser: (id: string) => Promise<void>;
     editUser: (id: string, data: Partial<User>) => Promise<void>;
     createUser: (data: Partial<User>) => Promise<void>;
+    reset: () => void;
 }
 
 export const useUserStore = create<UserStore>((set, get) => ({
@@ -36,11 +32,25 @@ export const useUserStore = create<UserStore>((set, get) => ({
     deleteData: null,
     editData: null,
     loading: true,
+    error: null,
+    perPage: 10,
 
     setDeleteData: (data) => set({ deleteData: data }),
     setEditData: (data) => set({ editData: data }),
     setSearch: (search) => set({ search }),
     setPage: (page) => set({ page }),
+    setTotal: (total) => set({ total }),
+    reset: () => set({
+        users: [],
+        total: 0,
+        page: 1,
+        search: "",
+        deleteData: null,
+        editData: null,
+        loading: true,
+        error: null,
+        perPage: 10
+    }),
 
     fetchUsers: async () => {
         set({ loading: true });

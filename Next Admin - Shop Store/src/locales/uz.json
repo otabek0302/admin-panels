@@ -3,6 +3,9 @@
   "login-page": {},
   "orders-page": {},
   "not-found-page": {},
+  "common": {
+    "loading": "Yuklanmoqda..."
+  },
   "admin-page": {
     "categories-page": {},
     "products-page": {},

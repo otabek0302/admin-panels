@@ -26,7 +26,7 @@ interface OrderStore {
   reset: () => void;
 }
 
-const initialState = {
+export const useOrderStore = create<OrderStore>((set, get) => ({
   orders: [],
   orderItems: [],
   loading: false,
@@ -37,10 +37,6 @@ const initialState = {
   perPage: 10,
   editData: null,
   deleteData: null,
-};
-
-export const useOrderStore = create<OrderStore>((set, get) => ({
-  ...initialState,
 
   setOrders: (orders) => set({ orders }),
   setSearch: (search) => set({ search, page: 1 }),
@@ -49,7 +45,18 @@ export const useOrderStore = create<OrderStore>((set, get) => ({
   setEditData: (order) => set({ editData: order }),
   setDeleteData: (order) => set({ deleteData: order }),
 
-  reset: () => set(initialState),
+  reset: () => set({
+    orders: [],
+    orderItems: [],
+    loading: false,
+    error: null,
+    search: "",
+    page: 1,
+    total: 0,
+    perPage: 10,
+    editData: null,
+    deleteData: null,
+  }),
 
   fetchOrders: async () => {
     try {

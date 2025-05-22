@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 interface Profile {
+  id: string;
   name: string;
   email: string;
   role: string;
@@ -10,21 +11,17 @@ interface Profile {
 }
 
 interface ProfileStore {
-  profile: Profile;
+  profile: Profile | null;
   loading: boolean;
   error: string | null;
   setProfile: (profile: Profile) => void;
-  updateProfile: (profile: Profile) => Promise<void>;
+  updateProfile: (profile: Partial<Profile>) => Promise<void>;
   fetchProfile: () => Promise<void>;
+  reset: () => void;
 }
 
 export const useProfileStore = create<ProfileStore>((set) => ({
-  profile: {
-    name: "",
-    email: "",
-    role: "",
-    phone: "",
-  },
+  profile: null,
   loading: false,
   error: null,
   setProfile: (profile) => set({ profile }),
@@ -37,15 +34,16 @@ export const useProfileStore = create<ProfileStore>((set) => ({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(profile),
       });
-      if (res.ok) {
-        set({ profile });
-      } else {
+      if (!res.ok) {
         const error = await res.json();
-        set({ error: error.message || "Failed to update profile" });
+        throw new Error(error.message || "Failed to update profile");
       }
+      const updatedProfile = await res.json();
+      set({ profile: updatedProfile });
     } catch (err) {
+      const message = err instanceof Error ? err.message : "Unexpected error while updating";
       console.error("[UPDATE_PROFILE_ERROR]", err);
-      set({ error: "Unexpected error while updating" });
+      set({ error: message });
     } finally {
       set({ loading: false });
     }
@@ -62,10 +60,17 @@ export const useProfileStore = create<ProfileStore>((set) => ({
       const profile = await res.json();
       set({ profile });
     } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Error fetching profile";
       console.error("[FETCH_PROFILE_ERROR]", err);
-      set({ error: err instanceof Error ? err.message : "Error fetching profile" });
+      set({ error: message });
     } finally {
       set({ loading: false });
     }
   },
+
+  reset: () => set({
+    profile: null,
+    loading: false,
+    error: null
+  })
 }));
