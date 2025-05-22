@@ -30,12 +30,10 @@ export type ChartConfig = Record<
 >
 
 interface ChartContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-  config: ChartConfig
-  children: React.ReactNode
+  children: React.ReactElement
 }
 
 export function ChartContainer({
-  config,
   children,
   className,
   ...props
@@ -49,8 +47,8 @@ export function ChartContainer({
   )
 }
 
-interface ChartTooltipProps extends React.HTMLAttributes<HTMLDivElement> {
-  content?: React.ReactNode
+interface ChartTooltipProps {
+  content?: React.ReactElement
   cursor?: boolean
 }
 
@@ -69,16 +67,7 @@ export function ChartTooltip({
   )
 }
 
-interface ChartTooltipContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  labelFormatter?: (value: string) => string
-  indicator?: "dot" | "line"
-}
-
-export function ChartTooltipContent({
-  labelFormatter,
-  indicator = "dot",
-  ...props
-}: ChartTooltipContentProps) {
+export function ChartTooltipContent(props: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className="bg-popover text-popover-foreground rounded-lg border p-3 shadow-sm"
