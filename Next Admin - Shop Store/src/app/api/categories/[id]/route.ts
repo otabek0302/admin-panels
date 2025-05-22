@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+<<<<<<< HEAD
 type CategoryUpdatePayload = {
     name: string;
 };
@@ -45,4 +46,24 @@ export async function DELETE(
             { status: 500 }
         );
     }
+=======
+export async function PATCH(
+    request: NextRequest,
+    { params }: { params: { id: string } }
+) {
+    const body = await request.json();
+    const updated = await prisma.category.update({
+        where: { id: params.id },
+        data: { name: body.name },
+    });
+    return NextResponse.json(updated);
+}
+
+export async function DELETE(
+    request: NextRequest,
+    { params }: { params: { id: string } }
+) {
+    await prisma.category.delete({ where: { id: params.id } });
+    return NextResponse.json({ success: true });
+>>>>>>> 11be6d1df1680202ca1702d2138f0632fe44f73c
 }

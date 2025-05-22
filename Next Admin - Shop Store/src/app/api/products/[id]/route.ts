@@ -47,7 +47,11 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
                 price: body.price,
                 stock: body.stock,
                 category: { connect: { id: body.category } },
+<<<<<<< HEAD
                 image: imageData as { public_id: string, url: string },
+=======
+                image: imageData as { public_id: string; url: string },
+>>>>>>> 11be6d1df1680202ca1702d2138f0632fe44f73c
             },
         });
 
