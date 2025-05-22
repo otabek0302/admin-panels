@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @custom-variant dark (&:is(.dark *));
 
@@ -113,7 +115,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-[var(--border)] ring-[var(--ring)] ring-opacity-50;
   }
 
   body {
