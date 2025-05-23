@@ -18,7 +18,7 @@ const Header = () => {
       <div className="flex items-center justify-center">
           {!pathname.includes('/admin') ? (
             <div className="relative h-12 w-12 rounded-full">
-              <Image src={logo} alt="logo" fill className="object-cover object-center" />
+              <Image src={logo} alt="logo" priority fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           ) : (
             <SidebarTrigger className="hover:bg-accent hover:text-primary text-primary z-50 h-9 w-9 cursor-pointer border" size="icon" />
