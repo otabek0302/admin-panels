@@ -1,29 +1,5 @@
 {
-<<<<<<< HEAD
   "pages": {
-=======
-  "app-page": {},
-  "login-page": {},
-  "orders-page": {},
-  "not-found-page": {},
-  "common": {
-    "loading": "Yuklanmoqda..."
-  },
-  "admin-page": {
-    "categories-page": {},
-    "products-page": {},
-    "users-page": {},
-    "orders-page": {},
-    "profile-page": {}
-  },
-  "components": {
-    "layout": {
-      "header": {
-        "title": "Do'kon",
-        "description": "Do'kon - bu mahsulotlar va xizmatlarni sotib olish va sotish uchun platforma."
-      }
-    },
->>>>>>> d0987f05d2954315f4ee8d22307f3c8b50c6cd03
     "footer": {
       "links": {
         "terms-and-conditions": "Shartlar va shartlar",

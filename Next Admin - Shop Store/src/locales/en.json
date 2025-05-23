@@ -1,28 +1,5 @@
 {
-<<<<<<< HEAD
   "pages": {
-=======
-  "app-page": {},
-  "orders-page": {},
-  "not-found-page": {},
-  "common": {
-    "loading": "Loading..."
-  },
-  "admin-page": {
-    "categories-page": {},
-    "products-page": {},
-    "users-page": {},
-    "orders-page": {},
-    "profile-page": {}
-  },
-  "components": {
-    "layout": {
-      "header": {
-        "title": "Shop Store",
-        "description": "Shop Store is a platform for buying and selling products and services."
-      }
-    },
->>>>>>> d0987f05d2954315f4ee8d22307f3c8b50c6cd03
     "footer": {
       "links": {
         "terms-and-conditions": "Terms and Conditions",
