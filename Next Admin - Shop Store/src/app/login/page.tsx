@@ -18,17 +18,20 @@ const LoginPage = () => {
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    
+    const [isLoading, setIsLoading] = useState(false);
+
     if (status === 'loading') return <Loading />;
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      setIsLoading(true);
       await signIn('credentials', {
         email,
         password,
         redirect: true,
         callbackUrl: '/',
       });
+      setIsLoading(false);
     };
 
   return (
@@ -56,8 +59,8 @@ const LoginPage = () => {
                 </div>
                 <Input id="password" type="password" placeholder="********" required value={password} onChange={(e) => setPassword(e.target.value)} />
               </div>
-              <Button type="submit" className="w-full">
-                {t('pages.login.login')}
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? t('pages.login.login-button-loading') : t('pages.login.login-button')}
               </Button>
             </div>
           </form>

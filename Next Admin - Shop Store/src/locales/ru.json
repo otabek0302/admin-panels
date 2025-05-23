@@ -13,6 +13,8 @@
       "email": "Email",
       "password": "Пароль",
       "login": "Войти",
+      "login-button": "Войти",
+      "login-button-loading": "Вход...",
       "forgot-password": "Забыли пароль?",
       "signup": "Регистрация"
     }

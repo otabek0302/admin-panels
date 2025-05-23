@@ -13,6 +13,8 @@
       "email": "Email",
       "password": "Parol",
       "login": "Kirish",
+      "login-button": "Kirish",
+      "login-button-loading": "Kirish...",
       "forgot-password": "Parolni unutdingizmi?",
       "signup": "Ro'yxatdan o'tish"
     }
