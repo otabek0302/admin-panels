@@ -11,13 +11,13 @@ const Footer = () => {
       <div className="border-border flex w-full flex-col items-center justify-between border-t py-6 md:flex-row gap-6">
         <div className="flex flex-col md:flex-row items-center justify-start md:justify-center gap-4">
           <a href="/terms-and-condition" className="text-xs md:text-sm text-gray-400 transition hover:text-primary">
-            {t('components.footer.links.terms-and-conditions')}
+            {t('pages.footer.links.terms-and-conditions')}
           </a>
           <a href="/privacy-policy" className="text-xs md:text-sm text-gray-400 transition hover:text-primary">
-            {t('components.footer.links.privacy-policy')}
+            {t('pages.footer.links.privacy-policy')}
           </a>
           <a href="/cookies" className="text-xs md:text-sm text-gray-400 transition hover:text-primary">
-            {t('components.footer.links.cookies')}
+            {t('pages.footer.links.cookies')}
           </a>
         </div>
 

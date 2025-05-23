@@ -8,7 +8,7 @@ async function main() {
 
     await prisma.user.upsert({
         where: { email: "admin@gmail.com" },
-        update: {},
+        update: {}, // Do nothing if exists
         create: {
             name: "Admin",
             email: "admin@gmail.com",
