@@ -1,5 +1,29 @@
 {
+<<<<<<< HEAD
   "pages": {
+=======
+  "app-page": {},
+  "login-page": {},
+  "orders-page": {},
+  "not-found-page": {},
+  "common": {
+    "loading": "Загрузка..."
+  },
+  "admin-page": {
+    "categories-page": {},
+    "products-page": {},
+    "users-page": {},
+    "orders-page": {},
+    "profile-page": {}
+  },
+  "components": {
+    "layout": {
+      "header": {
+        "title": "Магазин",
+        "description": "Магазин - это платформа для покупки и продажи товаров и услуг."
+      }
+    },
+>>>>>>> d0987f05d2954315f4ee8d22307f3c8b50c6cd03
     "footer": {
       "links": {
         "terms-and-conditions": "Условия использования",
