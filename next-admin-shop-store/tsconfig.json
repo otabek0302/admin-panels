@@ -13,16 +13,22 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": "./src",                       // ✅ move here
+    "paths": {
+      "@/*": ["*"]                            // ✅ simplified after fixing baseUrl
+    },
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "baseUrl": ["./src"],
-      "@/*": ["./src/*"]
-    }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/types/next-auth.d.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/types/next-auth.d.ts"
+  ],
   "exclude": ["node_modules"]
 }
