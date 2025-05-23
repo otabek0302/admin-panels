@@ -1,7 +1,7 @@
 "use client";
 
 import { Sun, Moon } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "./button";
 import { useTheme } from "next-themes";
 
 export const Switcher = () => {
