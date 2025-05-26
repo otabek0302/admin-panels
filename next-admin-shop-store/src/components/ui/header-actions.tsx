@@ -14,13 +14,13 @@ export const HeaderActions = () => {
   return (
     <div className="flex items-center gap-2">
       {session?.user?.role.toLowerCase() === 'admin' && (
-        <Button variant="outline" size="icon" asChild className='rounded-lg cursor-pointer'>
+        <Button variant="outline" size="icon" asChild className="cursor-pointer rounded-lg">
           <Link href="/admin">
-            <Database className="text-primary size-4" />
+            <Database className="size-4 text-primary" />
           </Link>
         </Button>
       )}
-      <Button variant="outline" size="icon" onClick={handleLogout} className="rounded-lg cursor-pointer">
+      <Button variant="outline" size="icon" onClick={handleLogout} className="cursor-pointer rounded-lg">
         <LogOut className="size-4 text-red-500" />
       </Button>
     </div>

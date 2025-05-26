@@ -13,9 +13,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "./src",                       // ✅ move here
+    "baseUrl": "./src", // ✅ move here
     "paths": {
-      "@/*": ["*"]                            // ✅ simplified after fixing baseUrl
+      "@/*": ["*"] // ✅ simplified after fixing baseUrl
     },
     "plugins": [
       {
@@ -23,12 +23,6 @@
       }
     ]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/types/next-auth.d.ts"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/types/next-auth.d.ts"],
   "exclude": ["node_modules"]
 }

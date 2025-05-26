@@ -19,5 +19,62 @@
       "signup": "Signup"
     }
   },
-  "components": {}
+  "components": {
+    "sidebar": {
+      "home": "Home",
+      "products": "Products",
+      "orders": "Orders",
+      "categories": "Categories",
+      "users": "Users",
+      "profile": "Profile"
+    },
+    "admin-ui": {
+      "users": {
+        "users-toolbar": {
+          "search": "Search users",
+          "add-user": "Add user"
+        },
+        "users-dialog": {
+          "title": "Add user",
+          "description": "Add a new user to the system",
+          "name-placeholder": "Name",
+          "email-placeholder": "Email",
+          "phone-placeholder": "Phone",
+          "password-placeholder": "Password",
+          "role-placeholder": "Role",
+          "add-user": "Add user",
+          "edit-user": "Edit user",
+          "delete-user": "Delete user",
+          "cancel": "Cancel",
+          "update": "Update",
+          "create": "Create",
+          "role-user": "User",
+          "role-admin": "Admin"
+        },
+        "users-list": {
+          "table-header": {
+            "id": "ID",
+            "name": "Name",
+            "email": "Email",
+            "role": "Role",
+            "created": "Created",
+            "actions": "Actions"
+          },
+          "messages": {
+            "no-users": "No users found",
+            "try-adjusting-filters": "Try adjusting your filters to find what you're looking for.",
+            "delete-user": "Are you sure you want to delete this user?",
+            "delete-user-title": "Delete user",
+            "delete-user-action": "Delete",
+            "delete-user-cancel": "Cancel",
+            "delete-user-success": "User deleted successfully",
+            "update-user-success": "User updated successfully",
+            "create-user-success": "User created successfully",
+            "update-user-error": "Failed to update user",
+            "create-user-error": "Failed to create user"
+          }
+        }
+      }
+    }
+  }
 }

@@ -19,5 +19,62 @@
       "signup": "Регистрация"
     }
   },
-  "components": {}
+  "components": {
+    "sidebar": {
+      "home": "Главная",
+      "products": "Продукты",
+      "orders": "Заказы",
+      "categories": "Категории",
+      "users": "Пользователи",
+      "profile": "Профиль"
+    },
+    "admin-ui": {
+      "users": {
+        "users-toolbar": {
+          "search": "Поиск пользователей",
+          "add-user": "Добавить пользователя"
+        },
+        "users-dialog": {
+          "title": "Добавить пользователя",
+          "description": "Добавьте нового пользователя в систему",
+          "name-placeholder": "Имя",
+          "email-placeholder": "Email",
+          "phone-placeholder": "Телефон",
+          "password-placeholder": "Пароль",
+          "role-placeholder": "Роль",
+          "add-user": "Добавить пользователя",
+          "edit-user": "Редактировать пользователя",
+          "delete-user": "Удалить пользователя",
+          "cancel": "Отмена",
+          "update": "Обновить",
+          "create": "Создать",
+          "role-user": "Пользователь",
+          "role-admin": "Администратор"
+        },
+        "users-list": {
+          "table-header": {
+            "id": "ID",
+            "name": "Имя",
+            "email": "Email",
+            "role": "Роль",
+            "created": "Создано",
+            "actions": "Действия"
+          },
+          "messages": {
+            "no-users": "Пользователи не найдены",
+            "try-adjusting-filters": "Попробуйте отрегулировать фильтры, чтобы найти то, что вы ищете.",
+            "delete-user": "Вы уверены, что хотите удалить этого пользователя?",
+            "delete-user-title": "Удаление пользователя",
+            "delete-user-action": "Удалить",
+            "delete-user-cancel": "Отмена",
+            "delete-user-success": "Пользователь успешно удален",
+            "update-user-success": "Пользователь успешно обновлен",
+            "create-user-success": "Пользователь успешно создан",
+            "update-user-error": "Не удалось обновить пользователя",
+            "create-user-error": "Не удалось создать пользователя"
+          }
+        }
+      }
+    }
+  }
 }

@@ -19,5 +19,62 @@
       "signup": "Ro'yxatdan o'tish"
     }
   },
-  "components": {}
+  "components": {
+    "sidebar": {
+      "home": "Bosh sahifa",
+      "products": "Mahsulotlar",
+      "orders": "Buyurtmalar",
+      "categories": "Kategoriyalar",
+      "users": "Foydalanuvchilar",
+      "profile": "Profil"
+    },
+    "admin-ui": {
+      "users": {
+        "users-toolbar": {
+          "search": "Foydalanuvchilarni qidirish",
+          "add-user": "Foydalanuvchi qo'shish"
+        },
+        "users-dialog": {
+          "title": "Foydalanuvchi qo'shish",
+          "description": "Yangi foydalanuvchi qo'shish",
+          "name-placeholder": "Ism",
+          "email-placeholder": "Email",
+          "phone-placeholder": "Telefon",
+          "password-placeholder": "Parol",
+          "role-placeholder": "Rol",
+          "add-user": "Foydalanuvchi qo'shish",
+          "edit-user": "Foydalanuvchi tahrirlash",
+          "delete-user": "Foydalanuvchi o'chirish",
+          "cancel": "Bekor qilish",
+          "update": "Yangilash",
+          "create": "Yaratish",
+          "role-user": "Foydalanuvchi",
+          "role-admin": "Admin"
+        },
+        "users-list": {
+          "table-header": {
+            "id": "ID",
+            "name": "Ism",
+            "email": "Email",
+            "role": "Rol",
+            "created": "Yaratilgan",
+            "actions": "Amallar"
+          },
+          "messages": {
+            "no-users": "Foydalanuvchilar topilmadi",
+            "try-adjusting-filters": "Qidiruvni o'zgartiring, qidirishingiz kerak bo'lgan narsani toping.",
+            "delete-user": "Rostdan ham ushbu foydalanuvchini o'chirishni xohlaysizmi?",
+            "delete-user-title": "Foydalanuvchi o'chirish",
+            "delete-user-action": "O'chirish",
+            "delete-user-cancel": "Bekor qilish",
+            "delete-user-success": "Foydalanuvchi muvaffaqiyatli o'chirildi",
+            "update-user-success": "Foydalanuvchi muvaffaqiyatli yangilandi",
+            "create-user-success": "Foydalanuvchi muvaffaqiyatli yaratildi",
+            "update-user-error": "Foydalanuvchi muvaffaqiyatli yangilanmadi",
+            "create-user-error": "Foydalanuvchi muvaffaqiyatli yaratilmadi"
+          }
+        }
+      }
+    }
+  }
 }
