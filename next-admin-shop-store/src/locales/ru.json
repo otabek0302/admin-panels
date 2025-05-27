@@ -74,6 +74,53 @@
             "create-user-error": "Не удалось создать пользователя"
           }
         }
+      },
+      "profile": {
+        "profile-toolbar": {
+          "title": "Профиль",
+          "edit-profile": "Редактировать профиль"
+        },
+        "profile-information": {
+          "title": "Личная информация",
+          "full-name": "Имя",
+          "email": "Email",
+          "phone": "Телефон",
+          "role": "Роль",
+          "no-profile": "Профиль не найден",
+          "try-later": "Пожалуйста, попробуйте позже"
+        },
+        "updated-password": {
+          "title": "Обновить пароль",
+          "current-password": "Текущий пароль",
+          "current-password-placeholder": "Введите ваш текущий пароль",
+          "new-password": "Новый пароль",
+          "new-password-placeholder": "Введите ваш новый пароль",
+          "confirm-password": "Подтвердить пароль",
+          "confirm-password-placeholder": "Подтвердите ваш новый пароль",
+          "update-password": "Обновить пароль",
+          "updating": "Обновление..."
+        },
+        "profile-dialog": {
+          "title": "Редактировать профиль",
+          "description": "Редактируйте вашу личную информацию",
+          "full-name": "Имя",
+          "full-name-placeholder": "Введите ваше имя",
+          "email": "Email",
+          "email-placeholder": "Введите ваш Email",
+          "phone": "Телефон",
+          "phone-placeholder": "Введите ваш Телефон",
+          "update-profile": "Обновить профиль",
+          "updating": "Обновление...",
+          "cancel": "Отмена"
+        },
+        "messages": {
+          "update-password-success": "Пароль успешно обновлен",
+          "update-password-error": "Не удалось обновить пароль",
+          "update-profile-success": "Профиль успешно обновлен",
+          "update-profile-error": "Не удалось обновить профиль",
+          "user-not-found": "Пользователь не найден",
+          "passwords-not-match": "Пароли не совпадают"
+        }
       }
     }
   }

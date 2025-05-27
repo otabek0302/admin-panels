@@ -17,12 +17,9 @@ async function isAdminSession(): Promise<(Session & { user: User }) | null> {
 }
 
 // GET /api/users/:id — get user by ID
-export async function GET(req: Request, context: { params: { id: string } }) {
-  const id = context?.params?.id ?? '';
-
-  if (!id) {
-    return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
-  }
+export async function GET(_: Request, context: { params: { id: string } }) {
+  const id = context?.params?.id;
+  if (!id) return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
 
   const session = await isAdminSession();
 
@@ -54,11 +51,8 @@ export async function GET(req: Request, context: { params: { id: string } }) {
 
 // PUT /api/users/:id — update user
 export async function PUT(req: Request, context: { params: { id: string } }) {
-  const id = context?.params?.id ?? '';
-
-  if (!id) {
-    return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
-  }
+  const id = context?.params?.id;
+  if (!id) return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
 
   const session = await isAdminSession();
   if (!session) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -66,7 +60,7 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
   try {
     const { name, email, role, password, phone } = await req.json();
 
-    if (!name || !email || !role) {
+    if (!name || !email) {
       return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
 
@@ -74,11 +68,14 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
       return NextResponse.json({ message: 'Invalid email format' }, { status: 400 });
     }
 
-    if (!ALLOWED_ROLES.includes(role)) {
+    const data: Partial<User> = { name, email, phone };
+
+    if (role && !ALLOWED_ROLES.includes(role)) {
       return NextResponse.json({ message: 'Invalid role' }, { status: 400 });
     }
-
-    const data: Partial<User> = { name, email, role, phone };
+    if (role) {
+      data.role = role;
+    }
 
     if (password) {
       data.password = await bcrypt.hash(password, 10);
@@ -104,13 +101,42 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
   }
 }
 
+// PUT /api/users/:id/password — update user password
+export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+  const id = params.id;
+  const session = await getServerSession(authOptions as any);
+
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const { currentPassword, newPassword } = await req.json();
+
+    if (!currentPassword || !newPassword) {
+      return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+    }
+
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) return NextResponse.json({ message: 'User not found' }, { status: 404 });
+
+    const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+    if (!isPasswordValid) return NextResponse.json({ message: 'Invalid current password' }, { status: 400 });
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await prisma.user.update({ where: { id }, data: { password: hashedPassword } });
+
+    return NextResponse.json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('❌ Error updating password:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+  }
+}
+
 // DELETE /api/users/:id — delete user
 export async function DELETE(_: Request, context: { params: { id: string } }) {
-  const id = context?.params?.id ?? '';
-
-  if (!id) {
-    return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
-  }
+  const id = context?.params?.id;
+  if (!id) return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
 
   const session = await isAdminSession();
   if (!session) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });

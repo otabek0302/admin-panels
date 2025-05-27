@@ -15,7 +15,7 @@
     "incremental": true,
     "baseUrl": "./src", // ✅ move here
     "paths": {
-      "@/*": ["*"] // ✅ simplified after fixing baseUrl
+      "@/*": ["./*"] // ✅ simplified after fixing baseUrl
     },
     "plugins": [
       {

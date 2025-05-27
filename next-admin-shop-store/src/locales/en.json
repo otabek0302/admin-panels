@@ -74,6 +74,53 @@
             "create-user-error": "Failed to create user"
           }
         }
+      },
+      "profile": {
+        "profile-toolbar": {
+          "title": "Profile",
+          "edit-profile": "Edit profile"
+        },
+        "profile-information": {
+          "title": "Personal information",
+          "full-name": "Full name",
+          "email": "Email",
+          "phone": "Phone",
+          "role": "Role",
+          "no-profile": "No profile found",
+          "try-later": "Please try again later"
+        },
+        "updated-password": {
+          "title": "Update password",
+          "current-password": "Current password",
+          "current-password-placeholder": "Enter your current password",
+          "new-password": "New password",
+          "new-password-placeholder": "Enter your new password",
+          "confirm-password": "Confirm password",
+          "confirm-password-placeholder": "Confirm your new password",
+          "update-password": "Update password",
+          "updating": "Updating..."
+        },
+        "profile-dialog": {
+          "title": "Edit profile",
+          "description": "Edit your profile information",
+          "full-name": "Full name",
+          "full-name-placeholder": "Enter your full name",
+          "email": "Email",
+          "email-placeholder": "Enter your email",
+          "phone": "Phone",
+          "phone-placeholder": "Enter your phone",
+          "update-profile": "Update profile",
+          "updating": "Updating...",
+          "cancel": "Cancel"
+        },
+        "messages": {
+          "update-password-success": "Password updated successfully",
+          "update-password-error": "Failed to update password",
+          "update-profile-success": "Profile updated successfully",
+          "update-profile-error": "Failed to update profile",
+          "user-not-found": "User not found",
+          "passwords-not-match": "Passwords do not match"
+        }
       }
     }
   }

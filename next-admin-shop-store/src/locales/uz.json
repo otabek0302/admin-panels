@@ -74,6 +74,53 @@
             "create-user-error": "Foydalanuvchi muvaffaqiyatli yaratilmadi"
           }
         }
+      },
+      "profile": {
+        "profile-toolbar": {
+          "title": "Profil",
+          "edit-profile": "Profilni tahrirlash"
+        },
+        "profile-information": {
+          "title": "Shaxsiy ma'lumotlar",
+          "full-name": "Ism",
+          "email": "Email",
+          "phone": "Telefon",
+          "role": "Rol",
+          "no-profile": "Profil topilmadi",
+          "try-later": "Iltimos, keyinroq urinib ko'ring"
+        },
+        "updated-password": {
+          "title": "Parolni o'zgartirish",
+          "current-password": "Joriy parol",
+          "current-password-placeholder": "Joriy parolingizni kiriting",
+          "new-password": "Yangi parol",
+          "new-password-placeholder": "Yangi parolingizni kiriting",
+          "confirm-password": "Parolni tasdiqlash",
+          "confirm-password-placeholder": "Yangi parolingizni tasdiqlang",
+          "update-password": "Parolni o'zgartirish",
+          "updating": "O'zgartirilmoqda..."
+        },
+        "profile-dialog": {
+          "title": "Profilni tahrirlash",
+          "description": "Profilingizni ma'lumotlarini tahrirlash",
+          "full-name": "Ism",
+          "full-name-placeholder": "Ismingizni kiriting",
+          "email": "Email",
+          "email-placeholder": "Emailingizni kiriting",
+          "phone": "Telefon",
+          "phone-placeholder": "Telefoningizni kiriting",
+          "update-profile": "Profilni o'zgartirish",
+          "updating": "O'zgartirilmoqda...",
+          "cancel": "Bekor qilish"
+        },
+        "messages": {
+          "update-password-success": "Parol muvaffaqiyatli o'zgartirildi",
+          "update-password-error": "Parol o'zgartirilmadi",
+          "update-profile-success": "Profil muvaffaqiyatli o'zgartirildi",
+          "update-profile-error": "Profil o'zgartirilmadi",
+          "user-not-found": "Foydalanuvchi topilmadi",
+          "passwords-not-match": "Parollar mos emas"
+        }
       }
     }
   }

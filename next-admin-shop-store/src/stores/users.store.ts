@@ -57,13 +57,15 @@ export const useUsersStore = create<UsersState & UsersActions>((set, get) => ({
 
   fetchUsers: async (params = {}) => {
     const { page = get().page, search = get().search } = params;
-    
+
     // Prevent duplicate requests
     if (get().loading) return;
-    
+
     set({ loading: true, error: null });
     try {
-      const res = await fetch(`/api/users?page=${page}&search=${search}`);
+      const res = await fetch(`/api/users?page=${page}&search=${search}`, {
+        credentials: 'include',
+      });
       const data = await res.json();
       set({
         users: data.users,
@@ -111,6 +113,7 @@ export const useUsersStore = create<UsersState & UsersActions>((set, get) => ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),
       });
+      if (!res.ok) throw new Error('Failed to update user');
       const data = await res.json();
       set((state) => ({
         users: state.users.map((u) => (u.id === user.id ? data : u)),

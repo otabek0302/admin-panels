@@ -18,7 +18,8 @@ export default function UsersPage() {
   const { status } = useSession();
 
   // Selected only the state we need:
-  const { page, total, search, openDialog, openDeleteDialog, deleteData, error, fetchUsers, setPage, setOpenDialog, setOpenDeleteDialog, deleteUser } = useUsersStore();
+  const { page, total, search, openDialog, openDeleteDialog, deleteData, error, setPage, setOpenDialog, setOpenDeleteDialog, deleteUser } = useUsersStore();
+  const fetchUsers = useUsersStore((state) => state.fetchUsers);
 
   // Fetch once whenever page or search change:
   useEffect(() => {
