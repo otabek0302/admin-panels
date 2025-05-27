@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 
 const UsersDialog = ({ setOpenDialog, openDialog }: { setOpenDialog: (open: boolean) => void; openDialog: boolean }) => {
   const { t } = useTranslation();
-  const { editData, updateUser, createUser } = useUsersStore();
+  const { editData, updateUser, createUser, setEditData } = useUsersStore();
   
   const [formData, setFormData] = useState<User>({
     name: '',
@@ -48,13 +48,14 @@ const UsersDialog = ({ setOpenDialog, openDialog }: { setOpenDialog: (open: bool
     e.preventDefault();
 
     if (editData) {
-      console.log('formData', formData);
       const res = await updateUser(formData);
       if (res) {
         setOpenDialog(false);
+        setEditData(null);
         toast.success(t('components.admin-ui.users.users-list.messages.update-user-success'));
       } else {
         setOpenDialog(false);
+        setEditData(null);
         toast.error(t('components.admin-ui.users.users-list.messages.update-user-error'));
       }
     } else {
@@ -69,10 +70,15 @@ const UsersDialog = ({ setOpenDialog, openDialog }: { setOpenDialog: (open: bool
     }
   };
 
+  const handleCancel = () => {
+    setOpenDialog(false);
+    setEditData(null);
+  };
+
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog} modal={true}>
       <DialogOverlay className="bg-black/50" />
-      <DialogTrigger className="hidden" />
+      <DialogTrigger className="hidden" onClick={handleCancel} />
       <DialogContent className="max-w-md rounded-[18px!important]">
         <DialogHeader className="pt-4">
           <DialogTitle>{t('components.admin-ui.users.users-dialog.title')}</DialogTitle>
@@ -119,7 +125,7 @@ const UsersDialog = ({ setOpenDialog, openDialog }: { setOpenDialog: (open: bool
           </div>
         </form>
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpenDialog(false)}>
+          <Button variant="outline" onClick={handleCancel}>
             {t('components.admin-ui.users.users-dialog.cancel')}
           </Button>
           <Button variant="default" type="submit" form="users-dialog-form">

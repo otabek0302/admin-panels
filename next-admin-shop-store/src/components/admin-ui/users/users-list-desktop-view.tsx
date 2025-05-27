@@ -37,7 +37,7 @@ const UsersListDesktopView = ({ users, loading }: { users: User[]; loading: bool
         <TableBody className="h-full">
           {loading && [1, 2, 3, 4, 5].map((_, index) => <UsersListSkeleton key={index} />)}
           {!loading && users.length === 0 && (
-            <TableRow>
+            <TableRow className="h-24 hover:bg-transparent">
               <TableCell colSpan={6} className="h-24 text-center">
                 <div className="flex flex-col items-center justify-center text-center text-muted-foreground">
                   <span className="text-lg font-semibold">{t('components.admin-ui.users.users-list.messages.no-users')}</span>

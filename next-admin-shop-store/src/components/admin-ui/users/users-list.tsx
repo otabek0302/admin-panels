@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react';
 import { toast } from 'sonner';
+import { useUsersStore } from '@/stores/users.store';
 
 import UsersListMobileView from './users-list-mobile-view';
 import UsersListDesktopView from './users-list-desktop-view';
-import { useUsersStore } from '@/stores/users.store';
 
 export default function UsersList() {
   // Select only the pieces of state we need

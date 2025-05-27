@@ -34,10 +34,18 @@ export default function UsersPage() {
   }, [error]);
   
   // Handle delete user
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (deleteData?.id) {
-      deleteUser(deleteData.id);
-      toast.success(t('components.admin-ui.users.users-list.messages.delete-user-success'));
+      try {
+        const res = await deleteUser(deleteData.id);
+        if (res.status === 200) {
+          toast.success(t('components.admin-ui.users.users-list.messages.delete-user-success'));
+        } else {
+          toast.error(t('components.admin-ui.users.users-list.messages.delete-user-error'));
+        }
+      } catch (error) {
+        toast.error(t('components.admin-ui.users.users-list.messages.delete-user-error'));
+      }
     }
     setOpenDeleteDialog(false);
   };

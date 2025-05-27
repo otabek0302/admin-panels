@@ -121,6 +121,110 @@
           "user-not-found": "User not found",
           "passwords-not-match": "Passwords do not match"
         }
+      },
+      "categories": {
+        "categories-toolbar": {
+          "search": "Search categories",
+          "add-category": "Add category"
+        },
+        "categories-dialog": {
+          "title": "Add category",
+          "description": "Add a new category to the system",
+          "name-placeholder": "Name",
+          "add-category": "Add category",
+          "edit-category": "Edit category",
+          "delete-category": "Delete category",
+          "cancel": "Cancel",
+          "update": "Update",
+          "create": "Create"
+        },
+        "categories-list": {
+          "table-header": {
+            "id": "ID",
+            "name": "Name",
+            "created": "Created",
+            "updated": "Updated",
+            "actions": "Actions"
+          },
+          "messages": {
+            "no-categories": "No categories found",
+            "try-adjusting-filters": "Try adjusting your filters to find what you're looking for.",
+            "delete-category": "Are you sure you want to delete this category?",
+            "delete-category-title": "Delete category",
+            "delete-category-action": "Delete",
+            "delete-category-cancel": "Cancel",
+            "delete-category-success": "Category deleted successfully",
+            "update-category-success": "Category updated successfully",
+            "create-category-success": "Category created successfully",
+            "update-category-error": "Failed to update category",
+            "create-category-error": "Failed to create category"
+          }
+        }
+      },
+      "products": {
+        "products-toolbar": {
+          "search": "Search products",
+          "add-product": "Add product"
+        },
+        "products-dialog": {
+          "add-title": "Add product",
+          "edit-title": "Edit product",
+          "description": "Fill in the product details below",
+          "image-label": "Image",
+          "image-placeholder": "Select an image",
+          "image-current-image": "Current image",
+          "image-browse-files": "Browse files",
+          "image-max-size-description": "Image must be less than 1MB",
+          
+          "name-label": "Name",
+          "name-placeholder": "Name",
+          
+          "description-label": "Description",
+          "description-placeholder": "Description",
+          
+          "price-label": "Price",
+          "price-placeholder": "Price",
+          
+          "stock-label": "Stock",
+          "stock-placeholder": "Stock",
+          
+          "category-label": "Category",
+          "category-placeholder": "Category",
+          
+          "brand-label": "Brand",
+          "brand-placeholder": "Brand",
+            
+          "update": "Update",
+          "create": "Create",
+          "cancel": "Cancel",
+          "updating": "Updating...",
+          "creating": "Creating..."
+        },
+        "products-card": {
+          "summary": {
+            "title": "Summary",
+            "brand": "Brand",
+            "description": "Description"
+          },
+          "sales": "Sales",
+          "remaining-products": "Remaining Products"
+        },
+        "messages": {
+          "no-products": "No products found",
+          "try-adjusting-filters": "Try adjusting your filters to find what you're looking for.",
+          "delete-product": "Are you sure you want to delete this product?",
+          "delete-product-title": "Delete product",
+          "delete-product-action": "Delete",
+          "delete-product-cancel": "Cancel",
+          "delete-product-success": "Product deleted successfully",
+          "update-product-success": "Product updated successfully",
+          "create-product-success": "Product created successfully",
+          "update-product-error": "Failed to update product",
+          "create-product-error": "Failed to create product",
+          "missing-fields": "Missing or invalid fields",
+          "image-required": "Image is required",
+          "error": "An error occurred"
+        }
       }
     }
   }

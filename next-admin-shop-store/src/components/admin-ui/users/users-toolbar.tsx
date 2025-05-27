@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const UsersToolbar = () => {
   const { t } = useTranslation();
-  const { search, setSearch, setOpenDialog } = useUsersStore();
+  const { search, setSearch, setOpenDialog, setEditData } = useUsersStore();
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -15,6 +15,7 @@ const UsersToolbar = () => {
 
   const handleAddUser = () => {
     setOpenDialog(true);
+    setEditData(null);
   };
 
   return (

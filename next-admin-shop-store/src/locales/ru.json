@@ -121,6 +121,110 @@
           "user-not-found": "Пользователь не найден",
           "passwords-not-match": "Пароли не совпадают"
         }
+      },
+      "categories": {
+        "categories-toolbar": {
+          "search": "Поиск категорий",
+          "add-category": "Добавить категорию"
+        },
+        "categories-dialog": {
+          "title": "Добавить категорию",
+          "description": "Добавьте новую категорию в систему",
+          "name-placeholder": "Имя",
+          "add-category": "Добавить категорию",
+          "edit-category": "Редактировать категорию",
+          "delete-category": "Удалить категорию",
+          "cancel": "Отмена",
+          "update": "Обновить",
+          "create": "Создать"
+        },
+        "categories-list": {
+          "table-header": {
+            "id": "ID",
+            "name": "Название",
+            "created": "Создано",
+            "updated": "Обновлено",
+            "actions": "Действия"
+          },
+          "messages": {
+            "no-categories": "Категории не найдены",
+            "try-adjusting-filters": "Попробуйте отрегулировать фильтры, чтобы найти то, что вы ищете.",
+            "delete-category": "Вы уверены, что хотите удалить эту категорию?",
+            "delete-category-title": "Удаление категории",
+            "delete-category-action": "Удалить",
+            "delete-category-cancel": "Отмена",
+            "delete-category-success": "Категория успешно удалена",
+            "update-category-success": "Категория успешно обновлена",
+            "create-category-success": "Категория успешно создана",
+            "update-category-error": "Не удалось обновить категорию",
+            "create-category-error": "Не удалось создать категорию"
+          }
+        }
+      },
+      "products": {
+        "products-toolbar": {
+          "search": "Поиск продуктов",
+          "add-product": "Добавить продукт"
+        },
+        "products-dialog": {
+          "add-title": "Добавить продукт",
+          "edit-title": "Редактировать продукт",
+          "description": "Заполните детали продукта ниже",
+          "image-label": "Изображение",
+          "image-placeholder": "Выберите изображение",
+          "image-current-image": "Текущее изображение",
+          "image-browse-files": "Выбрать файлы",
+          "image-max-size-description": "Изображение должно быть меньше 1MB",
+
+          "name-label": "Название",
+          "name-placeholder": "Название",
+
+          "description-label": "Описание",
+          "description-placeholder": "Описание",
+
+          "price-label": "Цена",
+          "price-placeholder": "Цена",
+
+          "stock-label": "Склад",
+          "stock-placeholder": "Склад",
+
+          "category-label": "Категория",
+          "category-placeholder": "Категория",
+
+          "brand-label": "Бренд",
+          "brand-placeholder": "Бренд",
+
+          "update": "Обновить",
+          "create": "Создать",
+          "cancel": "Отмена",
+          "updating": "Обновление...",
+          "creating": "Создание..."
+        },
+        "products-card": {
+          "summary": {
+            "title": "Сводка",
+            "brand": "Бренд",
+            "description": "Описание"
+          },
+          "sales": "Продажи",
+          "remaining-products": "Остаток"
+        },
+        "messages": {
+          "no-products": "Продукты не найдены",
+          "try-adjusting-filters": "Попробуйте отрегулировать фильтры, чтобы найти то, что вы ищете.",
+          "delete-product": "Вы уверены, что хотите удалить этот продукт?",
+          "delete-product-title": "Удаление продукта",
+          "delete-product-action": "Удалить",
+          "delete-product-cancel": "Отмена",
+          "delete-product-success": "Продукт успешно удален",
+          "update-product-success": "Продукт успешно обновлен",
+          "create-product-success": "Продукт успешно создан",
+          "update-product-error": "Не удалось обновить продукт",
+          "create-product-error": "Не удалось создать продукт",
+          "missing-fields": "Отсутствуют или неверные поля",
+          "image-required": "Изображение обязательно",
+          "error": "Произошла ошибка"
+        }
       }
     }
   }

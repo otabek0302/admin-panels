@@ -121,6 +121,110 @@
           "user-not-found": "Foydalanuvchi topilmadi",
           "passwords-not-match": "Parollar mos emas"
         }
+      },
+      "categories": {
+        "categories-toolbar": {
+          "search": "Kategoriyalarni qidirish",
+          "add-category": "Kategoriya qo'shish"
+        },
+        "categories-dialog": {
+          "title": "Kategoriya qo'shish",
+          "description": "Yangi kategoriya qo'shish",
+          "name-placeholder": "Kategoriya nomi",
+          "add-category": "Kategoriya qo'shish",
+          "edit-category": "Kategoriya tahrirlash",
+          "delete-category": "Kategoriya o'chirish",
+          "cancel": "Bekor qilish",
+          "update": "Yangilash",
+          "create": "Yaratish"
+        },
+        "categories-list": {
+          "table-header": {
+            "id": "ID",
+            "name": "Kategoriya nomi",
+            "created": "Yaratilgan",
+            "updated": "Yangilangan",
+            "actions": "Amallar"
+          },
+          "messages": {
+            "no-categories": "Kategoriyalar topilmadi",
+            "try-adjusting-filters": "Qidiruvni o'zgartiring, qidirishingiz kerak bo'lgan narsani toping.",
+            "delete-category": "Rostdan ham ushbu kategoriyani o'chirishni xohlaysizmi?",
+            "delete-category-title": "Kategoriya o'chirish",
+            "delete-category-action": "O'chirish",
+            "delete-category-cancel": "Bekor qilish",
+            "delete-category-success": "Kategoriya muvaffaqiyatli o'chirildi",
+            "update-category-success": "Kategoriya muvaffaqiyatli yangilandi",
+            "create-category-success": "Kategoriya muvaffaqiyatli yaratildi",
+            "update-category-error": "Kategoriya muvaffaqiyatli yangilanmadi",
+            "create-category-error": "Kategoriya muvaffaqiyatli yaratilmadi"
+          }
+        }
+      },
+      "products": {
+        "products-toolbar": {
+          "search": "Mahsulotlarni qidirish",
+          "add-product": "Mahsulot qo'shish"
+        },
+        "products-dialog": {
+          "add-title": "Mahsulot qo'shish",
+          "edit-title": "Mahsulot tahrirlash",
+          "description": "Yangi mahsulot qo'shish",
+          "image-label": "Rasm",
+          "image-placeholder": "Rasm tanlang",
+          "image-current-image": "Joriy rasm",
+          "image-browse-files": "Fayl tanlash",
+          "image-max-size-description": "Rasm 1MB dan oshmasligi kerak",
+
+          "name-label": "Nomi",
+          "name-placeholder": "Nomi",
+
+          "description-label": "Tavsifi",
+          "description-placeholder": "Tavsifi",
+
+          "price-label": "Narxi",
+          "price-placeholder": "Narxi",
+
+          "stock-label": "Sotilgan",
+          "stock-placeholder": "Sotilgan",
+
+          "category-label": "Kategoriya",
+          "category-placeholder": "Kategoriya",
+
+          "brand-label": "Brend",
+          "brand-placeholder": "Brend",
+
+          "update": "Yangilash",
+          "create": "Yaratish",
+          "cancel": "Bekor qilish",
+          "updating": "Yangilanmoqda...",
+          "creating": "Yaratilmoqda..."
+        },
+        "products-card": {
+          "summary": {
+            "title": "Xususiyatlar",
+            "brand": "Brend",
+            "description": "Tavsifi"
+          },
+          "sales": "Sotilgan",
+          "remaining-products": "Qolgan"
+        },
+        "messages": {
+          "no-products": "Mahsulotlar topilmadi",
+          "try-adjusting-filters": "Qidiruvni o'zgartiring, qidirishingiz kerak bo'lgan narsani toping.",
+          "delete-product": "Rostdan ham ushbu mahsulotni o'chirishni xohlaysizmi?",
+          "delete-product-title": "Mahsulot o'chirish",
+          "delete-product-action": "O'chirish",
+          "delete-product-cancel": "Bekor qilish",
+          "delete-product-success": "Mahsulot muvaffaqiyatli o'chirildi",
+          "update-product-success": "Mahsulot muvaffaqiyatli yangilandi",
+          "create-product-success": "Mahsulot muvaffaqiyatli yaratildi",
+          "update-product-error": "Mahsulot muvaffaqiyatli yangilanmadi",
+          "create-product-error": "Mahsulot muvaffaqiyatli yaratilmadi",
+          "missing-fields": "Ma'lumotlar to'liq emas",
+          "image-required": "Rasm kerak",
+          "error": "Xatolik yuz berdi"
+        }
       }
     }
   }

@@ -22,7 +22,7 @@ type UsersActions = {
   fetchUsers: (params?: { page?: number; search?: string }) => Promise<void>;
   createUser: (user: User) => Promise<boolean>;
   updateUser: (user: User) => Promise<boolean>;
-  deleteUser: (id: string) => Promise<void>;
+  deleteUser: (id: string) => Promise<Response>;
   setPage: (page: number) => void;
   setSearch: (search: string) => void;
   setOpenDialog: (openDialog: boolean) => void;
@@ -140,9 +140,11 @@ export const useUsersStore = create<UsersState & UsersActions>((set, get) => ({
         users: state.users.filter((user) => user.id !== id),
         total: state.total - 1,
       }));
+      return res;
     } catch (err) {
       console.error('Failed to delete user:', err);
       set({ error: 'Failed to delete user' });
+      throw err;
     } finally {
       set({ loading: false });
     }

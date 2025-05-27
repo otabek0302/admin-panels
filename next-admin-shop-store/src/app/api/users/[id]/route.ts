@@ -58,6 +58,15 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
   if (!session) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
 
   try {
+
+    const existingUser = await prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!existingUser) {
+      return NextResponse.json({ message: 'User not found' }, { status: 404 });
+    }
+
     const { name, email, role, password, phone } = await req.json();
 
     if (!name || !email) {
@@ -101,7 +110,7 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
   }
 }
 
-// PUT /api/users/:id/password — update user password
+// PATCH /api/users/:id/password — update user password
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = params.id;
   const session = await getServerSession(authOptions as any);
