@@ -6,7 +6,6 @@ import { prisma } from '@/lib/prisma';
 import { uploadImage, deleteImage } from '@/lib/cloudinary';
 
 import type { Session, User } from 'next-auth';
-import type { Product } from '@/interfaces/product';
 
 // Helper to check admin access
 async function isAdminSession(): Promise<(Session & { user: User }) | null> {

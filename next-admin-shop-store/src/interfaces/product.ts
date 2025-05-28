@@ -1,5 +1,4 @@
 import { Category } from './category';
-import { OrderItem } from './order';
 
 interface Product {
     id: string;
@@ -15,7 +14,12 @@ interface Product {
     imageBase64?: string;
     sales?: number;
     category: Category;
-    orderItems: OrderItem[];
+    orderItems: Array<{
+        id: string;
+        quantity: number;
+        price: number;
+        total: number;
+    }>;
     createdAt: Date;
     updatedAt: Date;
 }

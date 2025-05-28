@@ -1,0 +1,249 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useOrdersStore } from '@/stores/orders.store';
+import { useProductsStore } from '@/stores/product.store';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Badge } from '@/components/ui/badge';
+import { Divider } from '@/components/ui/divider';
+
+import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
+import { OrderStatus } from '@prisma/client';
+import { Search, Package, Loader2 } from 'lucide-react';
+import { ProductCard } from './product-card';
+import { OrderCard } from './order-card';
+import { OrderItem, OrderRequest } from '@/interfaces/order';
+
+const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setOpenDialog: (open: boolean) => void }) => {
+  const { t } = useTranslation();
+  const { loading, editData, setEditData, orderItems, total, discount, setDiscount, addOrderItem, removeOrderItem, updateOrderItem, createOrder, updateOrder, reset, search, setSearch } = useOrdersStore();
+
+  const { products, fetchProducts, loading: productsLoading } = useProductsStore();
+  const [discountInput, setDiscountInput] = useState('');
+
+  useEffect(() => {
+    if (openDialog) {
+      fetchProducts();
+    }
+  }, [openDialog, fetchProducts]);
+
+  useEffect(() => {
+    if (!openDialog) {
+      reset();
+      setDiscountInput('');
+    }
+  }, [openDialog, reset]);
+
+  const filteredProducts = products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
+
+  const handleSubmit = async () => {
+    if (!orderItems.length) {
+      toast.error(t('components.admin-ui.orders.messages.no-items'));
+      return;
+    }
+    try {
+      const orderData: OrderRequest = {
+        orderItems,
+        total,
+        discount,
+        status: 'PENDING' as OrderStatus,
+      };
+
+      if (editData) {
+        await updateOrder({ ...orderData, id: editData.id });
+        toast.success(t('components.admin-ui.orders.messages.update-order-success'));
+      } else {
+        await createOrder(orderData);
+        toast.success(t('components.admin-ui.orders.messages.create-order-success'));
+      }
+      setOpenDialog(false);
+      setEditData(null);
+    } catch (err) {
+      toast.error(t('components.admin-ui.orders.messages.save-failed'));
+    }
+  };
+
+  const handleApplyDiscount = () => {
+    const value = parseFloat(discountInput);
+    if (!isNaN(value) && value >= 0) {
+      setDiscount(value);
+      setDiscountInput('');
+    }
+  };
+
+  return (
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+      <DialogContent className="no-scrollbar h-[95vh] w-full max-w-md overflow-y-auto sm:max-w-5xl sm:rounded-lg">
+        <DialogTitle>{editData ? t('components.admin-ui.orders.orders-dialog.edit-title') : t('components.admin-ui.orders.orders-dialog.add-title')}</DialogTitle>
+        <DialogDescription>{editData ? t('components.admin-ui.orders.orders-dialog.edit-desc') : t('components.admin-ui.orders.orders-dialog.add-desc')}</DialogDescription>
+
+        <div className="flex h-[480px] w-full flex-col md:flex-row">
+          {/* Left Panel - Product Selection */}
+          <div className="flex h-full max-w-1/2 flex-1 flex-col p-4">
+            <div className="mb-6 flex items-center justify-between">
+              <h3 className="flex items-center gap-2 text-lg font-semibold">
+                <Package className="text-primary h-5 w-5" />
+                {t('components.admin-ui.orders.orders-dialog.products')}
+              </h3>
+              <Badge variant="outline" className="px-3 py-1 text-sm">
+                {products.length || 0} {t('components.admin-ui.orders.orders-dialog.items')}
+              </Badge>
+            </div>
+
+            <div className="relative mb-6">
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform" />
+              <Input 
+                placeholder={t('components.admin-ui.orders.orders-dialog.search-placeholder')} 
+                value={search} 
+                onChange={(e) => setSearch(e.target.value)} 
+                className="bg-background h-11 pl-9" 
+              />
+            </div>
+
+            <ScrollArea className="no-scrollbar h-[calc(100%-8rem)] flex-1">
+              {productsLoading ? (
+                <div className="flex h-full items-center justify-center">
+                  <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-4 px-2">
+                  {filteredProducts.map((product) => (
+                    <ProductCard 
+                      key={product.id} 
+                      product={product} 
+                      onAdd={addOrderItem} 
+                      isInCart={orderItems.some((item) => item.productId === product.id)} 
+                    />
+                  ))}
+                </div>
+              )}
+            </ScrollArea>
+          </div>
+
+          <Divider orientation="vertical" className="h-full" />
+
+          {/* Right Panel - Order Items */}
+          <div className="flex h-full max-w-1/2 flex-1 flex-col p-4">
+            <div className="mb-6 flex items-center justify-between">
+              <h3 className="flex items-center gap-2 text-lg font-semibold">
+                <Package className="text-primary h-5 w-5" />
+                {t('components.admin-ui.orders.orders-dialog.order-items')}
+              </h3>
+              <Badge variant="outline" className="px-3 py-1 text-sm">
+                {orderItems.length || 0} {t('components.admin-ui.orders.orders-dialog.items')}
+              </Badge>
+            </div>
+
+            <ScrollArea className="no-scrollbar h-[calc(100%-8rem)] flex-1">
+              <div className="space-y-4 px-2">
+                {orderItems.map((item: OrderItem, index: number) => (
+                  <OrderCard 
+                    key={index} 
+                    item={item} 
+                    index={index} 
+                    updateOrderItem={updateOrderItem} 
+                    removeOrderItem={(index) => removeOrderItem(orderItems[index].productId)} 
+                    availableStock={item.product.stock} 
+                  />
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="border-t px-4 py-2">
+          {/* Discount input section */}
+          <div className="mb-6">
+            <label htmlFor="discount-amount" className="mb-1 block text-sm font-medium">
+              {t('components.admin-ui.orders.orders-dialog.discount-label')}
+            </label>
+            <div className="flex">
+              <Input
+                id="discount-amount"
+                type="text"
+                min="0"
+                step="0.01"
+                value={discountInput}
+                onChange={(e) => setDiscountInput(e.target.value)}
+                placeholder={t('components.admin-ui.orders.orders-dialog.discount-placeholder')}
+                className="rounded-r-none border-none outline-none focus:ring-0 focus:outline-none"
+              />
+              <Button 
+                className="cursor-pointer rounded-l-none dark:bg-gray-800 dark:text-white" 
+                onClick={handleApplyDiscount} 
+                type="button"
+              >
+                {t('components.admin-ui.orders.orders-dialog.apply-discount')}
+              </Button>
+            </div>
+            {discount > 0 && (
+              <p className="mt-1 flex items-center gap-1 text-sm text-green-600">
+                {t('components.admin-ui.orders.orders-dialog.discount-applied', { discount: discount.toLocaleString() })}
+              </p>
+            )}
+          </div>
+
+          {/* Summary pricing */}
+          <div className="mb-6 space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span>{t('components.admin-ui.orders.orders-dialog.subtotal')}</span>
+              <span className="flex items-center gap-1">
+                {orderItems.reduce((sum, item) => sum + item.total, 0).toLocaleString()}
+              </span>
+            </div>
+            {discount > 0 && (
+              <div className="flex justify-between text-green-600">
+                <span>{t('components.admin-ui.orders.orders-dialog.discount')}</span>
+                <span className="flex items-center gap-1">
+                  -{discount.toLocaleString()}
+                </span>
+              </div>
+            )}
+            <div className="flex justify-between border-t pt-2 text-lg font-bold">
+              <span>{t('components.admin-ui.orders.orders-dialog.total')}</span>
+              <span className="flex items-center gap-1 text-primary">
+                {total.toLocaleString()}
+              </span>
+            </div>
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex justify-end gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOpenDialog(false)}
+              className="h-11 cursor-pointer px-6"
+            >
+              {t('components.admin-ui.orders.orders-dialog.cancel')}
+            </Button>
+            <Button 
+              type="submit" 
+              disabled={loading || !orderItems.length} 
+              onClick={handleSubmit} 
+              className="h-11 cursor-pointer px-6 dark:bg-gray-800 dark:text-white"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t('components.admin-ui.orders.orders-dialog.saving')}
+                </>
+              ) : editData ? (
+                t('components.admin-ui.orders.orders-dialog.update')
+              ) : (
+                t('components.admin-ui.orders.orders-dialog.create')
+              )}
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default OrdersDialog;

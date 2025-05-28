@@ -175,25 +175,25 @@
           "image-current-image": "Current image",
           "image-browse-files": "Browse files",
           "image-max-size-description": "Image must be less than 1MB",
-          
+
           "name-label": "Name",
           "name-placeholder": "Name",
-          
+
           "description-label": "Description",
           "description-placeholder": "Description",
-          
+
           "price-label": "Price",
           "price-placeholder": "Price",
-          
+
           "stock-label": "Stock",
           "stock-placeholder": "Stock",
-          
+
           "category-label": "Category",
           "category-placeholder": "Category",
-          
+
           "brand-label": "Brand",
           "brand-placeholder": "Brand",
-            
+
           "update": "Update",
           "create": "Create",
           "cancel": "Cancel",
@@ -225,7 +225,78 @@
           "image-required": "Image is required",
           "error": "An error occurred"
         }
+      },
+      "orders": {
+        "orders-toolbar": {
+          "search": "Search orders",
+          "add-order": "Add order"
+        },
+        "orders-list": {
+          "table-header": {
+            "id": "ID",
+            "total": "Total",
+            "status": "Status",
+            "items": "Items",
+            "created": "Created",
+            "actions": "Actions"
+          },
+          "messages": {
+            "no-orders": "Orders not found",
+            "try-adjusting-filters": "Try adjusting your filters to find what you're looking for."
+          }
+        },
+        "orders-dialog": {
+          "add-title": "Add order",
+          "edit-title": "Edit order",
+          "add-desc": "Add products to create a new order",
+          "edit-desc": "Modify the order details below",
+          "products": "Products",
+          "items": "Items",
+          "search-placeholder": "Search products...",
+          "discount-label": "Discount Amount",
+          "discount-placeholder": "Enter discount amount",
+          "apply-discount": "Apply Discount",
+          "discount-applied": "Discount of {{discount}} applied",
+          "subtotal": "Subtotal",
+          "discount": "Discount",
+          "total": "Total",
+          "cancel": "Cancel",
+          "create": "Create Order",
+          "update": "Update Order",
+          "saving": "Saving...",
+          "order-items": "Order Items",
+          "order-card": {
+            "no-stock-left": "Out of Stock",
+            "low-stock": "Low Stock",
+            "in-stock": "In Stock",
+            "total": "Total"
+          },
+          "product-item": {
+            "no-stock-left": "Out of Stock",
+            "low-stock": "Low Stock",
+            "in-stock": "In Stock"
+          }
+        },
+        "messages": {
+          "no-items": "Please add at least one item to the order",
+          "update-order-success": "Order updated successfully",
+          "create-order-success": "Order created successfully",
+          "save-failed": "Failed to save order",
+          "delete-order": "Are you sure you want to delete this order?",
+          "delete-order-title": "Delete order",
+          "delete-order-action": "Delete",
+          "delete-order-cancel": "Cancel",
+          "delete-order-success": "Order deleted successfully",
+          "delete-order-error": "Failed to delete order"
+        }
       }
+    }
+  },
+  "messages": {
+    "error": {
+      "out-of-stock": "This product is out of stock",
+      "low-stock": "Only {{count}} items left in stock",
+      "in-stock": "{{count}} items available in stock"
     }
   }
 }

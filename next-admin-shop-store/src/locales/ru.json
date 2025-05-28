@@ -4,7 +4,7 @@
       "links": {
         "terms-and-conditions": "Условия использования",
         "privacy-policy": "Политика конфиденциальности",
-        "cookies": "Куки"
+        "cookies": "Файлы cookie"
       }
     },
     "login": {
@@ -14,15 +14,15 @@
       "password": "Пароль",
       "login": "Войти",
       "login-button": "Войти",
-      "login-button-loading": "Вход...",
-      "forgot-password": "Забыли пароль?",
+      "login-button-loading": "Вход в систему...",
+      "forgot-password": "Забыли пароль",
       "signup": "Регистрация"
     }
   },
   "components": {
     "sidebar": {
       "home": "Главная",
-      "products": "Продукты",
+      "products": "Товары",
       "orders": "Заказы",
       "categories": "Категории",
       "users": "Пользователи",
@@ -57,14 +57,14 @@
             "name": "Имя",
             "email": "Email",
             "role": "Роль",
-            "created": "Создано",
+            "created": "Создан",
             "actions": "Действия"
           },
           "messages": {
             "no-users": "Пользователи не найдены",
-            "try-adjusting-filters": "Попробуйте отрегулировать фильтры, чтобы найти то, что вы ищете.",
+            "try-adjusting-filters": "Попробуйте изменить фильтры для поиска.",
             "delete-user": "Вы уверены, что хотите удалить этого пользователя?",
-            "delete-user-title": "Удаление пользователя",
+            "delete-user-title": "Удалить пользователя",
             "delete-user-action": "Удалить",
             "delete-user-cancel": "Отмена",
             "delete-user-success": "Пользователь успешно удален",
@@ -82,7 +82,7 @@
         },
         "profile-information": {
           "title": "Личная информация",
-          "full-name": "Имя",
+          "full-name": "Полное имя",
           "email": "Email",
           "phone": "Телефон",
           "role": "Роль",
@@ -92,23 +92,23 @@
         "updated-password": {
           "title": "Обновить пароль",
           "current-password": "Текущий пароль",
-          "current-password-placeholder": "Введите ваш текущий пароль",
+          "current-password-placeholder": "Введите текущий пароль",
           "new-password": "Новый пароль",
-          "new-password-placeholder": "Введите ваш новый пароль",
-          "confirm-password": "Подтвердить пароль",
-          "confirm-password-placeholder": "Подтвердите ваш новый пароль",
+          "new-password-placeholder": "Введите новый пароль",
+          "confirm-password": "Подтвердите пароль",
+          "confirm-password-placeholder": "Подтвердите новый пароль",
           "update-password": "Обновить пароль",
           "updating": "Обновление..."
         },
         "profile-dialog": {
           "title": "Редактировать профиль",
-          "description": "Редактируйте вашу личную информацию",
-          "full-name": "Имя",
-          "full-name-placeholder": "Введите ваше имя",
+          "description": "Редактирование информации профиля",
+          "full-name": "Полное имя",
+          "full-name-placeholder": "Введите полное имя",
           "email": "Email",
-          "email-placeholder": "Введите ваш Email",
+          "email-placeholder": "Введите email",
           "phone": "Телефон",
-          "phone-placeholder": "Введите ваш Телефон",
+          "phone-placeholder": "Введите телефон",
           "update-profile": "Обновить профиль",
           "updating": "Обновление...",
           "cancel": "Отмена"
@@ -130,7 +130,7 @@
         "categories-dialog": {
           "title": "Добавить категорию",
           "description": "Добавьте новую категорию в систему",
-          "name-placeholder": "Имя",
+          "name-placeholder": "Название",
           "add-category": "Добавить категорию",
           "edit-category": "Редактировать категорию",
           "delete-category": "Удалить категорию",
@@ -148,9 +148,9 @@
           },
           "messages": {
             "no-categories": "Категории не найдены",
-            "try-adjusting-filters": "Попробуйте отрегулировать фильтры, чтобы найти то, что вы ищете.",
+            "try-adjusting-filters": "Попробуйте изменить фильтры для поиска.",
             "delete-category": "Вы уверены, что хотите удалить эту категорию?",
-            "delete-category-title": "Удаление категории",
+            "delete-category-title": "Удалить категорию",
             "delete-category-action": "Удалить",
             "delete-category-cancel": "Отмена",
             "delete-category-success": "Категория успешно удалена",
@@ -163,17 +163,17 @@
       },
       "products": {
         "products-toolbar": {
-          "search": "Поиск продуктов",
-          "add-product": "Добавить продукт"
+          "search": "Поиск товаров",
+          "add-product": "Добавить товар"
         },
         "products-dialog": {
-          "add-title": "Добавить продукт",
-          "edit-title": "Редактировать продукт",
-          "description": "Заполните детали продукта ниже",
+          "add-title": "Добавить товар",
+          "edit-title": "Редактировать товар",
+          "description": "Заполните информацию о товаре",
           "image-label": "Изображение",
           "image-placeholder": "Выберите изображение",
           "image-current-image": "Текущее изображение",
-          "image-browse-files": "Выбрать файлы",
+          "image-browse-files": "Выбрать файл",
           "image-max-size-description": "Изображение должно быть меньше 1MB",
 
           "name-label": "Название",
@@ -185,8 +185,8 @@
           "price-label": "Цена",
           "price-placeholder": "Цена",
 
-          "stock-label": "Склад",
-          "stock-placeholder": "Склад",
+          "stock-label": "Количество",
+          "stock-placeholder": "Количество",
 
           "category-label": "Категория",
           "category-placeholder": "Категория",
@@ -207,25 +207,96 @@
             "description": "Описание"
           },
           "sales": "Продажи",
-          "remaining-products": "Остаток"
+          "remaining-products": "Остаток товаров"
         },
         "messages": {
-          "no-products": "Продукты не найдены",
-          "try-adjusting-filters": "Попробуйте отрегулировать фильтры, чтобы найти то, что вы ищете.",
-          "delete-product": "Вы уверены, что хотите удалить этот продукт?",
-          "delete-product-title": "Удаление продукта",
+          "no-products": "Товары не найдены",
+          "try-adjusting-filters": "Попробуйте изменить фильтры для поиска.",
+          "delete-product": "Вы уверены, что хотите удалить этот товар?",
+          "delete-product-title": "Удалить товар",
           "delete-product-action": "Удалить",
           "delete-product-cancel": "Отмена",
-          "delete-product-success": "Продукт успешно удален",
-          "update-product-success": "Продукт успешно обновлен",
-          "create-product-success": "Продукт успешно создан",
-          "update-product-error": "Не удалось обновить продукт",
-          "create-product-error": "Не удалось создать продукт",
+          "delete-product-success": "Товар успешно удален",
+          "update-product-success": "Товар успешно обновлен",
+          "create-product-success": "Товар успешно создан",
+          "update-product-error": "Не удалось обновить товар",
+          "create-product-error": "Не удалось создать товар",
           "missing-fields": "Отсутствуют или неверные поля",
-          "image-required": "Изображение обязательно",
+          "image-required": "Требуется изображение",
           "error": "Произошла ошибка"
         }
+      },
+      "orders": {
+        "orders-toolbar": {
+          "search": "Поиск заказов",
+          "add-order": "Добавить заказ"
+        },
+        "orders-list": {
+          "table-header": {
+            "id": "ID",
+            "total": "Итого",
+            "status": "Статус",
+            "items": "Товары",
+            "created": "Создан",
+            "actions": "Действия"
+          },
+          "messages": {
+            "no-orders": "Заказы не найдены",
+            "try-adjusting-filters": "Попробуйте изменить фильтры для поиска."
+          }
+        },
+        "orders-dialog": {
+          "add-title": "Добавить заказ",
+          "edit-title": "Редактировать заказ",
+          "add-desc": "Добавьте товары для создания нового заказа",
+          "edit-desc": "Измените детали заказа ниже",
+          "products": "Товары",
+          "items": "Товары",
+          "search-placeholder": "Поиск товаров...",
+          "discount-label": "Сумма скидки",
+          "discount-placeholder": "Введите сумму скидки",
+          "apply-discount": "Применить скидку",
+          "discount-applied": "Скидка {{discount}} применена",
+          "subtotal": "Подытог",
+          "discount": "Скидка",
+          "total": "Итого",
+          "cancel": "Отмена",
+          "create": "Создать заказ",
+          "update": "Обновить заказ",
+          "saving": "Сохранение...",
+          "order-items": "Товары заказа",
+          "order-card": {
+            "no-stock-left": "Нет в наличии",
+            "low-stock": "Мало осталось",
+            "in-stock": "В наличии",
+            "total": "Итого"
+          },
+          "product-item": {
+            "no-stock-left": "Нет в наличии",
+            "low-stock": "Мало осталось",
+            "in-stock": "В наличии"
+          }
+        },
+        "messages": {
+          "no-items": "Пожалуйста, добавьте хотя бы один товар в заказ",
+          "update-order-success": "Заказ успешно обновлен",
+          "create-order-success": "Заказ успешно создан",
+          "save-failed": "Не удалось сохранить заказ",
+          "delete-order": "Вы уверены, что хотите удалить этот заказ?",
+          "delete-order-title": "Удалить заказ",
+          "delete-order-action": "Удалить",
+          "delete-order-cancel": "Отмена",
+          "delete-order-success": "Заказ успешно удален",
+          "delete-order-error": "Не удалось удалить заказ"
+        }
       }
+    }
+  },
+  "messages": {
+    "error": {
+      "out-of-stock": "Этот товар отсутствует на складе",
+      "low-stock": "Осталось только {{count}} шт.",
+      "in-stock": "В наличии {{count}} шт."
     }
   }
 }

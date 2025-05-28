@@ -1,14 +1,12 @@
-import { Category } from './category';
+import { OrderStatus } from '@prisma/client';
 import { Product } from './product';
 
 interface Order {
     id: string;
     orderItems: OrderItem[];
-    brand: string;
-    price: number;
-    stock: number;
-    image: string;
-    category: Category;
+    total: number;
+    discount: number;
+    status: OrderStatus;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -20,16 +18,23 @@ interface OrderItem {
     product: Product;
     quantity: number;
     price: number;
+    total: number;
+    discount: number;
+    name: string;
+    image: {
+        publicId: string;
+        url: string;
+    };
+    status: OrderStatus;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 interface OrderRequest {
-    name: string;
-    description: string;
-    brand: string;
-    price: number;
-    stock: number;
-    image: string;
-    categoryId: string;
+    orderItems: OrderItem[];
+    total: number;
+    discount: number;
+    status?: OrderStatus;
 }
 
 interface OrderResponse {
@@ -37,4 +42,4 @@ interface OrderResponse {
     total: number;
 }
 
-export type { Order, OrderItem, OrderRequest, OrderResponse };
+export type { Order, OrderItem, OrderRequest, OrderResponse }; 

@@ -2,20 +2,20 @@
   "pages": {
     "footer": {
       "links": {
-        "terms-and-conditions": "Shartlar va shartlar",
+        "terms-and-conditions": "Foydalanish shartlari",
         "privacy-policy": "Maxfiylik siyosati",
-        "cookies": "Kukilarni qo'llash"
+        "cookies": "Cookie fayllari"
       }
     },
     "login": {
       "title": "Kirish",
-      "description": "Hisobingizga kiring, davom etish uchun",
+      "description": "Davom etish uchun hisobingizga kiring",
       "email": "Email",
       "password": "Parol",
       "login": "Kirish",
       "login-button": "Kirish",
-      "login-button-loading": "Kirish...",
-      "forgot-password": "Parolni unutdingizmi?",
+      "login-button-loading": "Tizimga kirish...",
+      "forgot-password": "Parolni unutdingizmi",
       "signup": "Ro'yxatdan o'tish"
     }
   },
@@ -36,20 +36,20 @@
         },
         "users-dialog": {
           "title": "Foydalanuvchi qo'shish",
-          "description": "Yangi foydalanuvchi qo'shish",
+          "description": "Tizimga yangi foydalanuvchi qo'shing",
           "name-placeholder": "Ism",
           "email-placeholder": "Email",
           "phone-placeholder": "Telefon",
           "password-placeholder": "Parol",
           "role-placeholder": "Rol",
           "add-user": "Foydalanuvchi qo'shish",
-          "edit-user": "Foydalanuvchi tahrirlash",
-          "delete-user": "Foydalanuvchi o'chirish",
+          "edit-user": "Foydalanuvchini tahrirlash",
+          "delete-user": "Foydalanuvchini o'chirish",
           "cancel": "Bekor qilish",
           "update": "Yangilash",
           "create": "Yaratish",
           "role-user": "Foydalanuvchi",
-          "role-admin": "Admin"
+          "role-admin": "Administrator"
         },
         "users-list": {
           "table-header": {
@@ -62,64 +62,64 @@
           },
           "messages": {
             "no-users": "Foydalanuvchilar topilmadi",
-            "try-adjusting-filters": "Qidiruvni o'zgartiring, qidirishingiz kerak bo'lgan narsani toping.",
-            "delete-user": "Rostdan ham ushbu foydalanuvchini o'chirishni xohlaysizmi?",
-            "delete-user-title": "Foydalanuvchi o'chirish",
+            "try-adjusting-filters": "Qidirish uchun filtrlarni o'zgartiring.",
+            "delete-user": "Bu foydalanuvchini o'chirishni xohlaysizmi?",
+            "delete-user-title": "Foydalanuvchini o'chirish",
             "delete-user-action": "O'chirish",
             "delete-user-cancel": "Bekor qilish",
             "delete-user-success": "Foydalanuvchi muvaffaqiyatli o'chirildi",
             "update-user-success": "Foydalanuvchi muvaffaqiyatli yangilandi",
             "create-user-success": "Foydalanuvchi muvaffaqiyatli yaratildi",
-            "update-user-error": "Foydalanuvchi muvaffaqiyatli yangilanmadi",
-            "create-user-error": "Foydalanuvchi muvaffaqiyatli yaratilmadi"
+            "update-user-error": "Foydalanuvchini yangilashda xatolik yuz berdi",
+            "create-user-error": "Foydalanuvchi yaratishda xatolik yuz berdi"
           }
         }
       },
       "profile": {
         "profile-toolbar": {
           "title": "Profil",
-          "edit-profile": "Profilni tahrirlash"
+          "edit-profile": "Profildi tahrirlash"
         },
         "profile-information": {
           "title": "Shaxsiy ma'lumotlar",
-          "full-name": "Ism",
+          "full-name": "To'liq ism",
           "email": "Email",
           "phone": "Telefon",
           "role": "Rol",
           "no-profile": "Profil topilmadi",
-          "try-later": "Iltimos, keyinroq urinib ko'ring"
+          "try-later": "Iltimos, keyinroq qayta urinib ko'ring"
         },
         "updated-password": {
-          "title": "Parolni o'zgartirish",
+          "title": "Parolni yangilash",
           "current-password": "Joriy parol",
-          "current-password-placeholder": "Joriy parolingizni kiriting",
+          "current-password-placeholder": "Joriy parolni kiriting",
           "new-password": "Yangi parol",
-          "new-password-placeholder": "Yangi parolingizni kiriting",
-          "confirm-password": "Parolni tasdiqlash",
-          "confirm-password-placeholder": "Yangi parolingizni tasdiqlang",
-          "update-password": "Parolni o'zgartirish",
-          "updating": "O'zgartirilmoqda..."
+          "new-password-placeholder": "Yangi parolni kiriting",
+          "confirm-password": "Parolni tasdiqlang",
+          "confirm-password-placeholder": "Yangi parolni tasdiqlang",
+          "update-password": "Parolni yangilash",
+          "updating": "Yangilanmoqda..."
         },
         "profile-dialog": {
-          "title": "Profilni tahrirlash",
-          "description": "Profilingizni ma'lumotlarini tahrirlash",
-          "full-name": "Ism",
-          "full-name-placeholder": "Ismingizni kiriting",
+          "title": "Profildi tahrirlash",
+          "description": "Profil ma'lumotlarini tahrirlash",
+          "full-name": "To'liq ism",
+          "full-name-placeholder": "To'liq ismingizni kiriting",
           "email": "Email",
-          "email-placeholder": "Emailingizni kiriting",
+          "email-placeholder": "Email manzilingizni kiriting",
           "phone": "Telefon",
-          "phone-placeholder": "Telefoningizni kiriting",
-          "update-profile": "Profilni o'zgartirish",
-          "updating": "O'zgartirilmoqda...",
+          "phone-placeholder": "Telefon raqamingizni kiriting",
+          "update-profile": "Profildi yangilash",
+          "updating": "Yangilanmoqda...",
           "cancel": "Bekor qilish"
         },
         "messages": {
-          "update-password-success": "Parol muvaffaqiyatli o'zgartirildi",
-          "update-password-error": "Parol o'zgartirilmadi",
-          "update-profile-success": "Profil muvaffaqiyatli o'zgartirildi",
-          "update-profile-error": "Profil o'zgartirilmadi",
+          "update-password-success": "Parol muvaffaqiyatli yangilandi",
+          "update-password-error": "Parolni yangilashda xatolik yuz berdi",
+          "update-profile-success": "Profil muvaffaqiyatli yangilandi",
+          "update-profile-error": "Profildi yangilashda xatolik yuz berdi",
           "user-not-found": "Foydalanuvchi topilmadi",
-          "passwords-not-match": "Parollar mos emas"
+          "passwords-not-match": "Parollar mos kelmadi"
         }
       },
       "categories": {
@@ -129,11 +129,11 @@
         },
         "categories-dialog": {
           "title": "Kategoriya qo'shish",
-          "description": "Yangi kategoriya qo'shish",
-          "name-placeholder": "Kategoriya nomi",
+          "description": "Tizimga yangi kategoriya qo'shing",
+          "name-placeholder": "Nomi",
           "add-category": "Kategoriya qo'shish",
-          "edit-category": "Kategoriya tahrirlash",
-          "delete-category": "Kategoriya o'chirish",
+          "edit-category": "Kategoriyani tahrirlash",
+          "delete-category": "Kategoriyani o'chirish",
           "cancel": "Bekor qilish",
           "update": "Yangilash",
           "create": "Yaratish"
@@ -141,23 +141,23 @@
         "categories-list": {
           "table-header": {
             "id": "ID",
-            "name": "Kategoriya nomi",
+            "name": "Nomi",
             "created": "Yaratilgan",
             "updated": "Yangilangan",
             "actions": "Amallar"
           },
           "messages": {
             "no-categories": "Kategoriyalar topilmadi",
-            "try-adjusting-filters": "Qidiruvni o'zgartiring, qidirishingiz kerak bo'lgan narsani toping.",
-            "delete-category": "Rostdan ham ushbu kategoriyani o'chirishni xohlaysizmi?",
-            "delete-category-title": "Kategoriya o'chirish",
+            "try-adjusting-filters": "Qidirish uchun filtrlarni o'zgartiring.",
+            "delete-category": "Bu kategoriyani o'chirishni xohlaysizmi?",
+            "delete-category-title": "Kategoriyani o'chirish",
             "delete-category-action": "O'chirish",
             "delete-category-cancel": "Bekor qilish",
             "delete-category-success": "Kategoriya muvaffaqiyatli o'chirildi",
             "update-category-success": "Kategoriya muvaffaqiyatli yangilandi",
             "create-category-success": "Kategoriya muvaffaqiyatli yaratildi",
-            "update-category-error": "Kategoriya muvaffaqiyatli yangilanmadi",
-            "create-category-error": "Kategoriya muvaffaqiyatli yaratilmadi"
+            "update-category-error": "Kategoriyani yangilashda xatolik yuz berdi",
+            "create-category-error": "Kategoriya yaratishda xatolik yuz berdi"
           }
         }
       },
@@ -168,25 +168,25 @@
         },
         "products-dialog": {
           "add-title": "Mahsulot qo'shish",
-          "edit-title": "Mahsulot tahrirlash",
-          "description": "Yangi mahsulot qo'shish",
+          "edit-title": "Mahsulotni tahrirlash",
+          "description": "Mahsulot ma'lumotlarini to'ldiring",
           "image-label": "Rasm",
           "image-placeholder": "Rasm tanlang",
           "image-current-image": "Joriy rasm",
-          "image-browse-files": "Fayl tanlash",
-          "image-max-size-description": "Rasm 1MB dan oshmasligi kerak",
+          "image-browse-files": "Fayl tanlang",
+          "image-max-size-description": "Rasm 1MB dan kichik bo'lishi kerak",
 
           "name-label": "Nomi",
           "name-placeholder": "Nomi",
 
-          "description-label": "Tavsifi",
-          "description-placeholder": "Tavsifi",
+          "description-label": "Tavsif",
+          "description-placeholder": "Tavsif",
 
           "price-label": "Narxi",
           "price-placeholder": "Narxi",
 
-          "stock-label": "Sotilgan",
-          "stock-placeholder": "Sotilgan",
+          "stock-label": "Soni",
+          "stock-placeholder": "Soni",
 
           "category-label": "Kategoriya",
           "category-placeholder": "Kategoriya",
@@ -202,30 +202,101 @@
         },
         "products-card": {
           "summary": {
-            "title": "Xususiyatlar",
+            "title": "Xulosa",
             "brand": "Brend",
-            "description": "Tavsifi"
+            "description": "Tavsif"
           },
-          "sales": "Sotilgan",
-          "remaining-products": "Qolgan"
+          "sales": "Sotuvlar",
+          "remaining-products": "Qolgan mahsulotlar"
         },
         "messages": {
           "no-products": "Mahsulotlar topilmadi",
-          "try-adjusting-filters": "Qidiruvni o'zgartiring, qidirishingiz kerak bo'lgan narsani toping.",
-          "delete-product": "Rostdan ham ushbu mahsulotni o'chirishni xohlaysizmi?",
-          "delete-product-title": "Mahsulot o'chirish",
+          "try-adjusting-filters": "Qidirish uchun filtrlarni o'zgartiring.",
+          "delete-product": "Bu mahsulotni o'chirishni xohlaysizmi?",
+          "delete-product-title": "Mahsulotni o'chirish",
           "delete-product-action": "O'chirish",
           "delete-product-cancel": "Bekor qilish",
           "delete-product-success": "Mahsulot muvaffaqiyatli o'chirildi",
           "update-product-success": "Mahsulot muvaffaqiyatli yangilandi",
           "create-product-success": "Mahsulot muvaffaqiyatli yaratildi",
-          "update-product-error": "Mahsulot muvaffaqiyatli yangilanmadi",
-          "create-product-error": "Mahsulot muvaffaqiyatli yaratilmadi",
-          "missing-fields": "Ma'lumotlar to'liq emas",
-          "image-required": "Rasm kerak",
+          "update-product-error": "Mahsulotni yangilashda xatolik yuz berdi",
+          "create-product-error": "Mahsulot yaratishda xatolik yuz berdi",
+          "missing-fields": "Maydonlar to'liq to'ldirilmagan yoki noto'g'ri",
+          "image-required": "Rasm talab qilinadi",
           "error": "Xatolik yuz berdi"
         }
+      },
+      "orders": {
+        "orders-toolbar": {
+          "search": "Buyurtmalarni qidirish",
+          "add-order": "Buyurtma qo'shish"
+        },
+        "orders-list": {
+          "table-header": {
+            "id": "ID",
+            "total": "Jami",
+            "status": "Holati",
+            "items": "Mahsulotlar",
+            "created": "Yaratilgan",
+            "actions": "Amallar"
+          },
+          "messages": {
+            "no-orders": "Buyurtmalar topilmadi",
+            "try-adjusting-filters": "Qidirish uchun filtrlarni o'zgartiring."
+          }
+        },
+        "orders-dialog": {
+          "add-title": "Buyurtma qo'shish",
+          "edit-title": "Buyurtmani tahrirlash",
+          "add-desc": "Yangi buyurtma yaratish uchun mahsulotlar qo'shing",
+          "edit-desc": "Buyurtma ma'lumotlarini o'zgartiring",
+          "products": "Mahsulotlar",
+          "items": "Mahsulotlar",
+          "search-placeholder": "Mahsulotlarni qidirish...",
+          "discount-label": "Chegirma miqdori",
+          "discount-placeholder": "Chegirma miqdorini kiriting",
+          "apply-discount": "Chegirmani qo'llash",
+          "discount-applied": "{{discount}} chegirma qo'llandi",
+          "subtotal": "Oraliq summa",
+          "discount": "Chegirma",
+          "total": "Jami",
+          "cancel": "Bekor qilish",
+          "create": "Buyurtma yaratish",
+          "update": "Buyurtmani yangilash",
+          "saving": "Saqlanmoqda...",
+          "order-items": "Buyurtma mahsulotlari",
+          "order-card": {
+            "no-stock-left": "Omborida yo'q",
+            "low-stock": "Oz qoldi",
+            "in-stock": "Omborida bor",
+            "total": "Jami"
+          },
+          "product-item": {
+            "no-stock-left": "Omborida yo'q",
+            "low-stock": "Oz qoldi",
+            "in-stock": "Omborida bor"
+          }
+        },
+        "messages": {
+          "no-items": "Iltimos, buyurtmaga kamida bitta mahsulot qo'shing",
+          "update-order-success": "Buyurtma muvaffaqiyatli yangilandi",
+          "create-order-success": "Buyurtma muvaffaqiyatli yaratildi",
+          "save-failed": "Buyurtmani saqlashda xatolik yuz berdi",
+          "delete-order": "Buyurtmani o'chirishni xohlaysizmi?",
+          "delete-order-title": "Buyurtmani o'chirish",
+          "delete-order-action": "O'chirish",
+          "delete-order-cancel": "Bekor qilish",
+          "delete-order-success": "Buyurtma muvaffaqiyatli o'chirildi",
+          "delete-order-error": "Buyurtmani o'chirishda xatolik yuz berdi"
+        }
       }
+    }
+  },
+  "messages": {
+    "error": {
+      "out-of-stock": "Bu mahsulot omborida yo'q",
+      "low-stock": "Omborida faqat {{count}} dona qoldi",
+      "in-stock": "Omborida {{count}} dona mavjud"
     }
   }
 }
