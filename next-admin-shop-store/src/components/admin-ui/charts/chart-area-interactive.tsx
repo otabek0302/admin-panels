@@ -66,11 +66,18 @@ export function ChartAreaInteractive() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/dashboard?timeRange=${timeRange}`);
+        const currentDate = new Date();
+        const response = await fetch(`/api/dashboard?month=${currentDate.getMonth() + 1}&year=${currentDate.getFullYear()}`);
         const dashboardData = await response.json();
-        setData(dashboardData.dailyStats || []);
+        if (dashboardData.data?.dailyStats) {
+          setData(dashboardData.data.dailyStats);
+        } else {
+          console.error('No daily stats data received');
+          setData([]);
+        }
       } catch (error) {
         console.error('Error fetching chart data:', error);
+        setData([]);
       } finally {
         setLoading(false);
       }
@@ -121,42 +128,52 @@ export function ChartAreaInteractive() {
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         <div className="aspect-auto h-[250px] w-full">
-          <BarChart data={data} barGap={8}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
-              tickFormatter={(value: string) => {
-                const date = new Date(value);
-                return date.toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                });
-              }}
-            />
-            <YAxis 
-              tickLine={false} 
-              axisLine={false} 
-              tickMargin={8} 
-              tickFormatter={(value) => formatCurrency(value)} 
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Bar 
-              dataKey="revenue" 
-              fill="hsl(var(--chart-1))" 
-              radius={[4, 4, 0, 0]} 
-              maxBarSize={40} 
-            />
-            <Bar 
-              dataKey="orders" 
-              fill="hsl(var(--chart-2))" 
-              radius={[4, 4, 0, 0]} 
-              maxBarSize={40} 
-            />
-          </BarChart>
+          {data.length > 0 ? (
+            <BarChart data={data} barGap={8} margin={{ top: 10, right: 10, bottom: 20, left: 10 }}>
+              <CartesianGrid vertical={false} strokeDasharray="3 3" />
+              <XAxis
+                dataKey="date"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                minTickGap={32}
+                tickFormatter={(value: string) => {
+                  const date = new Date(value);
+                  return date.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                  });
+                }}
+              />
+              <YAxis 
+                tickLine={false} 
+                axisLine={false} 
+                tickMargin={8}
+                tickFormatter={(value) => formatCurrency(value)}
+                domain={[0, 'auto']}
+                allowDataOverflow={false}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar 
+                dataKey="revenue" 
+                fill="hsl(var(--chart-1))" 
+                radius={[4, 4, 0, 0]} 
+                maxBarSize={40}
+                name={t('components.dashboard.chart.revenue')}
+              />
+              <Bar 
+                dataKey="orders" 
+                fill="hsl(var(--chart-2))" 
+                radius={[4, 4, 0, 0]} 
+                maxBarSize={40}
+                name={t('components.dashboard.chart.orders')}
+              />
+            </BarChart>
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <p className="text-muted-foreground">No data available</p>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

@@ -79,7 +79,7 @@ const OrdersListDesktopView = ({ orders, loading }: { orders: Order[]; loading: 
                   </TooltipProvider>
                 </TableCell>
                 <TableCell className="px-2 text-sm font-normal text-muted-foreground md:px-6">
-                  <div className="flex items-center gap-1">{formatCurrency(order?.orderItems.reduce((acc, item) => acc + item.price * item.quantity, 0))}</div>
+                  <div className="flex items-center gap-1">{formatCurrency(order.total)}</div>
                 </TableCell>
                 <TableCell className="px-2 text-sm font-normal text-muted-foreground md:px-6">
                   <SelectOrdersStatus order={order} />
@@ -103,7 +103,7 @@ const OrdersListDesktopView = ({ orders, loading }: { orders: Order[]; loading: 
                             <div className="flex flex-col gap-1">
                               <p className="text-xs font-medium text-white">{item.product?.name || 'N/A'}</p>
                               <p className="text-xs text-white">
-                                {item.quantity} × {item.price} - {item.discount ? item.discount : 0} = {item.total}
+                                {item.quantity} × {item.price} - {order.discount} = {order.total}
                               </p>
                             </div>
                           </TooltipContent>

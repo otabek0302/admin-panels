@@ -7,7 +7,10 @@ export interface DailyStat {
 export interface OutOfStockProduct {
     id: string;
     name: string;
-    image: string;
+    image: {
+        url: string;
+        alt: string;
+    };
     price: number;
     category: string | null;
 }

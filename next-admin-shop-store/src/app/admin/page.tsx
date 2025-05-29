@@ -16,6 +16,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { uz } from 'date-fns/locale';
+import { OutOfStockProduct } from '@/interfaces/dashboard';
 
 
 export default function DashboardPage() {
@@ -182,11 +183,11 @@ export default function DashboardPage() {
               {dashboardData.outOfStockProductsList.length > 0 ? (
                 <div className="space-y-1">
                   <div className="h-full space-y-2 overflow-y-auto">
-                    {dashboardData.outOfStockProductsList.map((p) => (
+                    {dashboardData.outOfStockProductsList.map((p: OutOfStockProduct) => (
                       <div key={p.id} className="flex items-center justify-between rounded-lg border p-3 hover:bg-muted/50">
                         <div className="flex items-center gap-2">
                           <div className="relative h-10 w-10 overflow-hidden rounded border">
-                            <Image src={p.image} alt={p.name} fill className="object-cover" />
+                            {p.image?.url ? <Image src={p.image?.url} alt={p.name} fill sizes="(max-width: 768px) 100vw" priority className="object-cover object-center" /> : <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-400">No Image</div>}
                           </div>
                           <p className="font-medium">{p.name}</p>
                           <p className="text-sm text-muted-foreground">{p.category || t('components.dashboard.content.no-category')}</p>

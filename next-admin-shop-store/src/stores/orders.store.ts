@@ -135,7 +135,11 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
             const data = await res.json();
             set((state) => ({ 
                 orders: [...state.orders, data], 
-                total: state.total + 1 
+                // Reset cart after successful order creation
+                orderItems: [],
+                subtotal: 0,
+                discount: 0,
+                total: 0
             }));
             get().fetchOrders({ page: get().page, search: get().search });
             return true;

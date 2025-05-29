@@ -29,3 +29,9 @@ export const getStatusColor = (status: OrderStatus) => {
       return 'bg-gray-500/10 text-gray-600';
   }
 };
+
+export const getStockStatus = (stock: number) => {
+  if (stock <= 0) return { message: 'Out of Stock', variant: 'destructive' as const };
+  if (stock <= 5) return { message: `Low Stock: ${stock}`, variant: 'secondary' as const };
+  return { message: `In Stock: ${stock}`, variant: 'outline' as const };
+};
