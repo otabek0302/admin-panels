@@ -17,6 +17,28 @@
       "login-button-loading": "Tizimga kirish...",
       "forgot-password": "Parolni unutdingizmi",
       "signup": "Ro'yxatdan o'tish"
+    },
+    "invoice": {
+      "title": "HISOBOT",
+      "not-found": "Buyurtma topilmadi",
+      "business-name": "Sizning ismingiz",
+      "business-address": "Sizning manzilingiz",
+      "business-phone": "Sizning telefon raqamingiz",
+      "bill-to": "Sizning raqamingiz:",
+      "customer-name": "Mijozning ismi",
+      "customer-address": "Mijozning manzili",
+      "customer-phone": "Mijozning telefon raqami",
+      "details": "Hisobot ma'lumotlari:",
+      "number": "Hisobot raqami",
+      "date": "Hisobot sanasi", 
+      "status": "Holat",
+      "item": "Mahsulot",
+      "quantity": "Soni",
+      "price": "Birlik narxi",
+      "amount": "Summa",
+      "total": "JAMI",
+      "discount": "CHEGIRMA",
+      "print": "Chiqarish"
     }
   },
   "components": {
@@ -49,7 +71,9 @@
           "update": "Yangilash",
           "create": "Yaratish",
           "role-user": "Foydalanuvchi",
-          "role-admin": "Administrator"
+          "role-admin": "Administrator",
+          "updating": "Yangilanmoqda...",
+          "creating": "Yaratilmoqda..."
         },
         "users-list": {
           "table-header": {
@@ -136,7 +160,9 @@
           "delete-category": "Kategoriyani o'chirish",
           "cancel": "Bekor qilish",
           "update": "Yangilash",
-          "create": "Yaratish"
+          "create": "Yaratish",
+          "updating": "Yangilanmoqda...",
+          "creating": "Yaratilmoqda..."
         },
         "categories-list": {
           "table-header": {
@@ -275,7 +301,9 @@
             "no-stock-left": "Omborida yo'q",
             "low-stock": "Oz qoldi",
             "in-stock": "Omborida bor"
-          }
+          },
+          "updating": "Yangilanmoqda...",
+          "creating": "Yaratilmoqda..."
         },
         "messages": {
           "no-items": "Iltimos, buyurtmaga kamida bitta mahsulot qo'shing",
@@ -287,8 +315,54 @@
           "delete-order-action": "O'chirish",
           "delete-order-cancel": "Bekor qilish",
           "delete-order-success": "Buyurtma muvaffaqiyatli o'chirildi",
-          "delete-order-error": "Buyurtmani o'chirishda xatolik yuz berdi"
+          "delete-order-error": "Buyurtmani o'chirishda xatolik yuz berdi",
+          "update-order-status-success": "Buyurtma holati muvaffaqiyatli yangilandi",
+          "update-order-status-error": "Buyurtma holatini yangilashda xatolik yuz berdi"
         }
+      }
+    },
+    "dashboard": {
+      "title": "Boshqaruv paneli",
+      "previous-month": "O'tgan oy",
+      "next-month": "Keyingi oy",
+      "card": {
+        "orders": "Buyurtmalar",
+        "revenue": "Tushum",
+        "products": "Mahsulotlar",
+        "stock-status": "Ombor holati"
+      },
+      "content": {
+        "completed-orders": "Bajarilgan buyurtmalar",
+        "cancelled-orders": "Bekor qilingan buyurtmalar",
+        "pending-orders": "Kutilayotgan buyurtmalar",
+        "processing-orders": "Jarayondagi buyurtmalar",
+        "total-products": "Jami mahsulotlar",
+        "products-in-store": "Do'kondagi mahsulotlar",
+        "sold-products": "Sotilgan mahsulotlar",
+        "sold-products-gross-value": "Sotilgan mahsulotlarning umumiy qiymati",
+        "store-value": "Do'kon qiymati",
+        "revenue-in-stock": "Om bordagi tushum",
+        "total-discount": "Jami chegirma",
+        "out-of-stock": "Tugagan",
+        "out-of-stock-items": "Tugagan mahsulotlar",
+        "no-out-of-stock": "Tugagan mahsulotlar yo'q",
+        "no-category": "Kategoriya yo'q"
+      },
+      "chart": {
+        "title": "Tushum",
+        "description": "Tushum grafikasi",
+        "descriptionShort": "Tushum grafikasi",
+        "placeholder": "Ma'lumotlar mavjud emas",
+        "revenue": "Tushum",
+        "orders": "Buyurtmalar",
+        "timeRange": {
+          "3months": "3 oy",
+          "30days": "30 kun",
+          "7days": "7 kun"
+        }
+      },
+      "errors": {
+        "fetch": "Ma'lumotlarni yuklashda xatolik yuz berdi"
       }
     }
   },

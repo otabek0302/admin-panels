@@ -8,7 +8,19 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useTranslation } from 'react-i18next';
 
-const UploadProductImage = ({ image, setImage, existingImage, clearExistingImage }: { image: File | null; setImage: (image: File | null) => void; existingImage: { url: string } | null; clearExistingImage?: () => void }) => {
+const UploadProductImage = ({ 
+  image, 
+  setImage, 
+  existingImage, 
+  clearExistingImage,
+  disabled 
+}: { 
+  image: File | null; 
+  setImage: (image: File | null) => void; 
+  existingImage: { url: string } | null; 
+  clearExistingImage?: () => void;
+  disabled?: boolean;
+}) => {
   const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -34,7 +46,7 @@ const UploadProductImage = ({ image, setImage, existingImage, clearExistingImage
           <>
             <div className="relative h-48 w-48 overflow-hidden rounded-md shadow-md">
               <Image src={URL.createObjectURL(image)} alt="Selected" fill priority className="rounded-md object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
-              <button type="button" onClick={removeImage} className="absolute right-2 top-2 rounded-full bg-white/80 p-1 hover:bg-white">
+              <button type="button" onClick={removeImage} className="absolute right-2 top-2 rounded-full bg-white/80 p-1 hover:bg-white" disabled={disabled}>
                 <X className="h-4 w-4 text-red-500" />
               </button>
             </div>
@@ -44,7 +56,7 @@ const UploadProductImage = ({ image, setImage, existingImage, clearExistingImage
           <>
             <div className="relative h-48 w-48 overflow-hidden rounded-md shadow-md">
               <Image src={existingImage.url} alt="Existing" fill className="rounded-md object-cover" />
-              <button type="button" onClick={removeImage} className="absolute right-2 top-2 rounded-full bg-white/80 p-1 hover:bg-white">
+              <button type="button" onClick={removeImage} className="absolute right-2 top-2 rounded-full bg-white/80 p-1 hover:bg-white" disabled={disabled}>
                 <X className="h-4 w-4 text-red-500" />
               </button>
             </div>
@@ -55,13 +67,13 @@ const UploadProductImage = ({ image, setImage, existingImage, clearExistingImage
             <Upload className="h-12 w-12 text-blue-800" />
             <p className="text-gray-600 dark:text-muted-foreground">{t('components.admin-ui.products.products-dialog.image-placeholder')}</p>
             <p className="text-sm text-gray-500 dark:text-gray-200">{t('components.admin-ui.products.products-dialog.image-max-size-description')}</p>
-            <Button type="button" variant="outline" onClick={triggerBrowse} className="cursor-pointer border-blue-800 text-blue-800 dark:bg-gray-800 dark:text-white">
+            <Button type="button" variant="outline" onClick={triggerBrowse} className="cursor-pointer border-blue-800 text-blue-800 dark:bg-gray-800 dark:text-white" disabled={disabled}>
               {t('components.admin-ui.products.products-dialog.image-browse-files')}
             </Button>
           </>
         )}
 
-        <Input ref={fileInputRef} type="file" accept="image/jpeg,image/png" onChange={handleFileChange} className="hidden" />
+        <Input ref={fileInputRef} type="file" accept="image/jpeg,image/png" onChange={handleFileChange} className="hidden" disabled={disabled} />
       </div>
     </div>
   );

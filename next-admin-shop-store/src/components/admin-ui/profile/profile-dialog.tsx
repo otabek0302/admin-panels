@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { User, Mail, Phone } from 'lucide-react';
+import { User, Mail, Phone, Loader2 } from 'lucide-react';
 
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -44,6 +44,7 @@ const ProfileDialog = () => {
 
     if (!user?.id) {
       toast.error(t('components.admin-ui.profile.messages.user-not-found'));
+      setLoading(false);
       return;
     }
 
@@ -56,10 +57,8 @@ const ProfileDialog = () => {
       toast.error(t('components.admin-ui.profile.messages.update-profile-error'));
     }
 
-    setTimeout(() => {
-      setLoading(false);
-      setOpenEditDialog(false);
-    }, 1500);
+    setLoading(false);
+    setOpenEditDialog(false);
   };
 
   return (
@@ -74,7 +73,16 @@ const ProfileDialog = () => {
             <Label htmlFor="name">{t('components.admin-ui.profile.profile-dialog.full-name')}</Label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input id="name" value={name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder={t('components.admin-ui.profile.profile-dialog.full-name-placeholder')} required disabled={loading} className="w-full pl-9 shadow-none focus-visible:ring-1" autoComplete="off" />
+              <Input 
+                id="name" 
+                value={name} 
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+                placeholder={t('components.admin-ui.profile.profile-dialog.full-name-placeholder')} 
+                required 
+                disabled={loading} 
+                className="w-full pl-9 shadow-none focus-visible:ring-1" 
+                autoComplete="off" 
+              />
             </div>
           </div>
 
@@ -83,7 +91,17 @@ const ProfileDialog = () => {
             <Label htmlFor="email">{t('components.admin-ui.profile.profile-dialog.email')}</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input id="email" type="email" value={email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder={t('components.admin-ui.profile.profile-dialog.email-placeholder')} required disabled={loading} className="w-full pl-9 shadow-none focus-visible:ring-1" autoComplete="off" />
+              <Input 
+                id="email" 
+                type="email" 
+                value={email} 
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
+                placeholder={t('components.admin-ui.profile.profile-dialog.email-placeholder')} 
+                required 
+                disabled={loading} 
+                className="w-full pl-9 shadow-none focus-visible:ring-1" 
+                autoComplete="off" 
+              />
             </div>
           </div>
 
@@ -92,16 +110,44 @@ const ProfileDialog = () => {
             <Label htmlFor="phone">{t('components.admin-ui.profile.profile-dialog.phone')}</Label>
             <div className="relative">
               <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input id="phone" type="tel" value={phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder={t('components.admin-ui.profile.profile-dialog.phone-placeholder')} required disabled={loading} className="w-full pl-9 shadow-none focus-visible:ring-1" autoComplete="off" />
+              <Input 
+                id="phone" 
+                type="tel" 
+                value={phone} 
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })} 
+                placeholder={t('components.admin-ui.profile.profile-dialog.phone-placeholder')} 
+                required 
+                disabled={loading} 
+                className="w-full pl-9 shadow-none focus-visible:ring-1" 
+                autoComplete="off" 
+              />
             </div>
           </div>
 
           {/* Actions */}
           <div className="mt-4 flex justify-end gap-2">
-            <Button type="submit" variant="outline" className="bg-primary text-white hover:bg-primary/90 dark:bg-gray-800" disabled={loading}>
-              {loading ? t('components.admin-ui.profile.profile-dialog.updating') : t('components.admin-ui.profile.profile-dialog.update-profile')}
+            <Button 
+              type="submit" 
+              variant="outline" 
+              className="bg-primary text-white hover:bg-primary/90 dark:bg-gray-800" 
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t('components.admin-ui.profile.profile-dialog.updating')}
+                </>
+              ) : (
+                t('components.admin-ui.profile.profile-dialog.update-profile')
+              )}
             </Button>
-            <Button type="button" variant="outline" className="bg-gray-200 hover:bg-gray-100" onClick={() => setOpenEditDialog(false)} disabled={loading}>
+            <Button 
+              type="button" 
+              variant="outline" 
+              className="bg-gray-200 hover:bg-gray-100" 
+              onClick={() => setOpenEditDialog(false)} 
+              disabled={loading}
+            >
               {t('components.admin-ui.profile.profile-dialog.cancel')}
             </Button>
           </div>

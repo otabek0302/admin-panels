@@ -5,7 +5,7 @@ import UpdatedPassword from '@/components/admin-ui/profile/updated-password';
 
 const ProfilePage = () => {
   return (
-    <section className="flex h-full flex-col justify-between space-y-4 p-4">
+    <section className="flex h-full flex-col justify-between space-y-4 p-4 xl:h-screen">
       <div className="container mx-auto px-4 md:px-6">
         <ProfileToolbar />
         <ProfileInformation />

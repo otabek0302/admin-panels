@@ -38,7 +38,7 @@ export default function OrdersPage() {
     if (deleteData?.id) {
       try {
         const res = await deleteOrder(deleteData.id);
-        if (res.status === 200) {
+        if (res) {
           toast.success(t('components.admin-ui.orders.messages.delete-order-success'));
         } else {
           toast.error(t('components.admin-ui.orders.messages.delete-order-error'));

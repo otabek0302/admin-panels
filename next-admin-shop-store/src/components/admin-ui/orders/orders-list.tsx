@@ -8,7 +8,7 @@ import OrdersListMobileView from './orders-list-mobile-view';
 import OrdersListDesktopView from './orders-list-desktop-view';
 
 export default function OrdersList() {
-  const { orders, loading, error } = useOrdersStore();
+  const { orders, loading, error, hydrated } = useOrdersStore();
 
   // Show an error toast whenever `error` changes
   useEffect(() => {
@@ -16,6 +16,16 @@ export default function OrdersList() {
       toast.error(error);
     }
   }, [error]);
+
+  // Don't render anything until we've hydrated the store
+  if (!hydrated) {
+    return (
+      <div className="mt-4 h-full rounded-md border">
+        <OrdersListMobileView orders={[]} loading={true} />
+        <OrdersListDesktopView orders={[]} loading={true} />
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 h-full rounded-md border">

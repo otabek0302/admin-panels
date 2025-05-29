@@ -10,13 +10,16 @@ import { useTranslation } from 'react-i18next';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { formatDistanceToNow, format } from 'date-fns';
-import { Clock, Calendar, Pencil, Trash } from 'lucide-react';
+import { Clock, Calendar, Pencil, Trash, Printer } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const OrdersListDesktopView = ({ orders, loading }: { orders: Order[]; loading: boolean }) => {
   const { t } = useTranslation();
   const { setOpenDialog, setEditData, setDeleteData, setOpenDeleteDialog } = useOrdersStore();
+
+  const router = useRouter();
 
   const handleEdit = (order: Order) => {
     setEditData(order);
@@ -26,6 +29,10 @@ const OrdersListDesktopView = ({ orders, loading }: { orders: Order[]; loading: 
   const handleDelete = (order: Order) => {
     setDeleteData(order);
     setOpenDeleteDialog(true);
+  };
+
+  const handlePrint = (order: Order) => {
+    router.push(`/admin/orders/${order.id}`);
   };
 
   return (
@@ -65,27 +72,27 @@ const OrdersListDesktopView = ({ orders, loading }: { orders: Order[]; loading: 
                       <TooltipTrigger>
                         <span className="font-mono">#{order.id?.slice(-6)}</span>
                       </TooltipTrigger>
-                      <TooltipContent>
+                      <TooltipContent className="text-xs font-medium text-white">
                         <p>Order ID: {order.id}</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                 </TableCell>
                 <TableCell className="px-2 text-sm font-normal text-muted-foreground md:px-6">
-                  <div className="flex items-center gap-1">{formatCurrency(order.orderItems.reduce((acc, item) => acc + item.price * item.quantity, 0))}</div>
+                  <div className="flex items-center gap-1">{formatCurrency(order?.orderItems.reduce((acc, item) => acc + item.price * item.quantity, 0))}</div>
                 </TableCell>
                 <TableCell className="px-2 text-sm font-normal text-muted-foreground md:px-6">
                   <SelectOrdersStatus order={order} />
                 </TableCell>
                 <TableCell className="px-2 text-sm font-normal text-muted-foreground md:px-6">
                   <div className="flex max-w-[120px] gap-2 overflow-y-auto">
-                    {order.orderItems.map((item: OrderItem) => (
+                    {order?.orderItems?.map((item: OrderItem) => (
                       <TooltipProvider key={item.id}>
                         <Tooltip>
                           <TooltipTrigger>
                             <div className="group relative p-2">
                               <div className="relative h-10 w-10 overflow-hidden rounded-md">
-                                {item.product?.image?.url ? <Image src={item.product.image.url} alt={item.product?.name || ''} fill sizes="(max-width: 768px) 100vw" priority className="object-cover object-center" /> : <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-400">No Image</div>}
+                                {item.product?.image?.url ? <Image src={item.product.image.url} alt={item.product?.name || 'N/A'} fill sizes="(max-width: 768px) 100vw" priority className="object-cover object-center" /> : <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-400">No Image</div>}
                                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
                                   <span className="text-xs font-medium text-white">{item.quantity}×</span>
                                 </div>
@@ -94,9 +101,9 @@ const OrdersListDesktopView = ({ orders, loading }: { orders: Order[]; loading: 
                           </TooltipTrigger>
                           <TooltipContent>
                             <div className="flex flex-col gap-1">
-                              <p className="font-medium">{item.product.name}</p>
-                              <p className="text-sm text-white">
-                                {item.quantity} × {formatCurrency(item.price)} - {formatCurrency(item.discount)} = {formatCurrency(item.total)}
+                              <p className="text-xs font-medium text-white">{item.product?.name || 'N/A'}</p>
+                              <p className="text-xs text-white">
+                                {item.quantity} × {item.price} - {item.discount ? item.discount : 0} = {item.total}
                               </p>
                             </div>
                           </TooltipContent>
@@ -116,22 +123,25 @@ const OrdersListDesktopView = ({ orders, loading }: { orders: Order[]; loading: 
                       </TooltipTrigger>
                       <TooltipContent>
                         <div className="flex flex-col gap-1">
-                          <p className="flex items-center gap-1">
+                          <p className="flex items-center gap-1 text-xs font-medium text-white">
                             <Calendar className="h-4 w-4" />
                             {order.createdAt ? format(new Date(order.createdAt), 'PPpp') : 'N/A'}
                           </p>
-                          <p className="text-sm text-muted-foreground">Order ID: {order.id}</p>
+                          <p className="text-xs text-white">Order ID: {order.id}</p>
                         </div>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                 </TableCell>
-                <TableCell className="px-2 flex items-center justify-center gap-2 text-sm font-normal text-muted-foreground md:px-6">
-                  <Button variant="outline" size="icon" className="cursor-pointer rounded-full" onClick={() => handleEdit(order)}>
+                <TableCell className="flex items-center justify-center gap-2 px-2 text-sm font-normal text-muted-foreground md:px-6">
+                  <Button variant="outline" size="icon" className="cursor-pointer shadow-none" onClick={() => handleEdit(order)}>
                     <Pencil className="h-5 w-5 text-muted-foreground" />
                   </Button>
-                  <Button variant="outline" size="icon" className="cursor-pointer rounded-full" onClick={() => handleDelete(order)}>
+                  <Button variant="outline" size="icon" className="cursor-pointer shadow-none" onClick={() => handleDelete(order)}>
                     <Trash className="h-5 w-5 text-muted-foreground" />
+                  </Button>
+                  <Button variant="outline" size="icon" className="cursor-pointer shadow-none" onClick={() => handlePrint(order)}>
+                    <Printer className="h-5 w-5 text-muted-foreground" />
                   </Button>
                 </TableCell>
               </TableRow>

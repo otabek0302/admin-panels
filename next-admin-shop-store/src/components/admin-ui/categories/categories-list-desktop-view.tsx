@@ -53,15 +53,13 @@ const CategoriesListDesktopView = ({ categories, loading }: { categories: Catego
                 <TableCell className="px-6 text-sm font-normal text-muted-foreground">{category.name}</TableCell>
                 <TableCell className="px-6 text-sm font-normal text-muted-foreground">{category.createdAt ? formatDistanceToNow(new Date(category.createdAt), { addSuffix: true }) : '-'}</TableCell>
                 <TableCell className="px-6 text-sm font-normal text-muted-foreground">{category.updatedAt ? formatDistanceToNow(new Date(category.updatedAt), { addSuffix: true }) : '-'}</TableCell>
-                <TableCell className="px-6 text-right text-sm font-normal text-muted-foreground">
-                  <div className="flex justify-center gap-2">
-                    <Button variant="ghost" size="icon" onClick={() => handleEdit(category)} title={t('components.admin-ui.categories.categories-list.actions.edit')}>
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDelete(category)} title={t('components.admin-ui.categories.categories-list.actions.delete')}>
-                      <Trash className="h-4 w-4" />
-                    </Button>
-                  </div>
+                <TableCell className="px-2 flex items-center justify-center gap-2 text-sm font-normal text-muted-foreground md:px-6">
+                  <Button variant="outline" size="icon" className="shadow-none cursor-pointer" onClick={() => handleEdit(category)}>
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                  <Button variant="outline" size="icon" className="shadow-none cursor-pointer" onClick={() => handleDelete(category)}>
+                    <Trash className="h-4 w-4" />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

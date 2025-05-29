@@ -17,6 +17,28 @@
       "login-button-loading": "Logging in...",
       "forgot-password": "Forgot Password",
       "signup": "Signup"
+    },
+    "invoice": {
+      "title": "INVOICE",
+      "not-found": "Order not found",
+      "business-name": "Your Business Name",
+      "business-address": "Your Address",
+      "business-phone": "Your Phone Number",
+      "bill-to": "Bill to:",
+      "customer-name": "Customer Name",
+      "customer-address": "Customer Address",
+      "customer-phone": "Customer Phone",
+      "details": "Invoice Details:",
+      "number": "Invoice number",
+      "date": "Invoice date",
+      "status": "Status",
+      "item": "Item",
+      "quantity": "Quantity",
+      "price": "Price per unit",
+      "amount": "Amount",
+      "total": "TOTAL",
+      "discount": "DISCOUNT",
+      "print": "Print Invoice"
     }
   },
   "components": {
@@ -49,7 +71,9 @@
           "update": "Update",
           "create": "Create",
           "role-user": "User",
-          "role-admin": "Admin"
+          "role-admin": "Admin",
+          "updating": "Updating...",
+          "creating": "Creating..."
         },
         "users-list": {
           "table-header": {
@@ -136,7 +160,9 @@
           "delete-category": "Delete category",
           "cancel": "Cancel",
           "update": "Update",
-          "create": "Create"
+          "create": "Create",
+          "updating": "Updating...",
+          "creating": "Creating..."
         },
         "categories-list": {
           "table-header": {
@@ -275,7 +301,9 @@
             "no-stock-left": "Out of Stock",
             "low-stock": "Low Stock",
             "in-stock": "In Stock"
-          }
+          },
+          "updating": "Updating...",
+          "creating": "Creating..."
         },
         "messages": {
           "no-items": "Please add at least one item to the order",
@@ -287,8 +315,54 @@
           "delete-order-action": "Delete",
           "delete-order-cancel": "Cancel",
           "delete-order-success": "Order deleted successfully",
-          "delete-order-error": "Failed to delete order"
+          "delete-order-error": "Failed to delete order",
+          "update-order-status-success": "Order status updated successfully",
+          "update-order-status-error": "Failed to update order status"
         }
+      }
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "previous-month": "Previous Month",
+      "next-month": "Next Month",
+      "card": {
+        "orders": "Orders",
+        "revenue": "Revenue",
+        "products": "Products",
+        "stock-status": "Stock Status"
+      },
+      "content": {
+        "completed-orders": "Completed orders",
+        "cancelled-orders": "Cancelled orders",
+        "pending-orders": "Pending orders",
+        "processing-orders": "Processing orders",
+        "total-products": "Total products",
+        "products-in-store": "Products in store",
+        "sold-products": "Sold products",
+        "sold-products-gross-value": "Gross value of sold products",
+        "store-value": "Store value",
+        "revenue-in-stock": "Revenue in stock",
+        "total-discount": "Total discount",
+        "out-of-stock": "Out of stock",
+        "out-of-stock-items": "Out of stock items",
+        "no-out-of-stock": "No products are out of stock",
+        "no-category": "No category"
+      },
+      "chart": {
+        "title": "Revenue",
+        "description": "Revenue chart",
+        "descriptionShort": "Revenue chart",
+        "placeholder": "No data available",
+        "revenue": "Revenue",
+        "orders": "Orders",
+        "timeRange": {
+          "3months": "3 months",
+          "30days": "30 days",
+          "7days": "7 days"
+        }
+      },
+      "errors": {
+        "fetch": "Failed to fetch dashboard data"
       }
     }
   },

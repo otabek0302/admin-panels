@@ -20,7 +20,7 @@ import { OrderItem, OrderRequest } from '@/interfaces/order';
 
 const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setOpenDialog: (open: boolean) => void }) => {
   const { t } = useTranslation();
-  const { loading, editData, setEditData, orderItems, total, discount, setDiscount, addOrderItem, removeOrderItem, updateOrderItem, createOrder, updateOrder, reset, search, setSearch } = useOrdersStore();
+  const { loading, editData, setEditData, orderItems, total, discount, setDiscount, addOrderItem, removeOrderItem, updateOrderItem, createOrder, updateOrder, reset, search, setSearch, fetchOrders, setOrderItems, setSubtotal } = useOrdersStore();
 
   const { products, fetchProducts, loading: productsLoading } = useProductsStore();
   const [discountInput, setDiscountInput] = useState('');
@@ -37,6 +37,20 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
       setDiscountInput('');
     }
   }, [openDialog, reset]);
+
+  useEffect(() => {
+    // Pre-populate order items and discount when editing an order
+    if (openDialog && editData) {
+      setOrderItems(editData.orderItems || []);
+      setDiscount(editData.discount || 0);
+      // Optionally, set subtotal and total based on the order items and discount
+      const subtotal = editData.orderItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
+      setSubtotal(subtotal);
+      // setDiscount will update total automatically in the store logic
+    }
+    // Do not run on create or when dialog is closed
+    // eslint-disable-next-line
+  }, [openDialog, editData]);
 
   const filteredProducts = products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -62,6 +76,7 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
       }
       setOpenDialog(false);
       setEditData(null);
+      fetchOrders();
     } catch (err) {
       toast.error(t('components.admin-ui.orders.messages.save-failed'));
     }
@@ -83,10 +98,10 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
 
         <div className="flex h-[480px] w-full flex-col md:flex-row">
           {/* Left Panel - Product Selection */}
-          <div className="flex h-full max-w-1/2 flex-1 flex-col p-4">
+          <div className="max-w-1/2 flex h-full flex-1 flex-col p-4">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="flex items-center gap-2 text-lg font-semibold">
-                <Package className="text-primary h-5 w-5" />
+                <Package className="h-5 w-5 text-primary" />
                 {t('components.admin-ui.orders.orders-dialog.products')}
               </h3>
               <Badge variant="outline" className="px-3 py-1 text-sm">
@@ -95,13 +110,8 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
             </div>
 
             <div className="relative mb-6">
-              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform" />
-              <Input 
-                placeholder={t('components.admin-ui.orders.orders-dialog.search-placeholder')} 
-                value={search} 
-                onChange={(e) => setSearch(e.target.value)} 
-                className="bg-background h-11 pl-9" 
-              />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
+              <Input placeholder={t('components.admin-ui.orders.orders-dialog.search-placeholder')} value={search} onChange={(e) => setSearch(e.target.value)} className="h-11 bg-background pl-9" />
             </div>
 
             <ScrollArea className="no-scrollbar h-[calc(100%-8rem)] flex-1">
@@ -112,12 +122,7 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
               ) : (
                 <div className="grid grid-cols-1 gap-4 px-2">
                   {filteredProducts.map((product) => (
-                    <ProductCard 
-                      key={product.id} 
-                      product={product} 
-                      onAdd={addOrderItem} 
-                      isInCart={orderItems.some((item) => item.productId === product.id)} 
-                    />
+                    <ProductCard key={product.id} product={product} onAdd={addOrderItem} isInCart={orderItems.some((item) => item.productId === product.id)} />
                   ))}
                 </div>
               )}
@@ -127,10 +132,10 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
           <Divider orientation="vertical" className="h-full" />
 
           {/* Right Panel - Order Items */}
-          <div className="flex h-full max-w-1/2 flex-1 flex-col p-4">
+          <div className="max-w-1/2 flex h-full flex-1 flex-col p-4">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="flex items-center gap-2 text-lg font-semibold">
-                <Package className="text-primary h-5 w-5" />
+                <Package className="h-5 w-5 text-primary" />
                 {t('components.admin-ui.orders.orders-dialog.order-items')}
               </h3>
               <Badge variant="outline" className="px-3 py-1 text-sm">
@@ -141,14 +146,7 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
             <ScrollArea className="no-scrollbar h-[calc(100%-8rem)] flex-1">
               <div className="space-y-4 px-2">
                 {orderItems.map((item: OrderItem, index: number) => (
-                  <OrderCard 
-                    key={index} 
-                    item={item} 
-                    index={index} 
-                    updateOrderItem={updateOrderItem} 
-                    removeOrderItem={(index) => removeOrderItem(orderItems[index].productId)} 
-                    availableStock={item.product.stock} 
-                  />
+                  <OrderCard key={index} item={item} index={index} updateOrderItem={updateOrderItem} removeOrderItem={(index) => removeOrderItem(orderItems[index].productId)} availableStock={item.product.stock} />
                 ))}
               </div>
             </ScrollArea>
@@ -163,71 +161,38 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
               {t('components.admin-ui.orders.orders-dialog.discount-label')}
             </label>
             <div className="flex">
-              <Input
-                id="discount-amount"
-                type="text"
-                min="0"
-                step="0.01"
-                value={discountInput}
-                onChange={(e) => setDiscountInput(e.target.value)}
-                placeholder={t('components.admin-ui.orders.orders-dialog.discount-placeholder')}
-                className="rounded-r-none border-none outline-none focus:ring-0 focus:outline-none"
-              />
-              <Button 
-                className="cursor-pointer rounded-l-none dark:bg-gray-800 dark:text-white" 
-                onClick={handleApplyDiscount} 
-                type="button"
-              >
+              <Input id="discount-amount" type="text" min="0" step="0.01" value={discountInput} onChange={(e) => setDiscountInput(e.target.value)} placeholder={t('components.admin-ui.orders.orders-dialog.discount-placeholder')} className="rounded-r-none border-none outline-none focus:outline-none focus:ring-0" />
+              <Button className="cursor-pointer rounded-l-none dark:bg-gray-800 dark:text-white" onClick={handleApplyDiscount} type="button">
                 {t('components.admin-ui.orders.orders-dialog.apply-discount')}
               </Button>
             </div>
-            {discount > 0 && (
-              <p className="mt-1 flex items-center gap-1 text-sm text-green-600">
-                {t('components.admin-ui.orders.orders-dialog.discount-applied', { discount: discount.toLocaleString() })}
-              </p>
-            )}
+            {discount > 0 && <p className="mt-1 flex items-center gap-1 text-sm text-green-600">{t('components.admin-ui.orders.orders-dialog.discount-applied', { discount: discount.toLocaleString() })}</p>}
           </div>
 
           {/* Summary pricing */}
           <div className="mb-6 space-y-2 text-sm">
             <div className="flex justify-between">
               <span>{t('components.admin-ui.orders.orders-dialog.subtotal')}</span>
-              <span className="flex items-center gap-1">
-                {orderItems.reduce((sum, item) => sum + item.total, 0).toLocaleString()}
-              </span>
+              <span className="flex items-center gap-1">{orderItems.reduce((sum, item) => sum + item.total, 0).toLocaleString()}</span>
             </div>
             {discount > 0 && (
               <div className="flex justify-between text-green-600">
                 <span>{t('components.admin-ui.orders.orders-dialog.discount')}</span>
-                <span className="flex items-center gap-1">
-                  -{discount.toLocaleString()}
-                </span>
+                <span className="flex items-center gap-1">-{discount.toLocaleString()}</span>
               </div>
             )}
             <div className="flex justify-between border-t pt-2 text-lg font-bold">
               <span>{t('components.admin-ui.orders.orders-dialog.total')}</span>
-              <span className="flex items-center gap-1 text-primary">
-                {total.toLocaleString()}
-              </span>
+              <span className="flex items-center gap-1 text-primary">{total.toLocaleString()}</span>
             </div>
           </div>
 
           {/* Action buttons */}
           <div className="flex justify-end gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setOpenDialog(false)}
-              className="h-11 cursor-pointer px-6"
-            >
+            <Button type="button" variant="outline" onClick={() => setOpenDialog(false)} className="h-11 cursor-pointer px-6">
               {t('components.admin-ui.orders.orders-dialog.cancel')}
             </Button>
-            <Button 
-              type="submit" 
-              disabled={loading || !orderItems.length} 
-              onClick={handleSubmit} 
-              className="h-11 cursor-pointer px-6 dark:bg-gray-800 dark:text-white"
-            >
+            <Button type="submit" disabled={loading || !orderItems.length} onClick={handleSubmit} className="h-11 cursor-pointer px-6 dark:bg-gray-800 dark:text-white">
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

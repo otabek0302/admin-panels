@@ -10,10 +10,11 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
+import { Loader2 } from 'lucide-react';
 
 const CategoriesDialog = ({ setOpenDialog, openDialog }: { setOpenDialog: (open: boolean) => void; openDialog: boolean }) => {
   const { t } = useTranslation();
-  const { editData, updateCategory, createCategory, setEditData } = useCategoriesStore();
+  const { editData, updateCategory, createCategory, setEditData, loading } = useCategoriesStore();
 
   const [formData, setFormData] = useState<Category>({
     id: '',
@@ -85,15 +86,29 @@ const CategoriesDialog = ({ setOpenDialog, openDialog }: { setOpenDialog: (open:
             <Label htmlFor="name" className="text-right text-xs">
               {t('components.admin-ui.categories.categories-dialog.name-placeholder')}
             </Label>
-            <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder={t('components.admin-ui.categories.categories-dialog.name-placeholder')} className="w-full shadow-none focus-visible:ring-1" id="name" />
+            <Input 
+              value={formData.name} 
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+              placeholder={t('components.admin-ui.categories.categories-dialog.name-placeholder')} 
+              className="w-full shadow-none focus-visible:ring-1" 
+              id="name"
+              disabled={loading}
+            />
           </div>
         </form>
         <DialogFooter>
-          <Button variant="outline" onClick={handleCancel}>
+          <Button variant="outline" onClick={handleCancel} disabled={loading}>
             {t('components.admin-ui.categories.categories-dialog.cancel')}
           </Button>
-          <Button variant="default" type="submit" form="categories-dialog-form">
-            {editData ? t('components.admin-ui.categories.categories-dialog.update') : t('components.admin-ui.categories.categories-dialog.create')}
+          <Button variant="default" type="submit" form="categories-dialog-form" disabled={loading}>
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                {editData ? t('components.admin-ui.categories.categories-dialog.updating') : t('components.admin-ui.categories.categories-dialog.creating')}
+              </>
+            ) : (
+              editData ? t('components.admin-ui.categories.categories-dialog.update') : t('components.admin-ui.categories.categories-dialog.create')
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

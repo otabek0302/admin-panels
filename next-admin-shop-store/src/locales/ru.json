@@ -17,6 +17,28 @@
       "login-button-loading": "Вход в систему...",
       "forgot-password": "Забыли пароль",
       "signup": "Регистрация"
+    },
+    "invoice": {
+      "title": "Счет",
+      "not-found": "Заказ не найден",
+      "business-name": "Ваше имя",
+      "business-address": "Ваш адрес",
+      "business-phone": "Ваш номер телефона",
+      "bill-to": "Счет на:",
+      "customer-name": "Имя клиента",
+      "customer-address": "Адрес клиента",
+      "customer-phone": "Телефон клиента",
+      "details": "Детали счета:",
+      "number": "Номер счета",
+      "date": "Дата счета",
+      "status": "Статус",
+      "item": "Товар",
+      "quantity": "Количество",
+      "price": "Цена за единицу",
+      "amount": "Сумма",
+      "total": "ИТОГО",
+      "discount": "СКИДКА",
+      "print": "Распечатать счет"
     }
   },
   "components": {
@@ -49,7 +71,9 @@
           "update": "Обновить",
           "create": "Создать",
           "role-user": "Пользователь",
-          "role-admin": "Администратор"
+          "role-admin": "Администратор",
+          "updating": "Обновление...",
+          "creating": "Создание..."
         },
         "users-list": {
           "table-header": {
@@ -136,7 +160,9 @@
           "delete-category": "Удалить категорию",
           "cancel": "Отмена",
           "update": "Обновить",
-          "create": "Создать"
+          "create": "Создать",
+          "updating": "Обновление...",
+          "creating": "Создание..."
         },
         "categories-list": {
           "table-header": {
@@ -275,7 +301,9 @@
             "no-stock-left": "Нет в наличии",
             "low-stock": "Мало осталось",
             "in-stock": "В наличии"
-          }
+          },
+          "updating": "Обновление...",
+          "creating": "Создание..."
         },
         "messages": {
           "no-items": "Пожалуйста, добавьте хотя бы один товар в заказ",
@@ -287,8 +315,54 @@
           "delete-order-action": "Удалить",
           "delete-order-cancel": "Отмена",
           "delete-order-success": "Заказ успешно удален",
-          "delete-order-error": "Не удалось удалить заказ"
+          "delete-order-error": "Не удалось удалить заказ",
+          "update-order-status-success": "Статус заказа успешно обновлен",
+          "update-order-status-error": "Не удалось обновить статус заказа"
         }
+      }
+    },
+    "dashboard": {
+      "title": "Панель управления",
+      "previous-month": "Предыдущий месяц",
+      "next-month": "Следующий месяц",
+      "card": {
+        "orders": "Заказы",
+        "revenue": "Доход",
+        "products": "Товары",
+        "stock-status": "Статус склада"
+      },
+      "content": {
+        "completed-orders": "Выполненные заказы",
+        "cancelled-orders": "Отмененные заказы",
+        "pending-orders": "Ожидающие заказы",
+        "processing-orders": "Заказы в обработке",
+        "total-products": "Всего товаров",
+        "products-in-store": "Товары в магазине",
+        "sold-products": "Проданные товары",
+        "sold-products-gross-value": "Общая стоимость проданных товаров",
+        "store-value": "Стоимость магазина",
+        "revenue-in-stock": "Доход на складе",
+        "total-discount": "Общая скидка",
+        "out-of-stock": "Нет в наличии",
+        "out-of-stock-items": "Товары не в наличии",
+        "no-out-of-stock": "Нет товаров не в наличии",
+        "no-category": "Нет категории"
+      },
+      "chart": {
+        "title": "Доход",
+        "description": "График дохода",
+        "descriptionShort": "График дохода",
+        "placeholder": "Нет данных",
+        "revenue": "Доход",
+        "orders": "Заказы",
+        "timeRange": {
+          "3months": "3 месяца",
+          "30days": "30 дней",
+          "7days": "7 дней"
+        }
+      },
+      "errors": {
+        "fetch": "Не удалось загрузить данные панели управления"
       }
     }
   },

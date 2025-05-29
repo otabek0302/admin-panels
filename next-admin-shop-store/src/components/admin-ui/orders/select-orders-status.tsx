@@ -5,12 +5,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { getStatusColor } from '@/lib/utils';
 import { ORDER_STATUS } from '@/lib/constants';
 import { useOrdersStore } from '@/stores/orders.store';
+import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 const SelectOrdersStatus = ({ order }: { order: Order }) => {
+  const { t } = useTranslation();
+
   const updateOrderStatus = useOrdersStore((state) => state.updateOrderStatus);
-  
-  const handleStatusChange = (id: string, status: OrderStatus) => {
-    updateOrderStatus(id, status);
+  const fetchOrders = useOrdersStore((state) => state.fetchOrders);
+
+  const handleStatusChange = async (id: string, status: OrderStatus) => {
+    const success = await updateOrderStatus(id, status);
+    if (success) {
+      toast.success(t('components.admin-ui.orders.messages.update-order-status-success'));
+      fetchOrders();
+    } else {
+      toast.error(t('components.admin-ui.orders.messages.update-order-status-error'));
+    }
   };
 
   return (

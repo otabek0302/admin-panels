@@ -46,7 +46,8 @@ const UsersListDesktopView = ({ users, loading }: { users: User[]; loading: bool
               </TableCell>
             </TableRow>
           )}
-          {!loading && users.length > 0 &&
+          {!loading &&
+            users.length > 0 &&
             users.map((user) => (
               <TableRow key={user.id} className="border-b border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">
                 <TableCell className="px-6 text-sm font-normal text-muted-foreground">{user.id?.slice(-6)}</TableCell>
@@ -54,15 +55,13 @@ const UsersListDesktopView = ({ users, loading }: { users: User[]; loading: bool
                 <TableCell className="px-6 text-sm font-normal text-muted-foreground">{user.email}</TableCell>
                 <TableCell className="px-6 text-sm font-normal text-muted-foreground">{user.role}</TableCell>
                 <TableCell className="hidden px-6 text-sm font-normal text-muted-foreground md:table-cell">{formatDistanceToNow(new Date(user.createdAt ?? ''), { addSuffix: true })}</TableCell>
-                <TableCell className="px-6 text-right text-sm font-normal text-muted-foreground">
-                  <div className="flex justify-center gap-2">
-                    <Button variant="ghost" size="icon" onClick={() => handleEdit(user)} title={t('components.admin-ui.users.users-list.actions.edit')}>
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDelete(user)} title={t('components.admin-ui.users.users-list.actions.delete')}>
-                      <Trash className="h-4 w-4" />
-                    </Button>
-                  </div>
+                <TableCell className="flex items-center justify-center gap-2 px-2 text-sm font-normal text-muted-foreground md:px-6">
+                  <Button variant="outline" size="icon" className="cursor-pointer shadow-none" onClick={() => handleEdit(user)}>
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                  <Button variant="outline" size="icon" className="cursor-pointer shadow-none" onClick={() => handleDelete(user)}>
+                    <Trash className="h-4 w-4" />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

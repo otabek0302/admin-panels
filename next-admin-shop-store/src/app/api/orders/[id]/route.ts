@@ -24,15 +24,13 @@ export async function GET(_: Request, context: { params: { id: string } }) {
     try {
         const order = await prisma.order.findUnique({
             where: { id },
-            select: {
-                id: true,
-                orderItems: true,
-                total: true,
-                discount: true,
-                status: true,
-                createdAt: true,
-                updatedAt: true,
-            },
+            include: {
+                orderItems: {
+                    include: {
+                        product: true  // Include product details
+                    }
+                }
+            }
         });
 
         if (!order) {
@@ -95,9 +93,34 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
             }
         }
 
+        // Sanitize orderItems for Prisma
+        const orderItemsForPrisma = orderItems.map((item: any) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+            price: item.price,
+            total: item.total,
+            discount: item.discount,
+            name: item.name,
+            image: item.image,
+            status: item.status,
+            createdAt: item.createdAt,
+            updatedAt: item.updatedAt,
+        }));
+
+        // Delete all existing order items for this order
+        await prisma.orderItem.deleteMany({ where: { orderId: id } });
+
+        // Update the order and create new order items
         const updated = await prisma.order.update({
             where: { id },
-            data: { orderItems: { set: [], create: orderItems }, total, discount, status },
+            data: {
+                orderItems: {
+                    create: orderItemsForPrisma
+                },
+                total,
+                discount,
+                status
+            },
             select: {
                 id: true,
                 orderItems: true,
@@ -197,6 +220,12 @@ export async function DELETE(_: Request, context: { params: { id: string } }) {
             }
         }
 
+        // Delete order items first
+        await prisma.orderItem.deleteMany({
+            where: { orderId: id }
+        });
+
+        // Then delete the order
         await prisma.order.delete({ where: { id } });
         return NextResponse.json({ message: 'Order deleted successfully' }, { status: 200 });
     } catch (error) {

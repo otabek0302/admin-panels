@@ -11,7 +11,7 @@ export default function Home() {
   if (status === 'loading') return <Loading />;
 
   return (
-    <main className="flex h-screen flex-col">
+    <main className="flex min-h-screen flex-col">
       <div className="container mx-auto px-4">
         <Header />
       </div>

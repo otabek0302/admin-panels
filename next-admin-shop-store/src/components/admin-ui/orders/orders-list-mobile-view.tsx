@@ -40,7 +40,7 @@ const OrdersListMobileView = ({ orders, loading }: { orders: Order[]; loading: b
 
       {!loading &&
         orders.length > 0 &&
-        orders.map((order) => (
+        orders?.map((order) => (
           <div key={order.id} className="mb-4 rounded-lg border bg-white p-4 shadow-md transition hover:shadow-lg dark:bg-gray-900">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-base font-bold text-gray-800 dark:text-gray-100">#{order.id?.slice(-6)}</span>
@@ -70,7 +70,7 @@ const OrdersListMobileView = ({ orders, loading }: { orders: Order[]; loading: b
             </div>
 
             <div className="mt-2 flex flex-wrap gap-2 overflow-y-auto border-t pt-2">
-              {order.orderItems.map((item: OrderItem) => (
+              {order?.orderItems?.map((item: OrderItem) => (
                 <div key={item.id} className="flex flex-col items-center rounded-sm border p-1.5">
                   <div className="relative h-12 w-12 overflow-hidden rounded-md">
                     {item.product?.image?.url ? <Image src={item.product.image.url} alt={item.product?.name || ''} fill sizes="(max-width: 768px) 100vw" priority className="object-cover object-center" /> : <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-400">No Image</div>}
@@ -78,7 +78,7 @@ const OrdersListMobileView = ({ orders, loading }: { orders: Order[]; loading: b
                       <span className="text-xs font-medium text-white">{item.quantity}×</span>
                     </div>
                   </div>
-                  <span className="mt-1 line-clamp-1 text-center text-[10px]">{item.product.name}</span>
+                  <span className="mt-1 line-clamp-1 text-center text-[10px]">{item.product?.name || 'N/A'}</span>
                 </div>
               ))}
             </div>

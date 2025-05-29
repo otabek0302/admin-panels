@@ -61,10 +61,10 @@ const ProductsListDesktopView = ({ products, loading }: { products: Product[]; l
               </div>
 
               <div className="flex flex-col items-center gap-2 md:flex-row">
-                <Button variant="outline" size="icon" className="cursor-pointer rounded-full" onClick={() => handleEdit(product)}>
+                <Button variant="outline" size="icon" className="shadow-none cursor-pointer" onClick={() => handleEdit(product)}>
                   <Pencil className="h-5 w-5 text-muted-foreground" />
                 </Button>
-                <Button variant="outline" size="icon" className="cursor-pointer rounded-full" onClick={() => handleDelete(product)}>
+                <Button variant="outline" size="icon" className="shadow-none cursor-pointer" onClick={() => handleDelete(product)}>
                   <Trash className="h-5 w-5 text-muted-foreground" />
                 </Button>
               </div>

@@ -16,6 +16,7 @@ type OrdersState = {
     page: number;
     totalPages: number;
     loading: boolean;
+    hydrated: boolean;
     error: string | null;
     search: string;
     openDialog: boolean;
@@ -30,8 +31,9 @@ type OrdersActions = {
     fetchOrders: (params?: { page?: number; search?: string }) => Promise<void>;
     createOrder: (order: OrderRequest) => Promise<boolean>;
     updateOrder: (order: OrderRequest & { id: string }) => Promise<boolean>;
-    deleteOrder: (id: string) => Promise<Response>;
+    deleteOrder: (id: string) => Promise<boolean>;
     getOrder: (id: string) => Promise<void>;
+    updateOrderStatus: (id: string, status: OrderStatus) => Promise<boolean>;
 
     setPage: (page: number) => void;
     setSearch: (search: string) => void;
@@ -55,6 +57,7 @@ type OrdersActions = {
     removeOrderItem: (productId: string) => void;
     updateOrderItem: (index: number, field: keyof OrderItem, value: string | number) => void;
     reset: () => void;
+    resetOrderForm: () => void;
 };
 
 // Initial State
@@ -68,6 +71,7 @@ const initialState: OrdersState = {
     page: 1,
     totalPages: 1,
     loading: false,
+    hydrated: false,
     error: null,
     search: '',
     openDialog: false,
@@ -93,16 +97,27 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
             });
             if (!res.ok) throw new Error('Failed to fetch orders');
             const data = await res.json();
+            
+            // Set the data first
             set({ 
                 orders: data.orders, 
                 total: data.total, 
                 page: data.page, 
-                totalPages: data.totalPages 
+                totalPages: data.totalPages,
+                hydrated: true
             });
+
+            // Add a small delay before setting loading to false
+            await new Promise(resolve => setTimeout(resolve, 300));
+            set({ loading: false });
         } catch (err) {
             console.error('Failed to fetch orders:', err);
-            set({ error: err instanceof Error ? err.message : 'Failed to fetch orders' });
-        } finally {
+            set({ 
+                error: err instanceof Error ? err.message : 'Failed to fetch orders',
+                hydrated: true
+            });
+            // Add the same delay for error case
+            await new Promise(resolve => setTimeout(resolve, 300));
             set({ loading: false });
         }
     },
@@ -159,6 +174,7 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
     },
 
     updateOrderStatus: async (id: string, status: OrderStatus) => {
+        set({ loading: true, error: null });
         try {
             const res = await fetch(`/api/orders/${id}`, {
                 method: 'PATCH',
@@ -169,13 +185,23 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
             if (!res.ok) {
                 const data = await res.json();
                 set({ error: data.message || 'Failed to update status' });
-                return;
+                return false;
             }
-
+            
+            // Update the order status in the store
+            set((state) => ({
+                orders: state.orders.map((o) => (o.id === id ? { ...o, status } : o)),
+            }));
+            
             // Refresh the list after update
             get().fetchOrders({ page: get().page, search: get().search });
+            return true;
         } catch (err: any) {
             set({ error: err.message || 'Status update failed' });
+            return false;
+        } finally {
+            set({ loading: false });
+
         }
     },
 
@@ -191,11 +217,11 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
                 orders: state.orders.filter((o) => o.id !== id),
                 total: state.total - 1,
             }));
-            return res;
+            return true;
         } catch (err) {
             console.error('Failed to delete order:', err);
             set({ error: err instanceof Error ? err.message : 'Failed to delete order' });
-            throw err;
+            return false;
         } finally {
             set({ loading: false });
         }
@@ -255,12 +281,13 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
 
         set({ orderItems: updatedItems });
         const subtotal = get().calculateOrderSubtotal(updatedItems);
-        set({ subtotal });
+        set({ subtotal, total: Math.max(subtotal - get().discount, 0) });
     },
 
     removeOrderItem: (productId: string) => {
         const items = get().orderItems.filter(item => item.productId !== productId);
         set({ orderItems: items, subtotal: get().calculateOrderSubtotal(items) });
+        set({ total: Math.max(get().subtotal - get().discount, 0) });
     },
 
     updateOrderItem: (index, field, value) => {
@@ -278,6 +305,7 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
         items[index] = item;
         set({ orderItems: items });
         set({ subtotal: get().calculateOrderSubtotal(items) });
+        set({ total: Math.max(get().subtotal - get().discount, 0) });
     },
 
     updateOrderItemQuantity: (productId: string, quantity: number) => {
@@ -287,6 +315,7 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
                 : item
         );
         set({ orderItems: items, subtotal: get().calculateOrderSubtotal(items) });
+        set({ total: Math.max(get().subtotal - get().discount, 0) });
     },
 
     calculateOrderSubtotal: (items) => items.reduce((sum, item) => sum + item.price * item.quantity, 0),
@@ -299,13 +328,30 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
     setDeleteData: (deleteData) => set({ deleteData }),
     setCreateData: (createData) => set({ createData }),
     setOrder: (order) => set({ order }),
-    setSubtotal: (subtotal) => set({ subtotal }),
+    setSubtotal: (subtotal) => set({ 
+        subtotal, 
+        total: Math.max(subtotal - get().discount, 0) 
+    }),
     getSubtotal: () => get().subtotal,
-    setDiscount: (discount) => set({ discount }),
+    setDiscount: (discount) => set({ 
+        discount, 
+        total: Math.max(get().subtotal - discount, 0) 
+    }),
     getDiscount: () => get().discount,
-    applyDiscount: (discount) => set({ discount }),
+    applyDiscount: (discount) => set({ 
+        discount, 
+        total: Math.max(get().subtotal - discount, 0) 
+    }),
     setOrderItems: (orderItems) => set({ orderItems }),
     getOrderItems: () => get().orderItems,
 
     reset: () => set(initialState),
+    resetOrderForm: () => set({
+        orderItems: [],
+        subtotal: 0,
+        discount: 0,
+        total: 0,
+        editData: null,
+        createData: null,
+    }),
 }));
