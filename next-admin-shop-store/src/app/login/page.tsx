@@ -11,27 +11,44 @@ import { Button } from '@/components/ui/button';
 import { logo } from '@/assets';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'next/navigation';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const LoginPage = () => {
   const { t } = useTranslation();
   const { status } = useSession();
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(error);
 
   if (status === 'loading') return <Loading />;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    await signIn('credentials', {
-      email,
-      password,
-      redirect: true,
-      callbackUrl: '/',
-    });
-    setIsLoading(false);
+    setLoginError(null);
+    
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setLoginError('Invalid email or password');
+      } else {
+        window.location.href = '/';
+      }
+    } catch (error) {
+      setLoginError('An error occurred during login');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -46,6 +63,11 @@ const LoginPage = () => {
                     <h1 className="text-2xl font-bold">{t('pages.login.title')}</h1>
                     <p className="text-balance text-muted-foreground">{t('pages.login.description')}</p>
                   </div>
+                  {loginError && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{loginError}</AlertDescription>
+                    </Alert>
+                  )}
                   <div className="grid gap-2">
                     <Label htmlFor="email">{t('pages.login.email')}</Label>
                     <Input id="email" type="email" placeholder="m@example.com" required value={email} onChange={(e) => setEmail(e.target.value)} />

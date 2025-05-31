@@ -529,5 +529,10 @@
         "content": "These terms and conditions are governed by and construed in accordance with the laws and you irrevocably submit to the exclusive jurisdiction of the courts in that location."
       }
     }
+  },
+  "not-found": {
+    "title": "404",
+    "description": "Oops! Page not found.",
+    "button": "Go back to Home"
   }
 }

@@ -529,5 +529,10 @@
         "content": "Ushbu shartlar va qoidalar qonunlar bilan tartibga solingan va talqin qilingan va siz o'sha joydagi sudlarning eksklyuziv yurisdiktsiyasiga qayta tiklanmasdan bo'ysunasiz."
       }
     }
+  },
+  "not-found": {
+    "title": "404",
+    "description": "Oops! Sahifa topilmadi.",
+    "button": "Bosh sahifaga qaytish"
   }
 }

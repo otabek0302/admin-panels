@@ -11,7 +11,7 @@ import type { OrderRequest } from '@/interfaces/order';
 // Helper to check admin access
 async function isAdminSession(): Promise<(Session & { user: User }) | null> {
     const session = (await getServerSession(authOptions as any)) as Session & { user: User };
-    if (!session?.user || session.user.role !== 'ADMIN') return null;
+    if (!session?.user) return null;
     return session;
 }
 

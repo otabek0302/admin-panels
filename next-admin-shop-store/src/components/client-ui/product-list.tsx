@@ -40,9 +40,9 @@ export function ProductList() {
           </>
         )}
 
-        {!loading && !products.length && <div className="py-10 text-center text-muted-foreground">{t('components.client-ui.product-list.no-products')}</div>}
+        {!loading && !products?.length && <div className="py-10 text-center text-muted-foreground">{t('components.client-ui.product-list.no-products')}</div>}
 
-        {!loading && products.map((product) => <ProductCard key={product.id} product={product} />)}
+        {!loading && products?.map((product) => <ProductCard key={product.id} product={product} />)}
       </div>
     </div>
   );
