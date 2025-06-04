@@ -92,13 +92,13 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <DialogContent className="no-scrollbar h-[95vh] w-full max-w-md overflow-y-auto sm:max-w-5xl sm:rounded-lg">
+      <DialogContent className="no-scrollbar h-[90vh] md:h-[95vh] w-full max-w-md overflow-y-auto md:max-w-5xl sm:rounded-lg">
         <DialogTitle>{editData ? t('components.admin-ui.orders.orders-dialog.edit-title') : t('components.admin-ui.orders.orders-dialog.add-title')}</DialogTitle>
         <DialogDescription>{editData ? t('components.admin-ui.orders.orders-dialog.edit-desc') : t('components.admin-ui.orders.orders-dialog.add-desc')}</DialogDescription>
 
-        <div className="flex h-[480px] w-full flex-col md:flex-row">
+        <div className="flex md:h-[480px] w-full flex-col md:flex-row border">
           {/* Left Panel - Product Selection */}
-          <div className="max-w-1/2 flex h-full flex-1 flex-col p-4">
+          <div className="max-w-1/2 flex h-[480px] md:h-full flex-1 flex-col p-4">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="flex items-center gap-2 text-lg font-semibold">
                 <Package className="h-5 w-5 text-primary" />
@@ -129,10 +129,10 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
             </ScrollArea>
           </div>
 
-          <Divider orientation="vertical" className="h-full" />
+          <Divider orientation="vertical" className="h-0 md:h-full" />
 
           {/* Right Panel - Order Items */}
-          <div className="max-w-1/2 flex h-full flex-1 flex-col p-4">
+          <div className="max-w-1/2 flex h-[480px] md:h-full flex-1 flex-col p-4">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="flex items-center gap-2 text-lg font-semibold">
                 <Package className="h-5 w-5 text-primary" />
@@ -154,7 +154,7 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
         </div>
 
         {/* Footer */}
-        <div className="border-t px-4 py-2">
+        <div className="border md:border-t px-3 md:px-4 py-2">
           {/* Discount input section */}
           <div className="mb-6">
             <label htmlFor="discount-amount" className="mb-1 block text-sm font-medium">
