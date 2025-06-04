@@ -30,7 +30,11 @@ export async function GET(req: Request) {
         const skip = (page - 1) * limit;
 
         const where = {
-            name: { contains: search, mode: 'insensitive' as const },
+            OR: [
+                { name: { contains: search, mode: 'insensitive' as const } },
+                { brand: { contains: search, mode: 'insensitive' as const } },
+                { category: { name: { contains: search, mode: 'insensitive' as const } } }
+            ]
         };
 
         const [products, total] = await Promise.all([prisma.product.findMany({

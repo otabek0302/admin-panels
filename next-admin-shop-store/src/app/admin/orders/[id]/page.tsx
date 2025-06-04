@@ -97,27 +97,27 @@ const InvoicePage = () => {
         <div className="print-content">
           <div className="mb-8 flex items-start justify-between">
             <div>
-              <h1 className="mb-8 text-4xl font-bold text-gray-800">{t('pages.invoice.title')}</h1>
-              <div className="space-y-1">
+              {/* <h1 className="text-2xl font-bold text-gray-800">{t('pages.invoice.title')}</h1> */}
+              {/* <div className="space-y-1">
                 <p className="text-lg font-semibold">{t('pages.invoice.business-name')}</p>
                 <p>{t('pages.invoice.business-address')}</p>
                 <p>{t('pages.invoice.business-phone')}</p>
-              </div>
+              </div> */}
             </div>
           </div>
 
-          <div className="mb-12 grid grid-cols-2 gap-8">
+          <div className="mb-4 grid grid-cols-2 gap-8">
             <div>
-              <h2 className="mb-2 text-lg font-semibold">{t('pages.invoice.bill-to')}</h2>
-              <div className="space-y-1">
+              <h2 className="mb-2 text-base font-semibold">{t('pages.invoice.bill-to')}</h2>
+              <div className="space-y-1 text-xs">
                 <p className="font-medium">{order.orderItems[0]?.product?.name || t('pages.invoice.customer-name')}</p>
                 <p>{t('pages.invoice.customer-address')}</p>
                 <p>{t('pages.invoice.customer-phone')}</p>
               </div>
             </div>
             <div className="text-right">
-              <h2 className="mb-2 text-lg font-semibold">{t('pages.invoice.details')}</h2>
-              <div className="mb-6 space-y-1">
+              <h2 className="mb-2 text-base font-semibold">{t('pages.invoice.details')}</h2>
+              <div className="mb-2 text-xs space-y-1">
                 <p className="flex items-center justify-end">
                   <span className="font-semibold">{t('pages.invoice.number')}:</span>
                   <span className="ml-2">#{order.id.slice(-6)}</span>
@@ -132,34 +132,34 @@ const InvoicePage = () => {
             </div>
           </div>
 
-          <div className="mb-8">
-            <div className="grid grid-cols-4 rounded-t-md bg-primary p-3 text-primary-foreground">
-              <div>{t('pages.invoice.item')}</div>
-              <div className="text-center">{t('pages.invoice.quantity')}</div>
-              <div className="text-center">{t('pages.invoice.price')}</div>
-              <div className="text-right">{t('pages.invoice.amount')}</div>
+          <div className="mb-2">
+            <div className="grid grid-cols-4 rounded-t-md bg-primary px-4 py-2 text-primary-foreground">
+              <div className='text-xs text-left'>{t('pages.invoice.item')}</div>
+              <div className="text-xs text-center">{t('pages.invoice.quantity')}</div>
+              <div className="text-xs text-center">{t('pages.invoice.price')}</div>
+              <div className="text-xs text-right">{t('pages.invoice.amount')}</div>
             </div>
             <div className="border-x border-b">
               {order.orderItems.map((item, idx) => (
                 <div key={idx} className="grid grid-cols-4 border-b p-3 last:border-b-0">
-                  <div className="text-left">{item.product?.name || 'N/A'}</div>
-                  <div className="text-center">{item.quantity}</div>
-                  <div className="text-center">{formatCurrency(item.price)}</div>
-                  <div className="text-right">{formatCurrency(item.total)}</div>
+                  <div className="text-xs text-left">{item.product?.name || 'N/A'}</div>
+                  <div className="text-xs text-center">{item.quantity}</div>
+                  <div className="text-xs text-center">{formatCurrency(item.price)}</div>
+                  <div className="text-xs text-right">{formatCurrency(item.total)}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="flex items-center justify-between rounded-md p-3 text-primary">
-            <span className="font-bold">{t('pages.invoice.total')}</span>
-            <span className="text-xl font-bold">{formatCurrency(order.total)}</span>
+          <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-primary">
+            <span className="text-base font-bold">{t('pages.invoice.total')}</span>
+            <span className="text-base font-bold">{formatCurrency(order.total)}</span>
           </div>
 
           {order.discount > 0 && (
-            <div className="mt-2 flex items-center justify-between rounded-md p-3 text-red-500">
-              <span className="font-bold">{t('pages.invoice.discount')}</span>
-              <span className="text-xl font-bold">-{formatCurrency(order.discount)}</span>
+            <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-red-500">
+              <span className="text-base font-bold">{t('pages.invoice.discount')}</span>
+              <span className="text-base font-bold">-{formatCurrency(order.discount)}</span>
             </div>
           )}
 

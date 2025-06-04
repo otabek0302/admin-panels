@@ -99,12 +99,6 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
             quantity: item.quantity,
             price: item.price,
             total: item.total,
-            discount: item.discount,
-            name: item.name,
-            image: item.image,
-            status: item.status,
-            createdAt: item.createdAt,
-            updatedAt: item.updatedAt,
         }));
 
         // Delete all existing order items for this order

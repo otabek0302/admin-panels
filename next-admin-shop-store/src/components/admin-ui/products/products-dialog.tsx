@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const ProductsDialog = ({ setOpenDialog, openDialog }: { setOpenDialog: (open: boolean) => void; openDialog: boolean }) => {
   const { t } = useTranslation();
@@ -116,93 +117,55 @@ const ProductsDialog = ({ setOpenDialog, openDialog }: { setOpenDialog: (open: b
     <Dialog open={openDialog} onOpenChange={setOpenDialog} modal={true}>
       <DialogOverlay className="bg-black/50" />
       <DialogTrigger className="hidden" onClick={handleCancel} />
-      <DialogContent className="no-scrollbar h-[95vh] w-[95vw] max-w-md overflow-y-auto rounded-[18px!important]">
-        <DialogHeader className="pt-4">
-          <DialogTitle>{editData ? t('components.admin-ui.products.products-dialog.edit-title') : t('components.admin-ui.products.products-dialog.add-title')}</DialogTitle>
-          <DialogDescription>{t('components.admin-ui.products.products-dialog.description')}</DialogDescription>
-        </DialogHeader>
+      <ScrollArea>
+        <DialogContent className="no-scrollbar h-[90vh!important] w-[95vw] max-w-md overflow-y-auto rounded-[18px!important] md:h-[95vh]">
+          <DialogHeader className="pt-4">
+            <DialogTitle>{editData ? t('components.admin-ui.products.products-dialog.edit-title') : t('components.admin-ui.products.products-dialog.add-title')}</DialogTitle>
+            <DialogDescription>{t('components.admin-ui.products.products-dialog.description')}</DialogDescription>
+          </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4" id="products-dialog-form">
-          {error && <div className="rounded bg-red-100 px-4 py-2 text-sm text-red-600">{error}</div>}
+          <form onSubmit={handleSubmit} className="grid gap-4 py-4" id="products-dialog-form">
+            {error && <div className="rounded bg-red-100 px-4 py-2 text-sm text-red-600">{error}</div>}
 
-          <UploadProductImage 
-            image={imageFile} 
-            setImage={setImageFile} 
-            existingImage={existingImage} 
-            clearExistingImage={() => setExistingImage(null)}
-            disabled={loading}
-          />
+            <UploadProductImage image={imageFile} setImage={setImageFile} existingImage={existingImage} clearExistingImage={() => setExistingImage(null)} disabled={loading} />
 
-          <Label htmlFor="name">{t('components.admin-ui.products.products-dialog.name-label')}</Label>
-          <Input 
-            id="name" 
-            value={formData.name} 
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
-            required 
-            disabled={loading}
-          />
+            <Label htmlFor="name">{t('components.admin-ui.products.products-dialog.name-label')}</Label>
+            <Input id="name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required disabled={loading} />
 
-          <Label htmlFor="description">{t('components.admin-ui.products.products-dialog.description-label')}</Label>
-          <Input 
-            id="description" 
-            value={formData.description} 
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })} 
-            required 
-            disabled={loading}
-          />
+            <Label htmlFor="description">{t('components.admin-ui.products.products-dialog.description-label')}</Label>
+            <Input id="description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required disabled={loading} />
 
-          <Label htmlFor="brand">{t('components.admin-ui.products.products-dialog.brand-label')}</Label>
-          <Input 
-            id="brand" 
-            value={formData.brand} 
-            onChange={(e) => setFormData({ ...formData, brand: e.target.value })} 
-            required 
-            disabled={loading}
-          />
+            <Label htmlFor="brand">{t('components.admin-ui.products.products-dialog.brand-label')}</Label>
+            <Input id="brand" value={formData.brand} onChange={(e) => setFormData({ ...formData, brand: e.target.value })} required disabled={loading} />
 
-          <Label htmlFor="price">{t('components.admin-ui.products.products-dialog.price-label')}</Label>
-          <Input 
-            id="price" 
-            type="number" 
-            value={formData.price} 
-            onChange={(e) => setFormData({ ...formData, price: +e.target.value })} 
-            required 
-            disabled={loading}
-          />
+            <Label htmlFor="price">{t('components.admin-ui.products.products-dialog.price-label')}</Label>
+            <Input id="price" type="text" value={formData.price || ""} onChange={(e) => setFormData({ ...formData, price: +e.target.value })} required disabled={loading} />
 
-          <Label htmlFor="stock">{t('components.admin-ui.products.products-dialog.stock-label')}</Label>
-          <Input 
-            id="stock" 
-            type="number" 
-            value={formData.stock} 
-            onChange={(e) => setFormData({ ...formData, stock: +e.target.value })} 
-            required 
-            disabled={loading}
-          />
+            <Label htmlFor="stock">{t('components.admin-ui.products.products-dialog.stock-label')}</Label>
+            <Input id="stock" type="text" value={formData.stock || ""} onChange={(e) => setFormData({ ...formData, stock: +e.target.value })} required disabled={loading} />
 
-          <SelectProductCategory 
-            category={formData.categoryId} 
-            setCategory={(catId) => setFormData({ ...formData, categoryId: catId })} 
-            disabled={loading}
-          />
+            <SelectProductCategory category={formData.categoryId} setCategory={(catId) => setFormData({ ...formData, categoryId: catId })} disabled={loading} />
 
-          <DialogFooter className="mt-4">
-            <Button type="button" variant="outline" onClick={handleCancel} disabled={loading}>
-              {t('components.admin-ui.products.products-dialog.cancel')}
-            </Button>
-            <Button type="submit" form="products-dialog-form" disabled={loading}>
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {editData ? t('components.admin-ui.products.products-dialog.updating') : t('components.admin-ui.products.products-dialog.creating')}
-                </>
-              ) : (
-                editData ? t('components.admin-ui.products.products-dialog.update') : t('components.admin-ui.products.products-dialog.create')
-              )}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
+            <DialogFooter className="mt-4">
+              <Button type="button" variant="outline" onClick={handleCancel} disabled={loading}>
+                {t('components.admin-ui.products.products-dialog.cancel')}
+              </Button>
+              <Button type="submit" form="products-dialog-form" disabled={loading}>
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {editData ? t('components.admin-ui.products.products-dialog.updating') : t('components.admin-ui.products.products-dialog.creating')}
+                  </>
+                ) : editData ? (
+                  t('components.admin-ui.products.products-dialog.update')
+                ) : (
+                  t('components.admin-ui.products.products-dialog.create')
+                )}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </ScrollArea>
     </Dialog>
   );
 };
