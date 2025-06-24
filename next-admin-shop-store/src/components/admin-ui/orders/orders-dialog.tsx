@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,21 +20,35 @@ import { OrderItem, OrderRequest } from '@/interfaces/order';
 
 const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setOpenDialog: (open: boolean) => void }) => {
   const { t } = useTranslation();
-  const { loading, editData, setEditData, orderItems, total, discount, setDiscount, addOrderItem, removeOrderItem, updateOrderItem, createOrder, updateOrder, reset, search, setSearch, fetchOrders, setOrderItems, setSubtotal } = useOrdersStore();
+  const { loading, editData, setEditData, orderItems, total, discount, setDiscount, addOrderItem, removeOrderItem, updateOrderItem, createOrder, updateOrder, reset, fetchOrders, setOrderItems, setSubtotal } = useOrdersStore();
 
   const { products, fetchProducts, loading: productsLoading } = useProductsStore();
+  
   const [discountInput, setDiscountInput] = useState('');
+  const [productSearch, setProductSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(productSearch);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [productSearch]);
 
   useEffect(() => {
     if (openDialog) {
-      fetchProducts();
+      fetchProducts({ search: debouncedSearch });
     }
-  }, [openDialog, fetchProducts]);
+  }, [openDialog, fetchProducts, debouncedSearch]);
 
   useEffect(() => {
     if (!openDialog) {
       reset();
       setDiscountInput('');
+      setProductSearch('');
+      setDebouncedSearch('');
     }
   }, [openDialog, reset]);
 
@@ -51,8 +65,6 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
     // Do not run on create or when dialog is closed
     // eslint-disable-next-line
   }, [openDialog, editData]);
-
-  const filteredProducts = products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
 
   const handleSubmit = async () => {
     if (!orderItems.length) {
@@ -92,13 +104,13 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <DialogContent className="no-scrollbar h-[90vh] md:h-[95vh] w-full max-w-md overflow-y-auto md:max-w-5xl sm:rounded-lg">
+      <DialogContent className="no-scrollbar h-[90vh] w-full max-w-md overflow-y-auto sm:rounded-lg md:h-[95vh] md:max-w-5xl">
         <DialogTitle>{editData ? t('components.admin-ui.orders.orders-dialog.edit-title') : t('components.admin-ui.orders.orders-dialog.add-title')}</DialogTitle>
         <DialogDescription>{editData ? t('components.admin-ui.orders.orders-dialog.edit-desc') : t('components.admin-ui.orders.orders-dialog.add-desc')}</DialogDescription>
 
-        <div className="flex md:h-[480px] w-full flex-col md:flex-row border">
+        <div className="flex w-full flex-col border md:h-[480px] md:flex-row">
           {/* Left Panel - Product Selection */}
-          <div className="max-w-1/2 flex h-[480px] md:h-full flex-1 flex-col p-4">
+          <div className="max-w-1/2 flex h-[480px] flex-1 flex-col p-4 md:h-full">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="flex items-center gap-2 text-lg font-semibold">
                 <Package className="h-5 w-5 text-primary" />
@@ -111,7 +123,15 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
 
             <div className="relative mb-6">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
-              <Input placeholder={t('components.admin-ui.orders.orders-dialog.search-placeholder')} value={search} onChange={(e) => setSearch(e.target.value)} className="h-11 bg-background pl-9" />
+              <Input placeholder={t('components.admin-ui.orders.orders-dialog.search-placeholder')} value={productSearch} onChange={(e) => setProductSearch(e.target.value)} className="h-11 bg-background pl-9 pr-10" />
+              {productSearch && (
+                <button type="button" aria-label={t('clear search')} onClick={() => setProductSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 focus:outline-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="6" y1="6" x2="14" y2="14" />
+                    <line x1="14" y1="6" x2="6" y2="14" />
+                  </svg>
+                </button>
+              )}
             </div>
 
             <ScrollArea className="no-scrollbar h-[calc(100%-8rem)] flex-1">
@@ -121,7 +141,7 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-4 px-2">
-                  {filteredProducts.map((product) => (
+                  {products.map((product) => (
                     <ProductCard key={product.id} product={product} onAdd={addOrderItem} isInCart={orderItems.some((item) => item.productId === product.id)} />
                   ))}
                 </div>
@@ -132,7 +152,7 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
           <Divider orientation="vertical" className="h-0 md:h-full" />
 
           {/* Right Panel - Order Items */}
-          <div className="max-w-1/2 flex h-[480px] md:h-full flex-1 flex-col p-4">
+          <div className="max-w-1/2 flex h-[480px] flex-1 flex-col p-4 md:h-full">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="flex items-center gap-2 text-lg font-semibold">
                 <Package className="h-5 w-5 text-primary" />
@@ -154,7 +174,7 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
         </div>
 
         {/* Footer */}
-        <div className="border md:border-t px-3 md:px-4 py-2">
+        <div className="border px-3 py-2 md:border-t md:px-4">
           {/* Discount input section */}
           <div className="mb-6">
             <label htmlFor="discount-amount" className="mb-1 block text-sm font-medium">

@@ -215,6 +215,7 @@ export async function GET(req: NextRequest) {
                 outOfStockProductsList: (outOfStockProductsList as OutOfStockProduct[]).map((product: OutOfStockProduct) => ({
                     ...product,
                     category: product.category?.name || null,
+                    image: { url: product.image, alt: product.name }
                 })),
                 totalRevenueOfProductsInStock,
                 soldProductsGrossValue,

@@ -18,13 +18,13 @@ const SelectProductCategory = ({
 }) => {
   const { t } = useTranslation();
 
-  const { categories, fetchCategories } = useCategoriesStore();
+  const { categories, fetchAllCategories } = useCategoriesStore();
 
   const categoryId = typeof category === 'string' ? category : category?.id;
 
   useEffect(() => {
-    fetchCategories();
-  }, [fetchCategories]);
+    fetchAllCategories();
+  }, [fetchAllCategories]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -33,7 +33,7 @@ const SelectProductCategory = ({
         <SelectTrigger id="category" className="w-full">
           <SelectValue placeholder={t('components.admin-ui.products.products-dialog.category-placeholder')} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="w-full h-[400px]">
           {categories?.map((cat) => (
             <SelectItem key={cat.id} value={cat.id}>
               {cat.name}

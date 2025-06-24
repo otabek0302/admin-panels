@@ -56,7 +56,7 @@ export const useProductsStore = create<ProductsState & ProductsActions>((set, ge
     ...initialState,
 
     fetchProducts: async (params = {}) => {
-        const { page = get().page, search = get().search } = params;
+        const { page = get().page, search = '' } = params;
 
         // Prevent duplicate requests
         if (get().loading) return;
@@ -91,7 +91,7 @@ export const useProductsStore = create<ProductsState & ProductsActions>((set, ge
             });
             const data = await res.json();
             set((state) => ({
-                products: [...state.products, data],
+                products: [data, ...state.products],
                 total: state.total + 1,
             }));
             return true;

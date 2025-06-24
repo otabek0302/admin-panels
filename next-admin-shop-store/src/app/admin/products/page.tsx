@@ -54,7 +54,7 @@ export default function ProductsPage() {
     <div className="flex h-full flex-col justify-between space-y-4 p-4">
       <ProductsToolbar />
       <ProductsList />
-      <Pagination page={page} setPage={setPage} total={total} perPage={10} />
+      <Pagination page={page} setPage={setPage} total={total} perPage={15} />
       <ProductsDialog setOpenDialog={setOpenDialog} openDialog={openDialog} />
       <DeleteDialog open={openDeleteDialog} setOpen={setOpenDeleteDialog} message={t('components.admin-ui.products.messages.delete-product')} title={t('components.admin-ui.products.messages.delete-product-title')} action={t('components.admin-ui.products.messages.delete-product-action')} cancel={t('components.admin-ui.products.messages.delete-product-cancel')} onConfirm={handleDelete} />
     </div>

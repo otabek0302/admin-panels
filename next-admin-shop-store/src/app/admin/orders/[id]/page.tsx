@@ -95,7 +95,7 @@ const InvoicePage = () => {
           }
         `}</style>
         <div className="print-content">
-          <div className="mb-8 flex items-start justify-between">
+          <div className="mb-6 flex items-start justify-between">
             <div>
               {/* <h1 className="text-2xl font-bold text-gray-800">{t('pages.invoice.title')}</h1> */}
               {/* <div className="space-y-1">
@@ -110,7 +110,7 @@ const InvoicePage = () => {
             <div>
               <h2 className="mb-2 text-base font-semibold">{t('pages.invoice.bill-to')}</h2>
               <div className="space-y-1 text-xs">
-                <p className="font-medium">{order.orderItems[0]?.product?.name || t('pages.invoice.customer-name')}</p>
+                <p>{t('pages.invoice.customer-name')}</p>
                 <p>{t('pages.invoice.customer-address')}</p>
                 <p>{t('pages.invoice.customer-phone')}</p>
               </div>
@@ -141,7 +141,7 @@ const InvoicePage = () => {
             </div>
             <div className="border-x border-b">
               {order.orderItems.map((item, idx) => (
-                <div key={idx} className="grid grid-cols-4 border-b p-3 last:border-b-0">
+                <div key={idx} className="grid grid-cols-4 border-b px-4 py-2 last:border-b-0">
                   <div className="text-xs text-left">{item.product?.name || 'N/A'}</div>
                   <div className="text-xs text-center">{item.quantity}</div>
                   <div className="text-xs text-center">{formatCurrency(item.price)}</div>
@@ -152,14 +152,14 @@ const InvoicePage = () => {
           </div>
 
           <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-primary">
-            <span className="text-base font-bold">{t('pages.invoice.total')}</span>
-            <span className="text-base font-bold">{formatCurrency(order.total)}</span>
+            <span className="text-xs font-bold">{t('pages.invoice.total')}</span>
+            <span className="text-xs font-bold">{formatCurrency(order.total)}</span>
           </div>
 
           {order.discount > 0 && (
             <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-red-500">
-              <span className="text-base font-bold">{t('pages.invoice.discount')}</span>
-              <span className="text-base font-bold">-{formatCurrency(order.discount)}</span>
+              <span className="text-xs font-bold">{t('pages.invoice.discount')}</span>
+              <span className="text-xs font-bold">-{formatCurrency(order.discount)}</span>
             </div>
           )}
 

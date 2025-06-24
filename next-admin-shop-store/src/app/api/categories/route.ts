@@ -23,9 +23,30 @@ export async function GET(req: Request) {
 
     try {
         const { searchParams } = new URL(req.url);
-        const page = parseInt(searchParams.get('page') || '1', 10);
-        const limit = parseInt(searchParams.get('limit') || '10', 10);
+        const all = searchParams.get('all');
         const search = searchParams.get('search') || '';
+
+        // If 'all=true', return all categories (unpaginated)
+        if (all === 'true') {
+            const where = {
+                OR: [{ name: { contains: search, mode: 'insensitive' } }],
+            };
+            const categories = await prisma.category.findMany({
+                where,
+                select: {
+                    id: true,
+                    name: true,
+                    createdAt: true,
+                    updatedAt: true,
+                },
+                orderBy: { createdAt: 'desc' },
+            });
+            return NextResponse.json({ categories });
+        }
+
+        // Paginated logic
+        const page = parseInt(searchParams.get('page') || '1', 15);
+        const limit = parseInt(searchParams.get('limit') || '15', 15);
         const skip = (page - 1) * limit;
 
         const where = {

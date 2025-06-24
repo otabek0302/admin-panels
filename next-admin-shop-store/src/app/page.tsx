@@ -3,14 +3,23 @@
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Loading from './loading';
+import Pagination from '@/components/ui/pagination';
 
-import { useSession } from 'next-auth/react';
 import { ProductList } from '@/components/client-ui/product-list';
 import { ProductToolbar } from '@/components/client-ui/product-toolbar';
 import { Summary } from '@/components/client-ui/summary';
+import { useSession } from 'next-auth/react';
+import { useProductsStore } from '@/stores/product.store';
+import { useEffect } from 'react';
 
 export default function Home() {
   const { status } = useSession();
+  const { page, total, setPage, fetchProducts } = useProductsStore();
+
+  useEffect(() => {
+    fetchProducts({ page });
+  }, [page]);
+  
   if (status === 'loading') return <Loading />;
 
   return (
@@ -25,6 +34,7 @@ export default function Home() {
             <div className="no-scrollbar h-full w-full flex-1 overflow-y-auto lg:max-w-full">
               <ProductToolbar />
               <ProductList />
+              <Pagination page={page} setPage={setPage} total={total} perPage={15} /> 
             </div>
             <div className="no-scrollbar h-full w-full flex-1 overflow-y-auto lg:max-w-md">
               <Summary />

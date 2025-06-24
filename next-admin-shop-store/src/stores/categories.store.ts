@@ -32,6 +32,7 @@ type CategoriesActions = {
     setCreateData: (createData: Category | null) => void;
     setCategory: (category: Category | null) => void;
     getCategory: (id: string) => Promise<void>;
+    fetchAllCategories: () => Promise<void>;
 };
 
 // Initial State
@@ -164,4 +165,17 @@ export const useCategoriesStore = create<CategoriesState & CategoriesActions>((s
     setDeleteData: (deleteData) => set({ deleteData }),
     setCreateData: (createData) => set({ createData }),
     setCategory: (category) => set({ category }),
+
+    fetchAllCategories: async () => {
+        set({ loading: true, error: null });
+        try {
+            const res = await fetch('/api/categories?all=true', { credentials: 'include' });
+            const data = await res.json();
+            set({ categories: data.categories });
+        } catch (err) {
+            set({ error: 'Failed to fetch all categories' });
+        } finally {
+            set({ loading: false });
+        }
+    },
 }));
