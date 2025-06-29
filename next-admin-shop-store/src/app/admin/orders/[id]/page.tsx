@@ -66,7 +66,7 @@ const InvoicePage = () => {
               left: 0;
               top: 0;
               width: 100%;
-              padding: 2rem;
+              padding: 1rem;
             }
             .no-print {
               display: none !important;
@@ -95,7 +95,7 @@ const InvoicePage = () => {
           }
         `}</style>
         <div className="print-content">
-          <div className="mb-6 flex items-start justify-between">
+          <div className="flex items-start justify-between">
             <div>
               {/* <h1 className="text-2xl font-bold text-gray-800">{t('pages.invoice.title')}</h1> */}
               {/* <div className="space-y-1">
@@ -106,60 +106,60 @@ const InvoicePage = () => {
             </div>
           </div>
 
-          <div className="mb-4 grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-2 gap-6">
             <div>
-              <h2 className="mb-2 text-base font-semibold">{t('pages.invoice.bill-to')}</h2>
-              <div className="space-y-1 text-xs">
+              <h2 className="mb-2 text-sm font-semibold">{t('pages.invoice.bill-to')}</h2>
+              <div className="space-y-1 text-[8px]">
                 <p>{t('pages.invoice.customer-name')}</p>
                 <p>{t('pages.invoice.customer-address')}</p>
                 <p>{t('pages.invoice.customer-phone')}</p>
               </div>
             </div>
             <div className="text-right">
-              <h2 className="mb-2 text-base font-semibold">{t('pages.invoice.details')}</h2>
-              <div className="mb-2 text-xs space-y-1">
+              <h2 className="mb-2 text-sm font-semibold">{t('pages.invoice.details')}</h2>
+              <div className="mb-2 text-[8px] space-y-1">
                 <p className="flex items-center justify-end">
-                  <span className="font-semibold">{t('pages.invoice.number')}:</span>
+                  <span className="font-semibold text-[10px]">{t('pages.invoice.number')}:</span>
                   <span className="ml-2">#{order.id.slice(-6)}</span>
                 </p>
                 <p>
-                  <span className="font-semibold">{t('pages.invoice.date')}:</span> {formattedDate}
+                  <span className="font-semibold text-[10px]">{t('pages.invoice.date')}:</span> {formattedDate}
                 </p>
                 <p>
-                  <span className="font-semibold">{t('pages.invoice.status')}:</span> {order.status}
+                  <span className="font-semibold text-[10px]">{t('pages.invoice.status')}:</span> {order.status}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="mb-2">
-            <div className="grid grid-cols-4 rounded-t-md bg-primary px-4 py-2 text-primary-foreground">
-              <div className='text-xs text-left'>{t('pages.invoice.item')}</div>
-              <div className="text-xs text-center">{t('pages.invoice.quantity')}</div>
-              <div className="text-xs text-center">{t('pages.invoice.price')}</div>
-              <div className="text-xs text-right">{t('pages.invoice.amount')}</div>
+            <div className="grid grid-cols-4 bg-primary px-4 py-2 text-primary-foreground">
+              <div className='text-[8px] text-left'>{t('pages.invoice.item')}</div>
+              <div className="text-[8px] border-x text-center">{t('pages.invoice.quantity')}</div>
+              <div className="text-[8px] text-center">{t('pages.invoice.price')}</div>
+              <div className="text-[8px] border-l text-right">{t('pages.invoice.amount')}</div>
             </div>
             <div className="border-x border-b">
               {order.orderItems.map((item, idx) => (
                 <div key={idx} className="grid grid-cols-4 border-b px-4 py-2 last:border-b-0">
-                  <div className="text-xs text-left">{item.product?.name || 'N/A'}</div>
-                  <div className="text-xs text-center">{item.quantity}</div>
-                  <div className="text-xs text-center">{formatCurrency(item.price)}</div>
-                  <div className="text-xs text-right">{formatCurrency(item.total)}</div>
+                  <div className="text-[8px] border-x text-left">{item.product?.name || 'N/A'}</div>
+                  <div className="text-[8px] text-center">{item.quantity}</div>
+                  <div className="text-[8px] border-x text-center">{formatCurrency(item.price)}</div>
+                  <div className="text-[8px] border-l text-right">{formatCurrency(item.total)}</div>
                 </div>
               ))}
             </div>
           </div>
 
           <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-primary">
-            <span className="text-xs font-bold">{t('pages.invoice.total')}</span>
-            <span className="text-xs font-bold">{formatCurrency(order.total)}</span>
+            <span className="text-[8px] font-bold">{t('pages.invoice.total')}</span>
+            <span className="text-[8px] font-bold">{formatCurrency(order.total)}</span>
           </div>
 
           {order.discount > 0 && (
             <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-red-500">
-              <span className="text-xs font-bold">{t('pages.invoice.discount')}</span>
-              <span className="text-xs font-bold">-{formatCurrency(order.discount)}</span>
+              <span className="text-[8px] font-bold">{t('pages.invoice.discount')}</span>
+              <span className="text-[8px] font-bold">-{formatCurrency(order.discount)}</span>
             </div>
           )}
 

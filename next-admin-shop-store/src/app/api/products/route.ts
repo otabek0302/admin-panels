@@ -33,6 +33,7 @@ export async function GET(req: Request) {
             OR: [
                 { name: { contains: search, mode: 'insensitive' as const } },
                 { brand: { contains: search, mode: 'insensitive' as const } },
+                { description: { contains: search, mode: 'insensitive' as const } },
                 { category: { name: { contains: search, mode: 'insensitive' as const } } }
             ]
         };

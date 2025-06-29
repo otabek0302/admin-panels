@@ -18,13 +18,14 @@ const SelectProductCategory = ({
 }) => {
   const { t } = useTranslation();
 
-  const { categories, fetchAllCategories } = useCategoriesStore();
+  const { categories } = useCategoriesStore();
+  const fetchAllCategories = useCategoriesStore((state) => state.fetchAllCategories);
 
   const categoryId = typeof category === 'string' ? category : category?.id;
 
   useEffect(() => {
     fetchAllCategories();
-  }, [fetchAllCategories]);
+  }, []);
 
   return (
     <div className="flex flex-col gap-2">

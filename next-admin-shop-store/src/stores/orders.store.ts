@@ -92,7 +92,7 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
         
         set({ loading: true, error: null });
         try {
-            const res = await fetch(`/api/orders?page=${page}&search=${search}`, {
+            const res = await fetch(`/api/orders?page=${page}&search=${encodeURIComponent(search)}`, {
                 credentials: 'include',
             });
             if (!res.ok) throw new Error('Failed to fetch orders');
@@ -183,6 +183,7 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
             const res = await fetch(`/api/orders/${id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({ status }),
             });
 

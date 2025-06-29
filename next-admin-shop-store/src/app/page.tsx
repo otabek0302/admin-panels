@@ -14,7 +14,8 @@ import { useEffect } from 'react';
 
 export default function Home() {
   const { status } = useSession();
-  const { page, total, setPage, fetchProducts } = useProductsStore();
+  const { page, total, setPage } = useProductsStore();
+  const fetchProducts = useProductsStore((state) => state.fetchProducts);
 
   useEffect(() => {
     fetchProducts({ page });

@@ -56,14 +56,14 @@ export const useProductsStore = create<ProductsState & ProductsActions>((set, ge
     ...initialState,
 
     fetchProducts: async (params = {}) => {
-        const { page = get().page, search = '' } = params;
+        const { page = get().page, search = get().search } = params;
 
         // Prevent duplicate requests
         if (get().loading) return;
 
         set({ loading: true, error: null });
         try {
-            const res = await fetch(`/api/products?page=${page}&search=${search}`, {
+            const res = await fetch(`/api/products?page=${page}&search=${encodeURIComponent(search)}`, {
                 credentials: 'include',
             });
             const data = await res.json();
@@ -87,8 +87,14 @@ export const useProductsStore = create<ProductsState & ProductsActions>((set, ge
             const res = await fetch('/api/products', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(product),
             });
+            
+            if (!res.ok) {
+                throw new Error(`Failed to create product: ${res.status}`);
+            }
+            
             const data = await res.json();
             set((state) => ({
                 products: [data, ...state.products],
@@ -149,9 +155,24 @@ export const useProductsStore = create<ProductsState & ProductsActions>((set, ge
     },
 
     getProduct: async (id: string) => {
-        const res = await fetch(`/api/products/${id}`);
-        const data = await res.json();
-        set({ product: data });
+        set({ loading: true, error: null });
+        try {
+            const res = await fetch(`/api/products/${id}`, {
+                credentials: 'include',
+            });
+            
+            if (!res.ok) {
+                throw new Error(`Failed to fetch product: ${res.status}`);
+            }
+            
+            const data = await res.json();
+            set({ product: data, error: null });
+        } catch (err) {
+            console.error('Failed to fetch product:', err);
+            set({ error: 'Failed to fetch product', product: null });
+        } finally {
+            set({ loading: false });
+        }
     },
 
     setPage: (page) => set({ page }),

@@ -8,11 +8,12 @@ import { useEffect } from 'react';
 
 export function ProductList() {
   const { t } = useTranslation();
-  const { products, loading, fetchProducts } = useProductsStore();
+  const { products, loading } = useProductsStore();
+  const fetchProducts = useProductsStore((state) => state.fetchProducts);
 
   useEffect(() => {
     fetchProducts();
-  }, [fetchProducts]);
+  }, []);
 
   const LoadingSkeleton = () => (
     <div className="w-full space-y-4 overflow-hidden rounded-xl border p-4 shadow-sm">
@@ -31,7 +32,7 @@ export function ProductList() {
 
   return (
     <div className="h-full w-full space-y-6">
-      <div className="no-scrollbar h-screen space-y-6 overflow-y-auto md:h-full">
+      <div className="no-scrollbar h-full space-y-6 overflow-y-auto">
         {loading && (
           <>
             <LoadingSkeleton />

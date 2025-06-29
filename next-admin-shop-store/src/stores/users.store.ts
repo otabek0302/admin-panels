@@ -63,7 +63,7 @@ export const useUsersStore = create<UsersState & UsersActions>((set, get) => ({
 
     set({ loading: true, error: null });
     try {
-      const res = await fetch(`/api/users?page=${page}&search=${search}`, {
+      const res = await fetch(`/api/users?page=${page}&search=${encodeURIComponent(search)}`, {
         credentials: 'include',
       });
       const data = await res.json();
@@ -87,8 +87,14 @@ export const useUsersStore = create<UsersState & UsersActions>((set, get) => ({
       const res = await fetch('/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(user),
       });
+      
+      if (!res.ok) {
+        throw new Error(`Failed to create user: ${res.status}`);
+      }
+      
       const data = await res.json();
       set((state) => ({
         users: [...state.users, data],
@@ -102,7 +108,6 @@ export const useUsersStore = create<UsersState & UsersActions>((set, get) => ({
     } finally {
       set({ loading: false });
     }
-    return false;
   },
 
   updateUser: async (user: User) => {
@@ -111,6 +116,7 @@ export const useUsersStore = create<UsersState & UsersActions>((set, get) => ({
       const res = await fetch(`/api/users/${user.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(user),
       });
       if (!res.ok) throw new Error('Failed to update user');
@@ -126,7 +132,6 @@ export const useUsersStore = create<UsersState & UsersActions>((set, get) => ({
     } finally {
       set({ loading: false });
     }
-    return false;
   },
 
   deleteUser: async (id: string) => {
@@ -134,6 +139,7 @@ export const useUsersStore = create<UsersState & UsersActions>((set, get) => ({
     try {
       const res = await fetch(`/api/users/${id}`, {
         method: 'DELETE',
+        credentials: 'include',
       });
       if (!res.ok) throw new Error('Failed to delete user');
       set((state) => ({
@@ -151,9 +157,24 @@ export const useUsersStore = create<UsersState & UsersActions>((set, get) => ({
   },
 
   getUser: async (id: string) => {
-    const res = await fetch(`/api/users/${id}`);
-    const data = await res.json();
-    set({ user: data });
+    set({ loading: true, error: null });
+    try {
+      const res = await fetch(`/api/users/${id}`, {
+        credentials: 'include',
+      });
+      
+      if (!res.ok) {
+        throw new Error(`Failed to fetch user: ${res.status}`);
+      }
+      
+      const data = await res.json();
+      set({ user: data, error: null });
+    } catch (err) {
+      console.error('Failed to fetch user:', err);
+      set({ error: 'Failed to fetch user', user: null });
+    } finally {
+      set({ loading: false });
+    }
   },
 
   setPage: (page) => set({ page }),

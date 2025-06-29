@@ -64,7 +64,7 @@ export const useCategoriesStore = create<CategoriesState & CategoriesActions>((s
 
         set({ loading: true, error: null });
         try {
-            const res = await fetch(`/api/categories?page=${page}&search=${search}`, {
+            const res = await fetch(`/api/categories?page=${page}&search=${encodeURIComponent(search)}`, {
                 credentials: 'include',
             });
             const data = await res.json();
@@ -75,8 +75,8 @@ export const useCategoriesStore = create<CategoriesState & CategoriesActions>((s
                 totalPages: data.totalPages,
             });
         } catch (err) {
-            console.error('Failed to fetch users:', err);
-            set({ error: 'Failed to fetch users' });
+            console.error('Failed to fetch categories:', err);
+            set({ error: 'Failed to fetch categories' });
         } finally {
             set({ loading: false });
         }
@@ -88,8 +88,14 @@ export const useCategoriesStore = create<CategoriesState & CategoriesActions>((s
             const res = await fetch('/api/categories', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(category),
             });
+            
+            if (!res.ok) {
+                throw new Error(`Failed to create category: ${res.status}`);
+            }
+            
             const data = await res.json();
             set((state) => ({
                 categories: [...state.categories, data],
@@ -103,7 +109,6 @@ export const useCategoriesStore = create<CategoriesState & CategoriesActions>((s
         } finally {
             set({ loading: false });
         }
-        return false;
     },
 
     updateCategory: async (category: Category) => {
@@ -112,6 +117,7 @@ export const useCategoriesStore = create<CategoriesState & CategoriesActions>((s
             const res = await fetch(`/api/categories/${category.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(category),
             });
             if (!res.ok) throw new Error('Failed to update category');
@@ -127,7 +133,6 @@ export const useCategoriesStore = create<CategoriesState & CategoriesActions>((s
         } finally {
             set({ loading: false });
         }
-        return false;
     },
 
     deleteCategory: async (id: string) => {
@@ -135,6 +140,7 @@ export const useCategoriesStore = create<CategoriesState & CategoriesActions>((s
         try {
             const res = await fetch(`/api/categories/${id}`, {
                 method: 'DELETE',
+                credentials: 'include',
             });
             if (!res.ok) throw new Error('Failed to delete category');
             set((state) => ({
@@ -152,9 +158,24 @@ export const useCategoriesStore = create<CategoriesState & CategoriesActions>((s
     },
 
     getCategory: async (id: string) => {
-        const res = await fetch(`/api/categories/${id}`);
-        const data = await res.json();
-        set({ category: data });
+        set({ loading: true, error: null });
+        try {
+            const res = await fetch(`/api/categories/${id}`, {
+                credentials: 'include',
+            });
+            
+            if (!res.ok) {
+                throw new Error(`Failed to fetch category: ${res.status}`);
+            }
+            
+            const data = await res.json();
+            set({ category: data, error: null });
+        } catch (err) {
+            console.error('Failed to fetch category:', err);
+            set({ error: 'Failed to fetch category', category: null });
+        } finally {
+            set({ loading: false });
+        }
     },
 
     setPage: (page) => set({ page }),
