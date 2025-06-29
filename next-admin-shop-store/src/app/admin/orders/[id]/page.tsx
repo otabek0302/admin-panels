@@ -152,6 +152,10 @@ const InvoicePage = () => {
           </div>
 
           <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-primary">
+            <span className="text-[8px] font-bold">"ISLOMJON ILXOMJON STROY SERVICE"</span>
+            <span className="text-[8px] font-bold">+998-(90)-604-55-50</span>
+          </div>
+          <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-primary">
             <span className="text-[8px] font-bold">{t('pages.invoice.total')}</span>
             <span className="text-[8px] font-bold">{formatCurrency(order.total)}</span>
           </div>
