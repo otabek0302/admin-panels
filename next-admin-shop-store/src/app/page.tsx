@@ -10,7 +10,45 @@ import { ProductToolbar } from '@/components/client-ui/product-toolbar';
 import { Summary } from '@/components/client-ui/summary';
 import { useSession } from 'next-auth/react';
 import { useProductsStore } from '@/stores/product.store';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useOrdersStore } from '@/stores/orders.store';
+
+// CartHydrator component to hydrate cart from localStorage and persist changes
+function CartHydrator() {
+  const setOrderItems = useOrdersStore((state) => state.setOrderItems);
+  const orderItems = useOrdersStore((state) => state.orderItems);
+  const setSubtotal = useOrdersStore((state) => state.setSubtotal);
+  const calculateOrderSubtotal = useOrdersStore((state) => state.calculateOrderSubtotal);
+  const [hydrated, setHydrated] = useState(false);
+
+  // Hydrate from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('clientOrderItems');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setOrderItems(parsed);
+          // Recalculate subtotal and total
+          const subtotal = calculateOrderSubtotal(parsed);
+          setSubtotal(subtotal);
+        }
+      } catch {}
+    }
+    setHydrated(true);
+    // Only run once on mount
+    // eslint-disable-next-line
+  }, []);
+
+  // Save to localStorage only after hydration
+  useEffect(() => {
+    if (hydrated) {
+      localStorage.setItem('clientOrderItems', JSON.stringify(orderItems));
+    }
+  }, [orderItems, hydrated]);
+
+  return null;
+}
 
 export default function Home() {
   const { status } = useSession();
@@ -25,6 +63,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col">
+      <CartHydrator />
       <div className="container mx-auto px-4">
         <Header />
       </div>

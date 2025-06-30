@@ -20,7 +20,7 @@ import { OrderItem, OrderRequest } from '@/interfaces/order';
 
 const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setOpenDialog: (open: boolean) => void }) => {
   const { t } = useTranslation();
-  const { loading, editData, setEditData, orderItems, total, discount, setDiscount, addOrderItem, removeOrderItem, updateOrderItem, createOrder, updateOrder, reset, fetchOrders, setOrderItems, setSubtotal } = useOrdersStore();
+  const { loading, editData, setEditData, orderItems, total, discount, setDiscount, addOrderItem, removeOrderItem, updateOrderItem, createOrder, updateOrder, reset, fetchOrders, setOrderItems, setSubtotal, setSubtotalAndDiscount } = useOrdersStore();
 
   const { products, fetchProducts, loading: productsLoading } = useProductsStore();
   
@@ -45,7 +45,6 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
 
   useEffect(() => {
     if (!openDialog) {
-      reset();
       setDiscountInput('');
       setProductSearch('');
       setDebouncedSearch('');
@@ -66,6 +65,30 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
     // eslint-disable-next-line
   }, [openDialog, editData]);
 
+  // Persist orderItems to localStorage when changed and dialog is open
+  useEffect(() => {
+    if (openDialog) {
+      localStorage.setItem('orderItems', JSON.stringify(orderItems));
+    }
+  }, [orderItems, openDialog]);
+
+  // Hydrate orderItems from localStorage on first mount (only once)
+  useEffect(() => {
+    const saved = localStorage.getItem('orderItems');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setOrderItems(parsed);
+          const subtotal = parsed.reduce((sum, item) => sum + item.price * item.quantity, 0);
+          setSubtotalAndDiscount(subtotal, 0); // Set both at once for correct total
+        }
+      } catch {}
+    }
+    // Only run once on mount
+    // eslint-disable-next-line
+  }, []);
+
   const handleSubmit = async () => {
     if (!orderItems.length) {
       toast.error(t('components.admin-ui.orders.messages.no-items'));
@@ -85,6 +108,8 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
       } else {
         await createOrder(orderData);
         toast.success(t('components.admin-ui.orders.messages.create-order-success'));
+        // Clear localStorage after successful order creation
+        localStorage.removeItem('orderItems');
       }
       setOpenDialog(false);
       setEditData(null);
@@ -141,9 +166,28 @@ const OrdersDialog = ({ openDialog, setOpenDialog }: { openDialog: boolean; setO
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-4 px-2">
-                  {products.map((product) => (
-                    <ProductCard key={product.id} product={product} onAdd={addOrderItem} isInCart={orderItems.some((item) => item.productId === product.id)} />
-                  ))}
+                  {products.map((product) => {
+                    const orderItem = orderItems.find((item) => item.productId === product.id);
+                    const quantity = orderItem ? orderItem.quantity : 0;
+
+                    return (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onAdd={addOrderItem}
+                        isInCart={!!orderItem}
+                        quantity={quantity}
+                        onIncrement={() => updateOrderItem(orderItems.findIndex(item => item.productId === product.id), 'quantity', quantity + 1)}
+                        onDecrement={() => {
+                          if (quantity === 1) {
+                            removeOrderItem(product.id);
+                          } else {
+                            updateOrderItem(orderItems.findIndex(item => item.productId === product.id), 'quantity', quantity - 1);
+                          }
+                        }}
+                      />
+                    );
+                  })}
                 </div>
               )}
             </ScrollArea>

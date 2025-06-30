@@ -58,6 +58,7 @@ type OrdersActions = {
     updateOrderItem: (index: number, field: keyof OrderItem, value: string | number) => void;
     reset: () => void;
     resetOrderForm: () => void;
+    setSubtotalAndDiscount: (subtotal: number, discount: number) => void;
 };
 
 // Initial State
@@ -335,12 +336,12 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
     setOrder: (order) => set({ order }),
     setSubtotal: (subtotal) => set({ 
         subtotal, 
-        total: Math.max(subtotal - get().discount, 0) 
+        total: Math.max(subtotal - (Number(get().discount) || 0), 0) 
     }),
     getSubtotal: () => get().subtotal,
     setDiscount: (discount) => set({ 
-        discount, 
-        total: Math.max(get().subtotal - discount, 0) 
+        discount: Number(discount) || 0, 
+        total: Math.max(get().subtotal - (Number(discount) || 0), 0) 
     }),
     getDiscount: () => get().discount,
     applyDiscount: (discount) => set({ 
@@ -358,5 +359,10 @@ export const useOrdersStore = create<OrdersState & OrdersActions>((set, get) => 
         total: 0,
         editData: null,
         createData: null,
+    }),
+    setSubtotalAndDiscount: (subtotal, discount) => set({
+        subtotal,
+        discount: Number(discount) || 0,
+        total: Math.max(subtotal - (Number(discount) || 0), 0)
     }),
 }));

@@ -14,8 +14,8 @@ async function isAdminSession(): Promise<(Session & { user: User }) | null> {
 }
 
 // GET /api/orders/:id — get order by ID
-export async function GET(_: Request, context: { params: { id: string } }) {
-    const id = context?.params?.id;
+export async function GET(_: Request, context: { params: Promise<{ id: string }> }) {
+    const { id } = await context.params;
     if (!id) return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
 
     const session = await isAdminSession();
@@ -45,8 +45,8 @@ export async function GET(_: Request, context: { params: { id: string } }) {
 }
 
 // PUT /api/orders/:id — update order
-export async function PUT(req: Request, context: { params: { id: string } }) {
-    const id = context?.params?.id;
+export async function PUT(req: Request, context: { params: Promise<{ id: string }> }) {
+    const { id } = await context.params;
     if (!id) return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
 
     const session = await isAdminSession();
@@ -62,8 +62,19 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
         const body = await req.json();
         const { orderItems, total, discount, status } = body;
 
-        if (!orderItems || !total || !discount || !status) {
+        if (!orderItems || typeof total !== 'number' || typeof discount !== 'number' || !status) {
+            console.log('❌ Validation failed:', { 
+                hasOrderItems: !!orderItems, 
+                totalType: typeof total, 
+                discountType: typeof discount, 
+                hasStatus: !!status 
+            });
             return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+        }
+
+        if (!Array.isArray(orderItems) || orderItems.length === 0) {
+            console.log('❌ OrderItems validation failed:', { orderItems });
+            return NextResponse.json({ message: 'Order items must be a non-empty array' }, { status: 400 });
         }
 
         // If previous was COMPLETED and now not, restore stock
@@ -134,8 +145,8 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
 }
 
 // PATCH /api/orders/:id — update order status
-export async function PATCH(req: Request, context: { params: { id: string } }) {
-    const id = context?.params?.id;
+export async function PATCH(req: Request, context: { params: Promise<{ id: string }> }) {
+    const { id } = await context.params;
     if (!id) return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
 
     const session = await isAdminSession();
@@ -189,8 +200,8 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
 }
 
 // DELETE /api/orders/:id — delete order
-export async function DELETE(_: Request, context: { params: { id: string } }) {
-    const id = context?.params?.id;
+export async function DELETE(_: Request, context: { params: Promise<{ id: string }> }) {
+    const { id } = await context.params;
     if (!id) return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
 
     const session = await isAdminSession();

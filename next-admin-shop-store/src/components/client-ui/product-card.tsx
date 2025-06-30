@@ -17,9 +17,11 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { t } = useTranslation();
-  const { addOrderItem, orderItems } = useOrdersStore();
+  const { addOrderItem, orderItems, updateOrderItem, removeOrderItem } = useOrdersStore();
 
-  const isInCart = orderItems.some((item) => item.productId === product.id);
+  const orderItem = orderItems.find((item) => item.productId === product.id);
+  const quantity = orderItem ? orderItem.quantity : 0;
+  const isInCart = !!orderItem;
   const isLowStock = product?.stock > 0 && product?.stock <= 5;
 
   const getStockBadgeVariant = () => {
@@ -57,9 +59,43 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
         <div className="flex flex-1 items-center justify-end gap-2">
-          <Button size="icon" variant="outline" onClick={() => addOrderItem(product)} className="h-9 w-9 cursor-pointer rounded-full" disabled={isInCart || product?.stock <= 0} aria-label="Add to order">
-            <Plus className="h-4 w-4" />
-          </Button>
+          {isInCart && quantity > 0 ? (
+            <div className="flex items-center gap-2">
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() => {
+                  if (quantity === 1) {
+                    removeOrderItem(product.id);
+                  } else {
+                    const index = orderItems.findIndex((item) => item.productId === product.id);
+                    updateOrderItem(index, 'quantity', quantity - 1);
+                  }
+                }}
+                className="h-9 w-9 cursor-pointer rounded-full"
+                aria-label="Decrease quantity"
+                disabled={quantity <= 0}>
+                -
+              </Button>
+              <span className="w-6 text-center">{quantity}</span>
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() => {
+                  const index = orderItems.findIndex((item) => item.productId === product.id);
+                  updateOrderItem(index, 'quantity', quantity + 1);
+                }}
+                className="h-9 w-9 cursor-pointer rounded-full"
+                aria-label="Increase quantity"
+                disabled={quantity >= product.stock}>
+                +
+              </Button>
+            </div>
+          ) : (
+            <Button size="icon" variant="outline" onClick={() => addOrderItem(product)} className="h-9 w-9 cursor-pointer rounded-full" disabled={isInCart || product?.stock <= 0} aria-label="Add to order">
+              <Plus className="h-4 w-4" />
+            </Button>
+          )}
         </div>
       </div>
     </Card>

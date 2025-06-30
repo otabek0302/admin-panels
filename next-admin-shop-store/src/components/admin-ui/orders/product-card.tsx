@@ -15,9 +15,12 @@ interface ProductCardProps {
   product: Product;
   onAdd: (product: Product) => void;
   isInCart: boolean;
+  quantity?: number;
+  onIncrement?: (product: Product) => void;
+  onDecrement?: (product: Product) => void;
 }
 
-export const ProductCard = ({ product, onAdd, isInCart }: ProductCardProps) => {
+export const ProductCard = ({ product, onAdd, isInCart, quantity = 0, onIncrement, onDecrement }: ProductCardProps) => {
   const { t } = useTranslation();
 
   const isLowStock = product.stock > 0 && product.stock <= 5;
@@ -51,28 +54,27 @@ export const ProductCard = ({ product, onAdd, isInCart }: ProductCardProps) => {
                     {getStockMessage()}
                   </Badge>
                 </TooltipTrigger>
-                <TooltipContent>
-                  {product.stock <= 0 
-                    ? t('messages.error.out-of-stock') 
-                    : product.stock <= 5 
-                      ? t('messages.error.low-stock', { count: product.stock }) 
-                      : t('messages.error.in-stock', { count: product.stock })}
-                </TooltipContent>
+                <TooltipContent>{product.stock <= 0 ? t('messages.error.out-of-stock') : product.stock <= 5 ? t('messages.error.low-stock', { count: product.stock }) : t('messages.error.in-stock', { count: product.stock })}</TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </div>
         </div>
         <div className="flex flex-1 items-center justify-end gap-2">
-          <Button 
-            size="icon" 
-            variant="outline" 
-            onClick={() => onAdd(product)} 
-            className="h-9 w-9 cursor-pointer rounded-full" 
-            disabled={isInCart || product.stock <= 0} 
-            aria-label="Add to order"
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
+          {isInCart && quantity > 0 ? (
+            <div className="flex items-center gap-2">
+              <Button size="icon" variant="outline" onClick={() => onDecrement && onDecrement(product)} className="h-9 w-9 cursor-pointer rounded-full" aria-label="Decrease quantity" disabled={quantity <= 0}>
+                -
+              </Button>
+              <span className="w-6 text-center">{quantity}</span>
+              <Button size="icon" variant="outline" onClick={() => onIncrement && onIncrement(product)} className="h-9 w-9 cursor-pointer rounded-full" aria-label="Increase quantity" disabled={quantity >= product.stock}>
+                +
+              </Button>
+            </div>
+          ) : (
+            <Button size="icon" variant="outline" onClick={() => onAdd(product)} className="h-9 w-9 cursor-pointer rounded-full" disabled={isInCart || product.stock <= 0} aria-label="Add to order">
+              <Plus className="h-4 w-4" />
+            </Button>
+          )}
         </div>
       </div>
     </Card>

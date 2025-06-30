@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { AlertTriangle, Minus, Plus, Loader2 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,9 +16,10 @@ import { getStockStatus } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 import { OrderItem, OrderRequest } from '@/interfaces/order';
 import { formatCurrency } from '@/lib/utils';
+import { toast } from 'sonner';
 
 export const Summary = () => {
-  const { orderItems, discount, applyDiscount, getSubtotal, createOrder, updateOrderItem, removeOrderItem } = useOrdersStore();
+  const { orderItems, discount, applyDiscount, getSubtotal, createOrder, updateOrderItem, removeOrderItem, setOrderItems } = useOrdersStore();
   const { t } = useTranslation();
 
   const [discountAmount, setDiscountAmount] = useState('');
@@ -26,6 +27,21 @@ export const Summary = () => {
   
   const subtotal = getSubtotal();
   const total = subtotal - discount;
+
+  // Hydrate orderItems from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('clientOrderItems');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setOrderItems(parsed);
+        }
+      } catch {}
+    }
+    // Only run once on mount
+    // eslint-disable-next-line
+  }, []);
 
   const handleApplyDiscount = () => {
     const amount = parseFloat(discountAmount);
@@ -65,6 +81,9 @@ export const Summary = () => {
         status: 'PENDING',
       };
       await createOrder(orderRequest);
+      toast.success(t('components.admin-ui.orders.messages.create-order-success'));
+      // Clear localStorage after successful order creation
+      localStorage.removeItem('clientOrderItems');
     } catch (error) {
       console.error('Error creating order:', error);
     } finally {

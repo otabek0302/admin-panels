@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -9,6 +11,7 @@ import { useOrdersStore } from '@/stores/orders.store';
 import { useTranslation } from 'react-i18next';
 import { formatCurrency } from '@/lib/utils';
 import { format } from 'date-fns';
+import { new_logo } from '@/assets';
 
 const InvoicePage = () => {
   const params = useParams();
@@ -95,75 +98,71 @@ const InvoicePage = () => {
           }
         `}</style>
         <div className="print-content">
-          <div className="flex items-start justify-between">
-            <div>
-              {/* <h1 className="text-2xl font-bold text-gray-800">{t('pages.invoice.title')}</h1> */}
-              {/* <div className="space-y-1">
-                <p className="text-lg font-semibold">{t('pages.invoice.business-name')}</p>
-                <p>{t('pages.invoice.business-address')}</p>
-                <p>{t('pages.invoice.business-phone')}</p>
-              </div> */}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-3 gap-6">
             <div>
               <h2 className="mb-2 text-sm font-semibold">{t('pages.invoice.bill-to')}</h2>
-              <div className="space-y-1 text-[8px]">
+              <div className="space-y-1 text-sm">
                 <p>{t('pages.invoice.customer-name')}</p>
                 <p>{t('pages.invoice.customer-address')}</p>
                 <p>{t('pages.invoice.customer-phone')}</p>
               </div>
             </div>
+            <div className="h-22 relative w-32">
+              <Image src={new_logo} alt="logo" fill className="object-contain" />
+            </div>
             <div className="text-right">
               <h2 className="mb-2 text-sm font-semibold">{t('pages.invoice.details')}</h2>
-              <div className="mb-2 text-[8px] space-y-1">
+              <div className="mb-2 space-y-1 text-sm">
                 <p className="flex items-center justify-end">
-                  <span className="font-semibold text-[10px]">{t('pages.invoice.number')}:</span>
+                  <span className="text-[10px] font-semibold">{t('pages.invoice.number')}:</span>
                   <span className="ml-2">#{order.id.slice(-6)}</span>
                 </p>
                 <p>
-                  <span className="font-semibold text-[10px]">{t('pages.invoice.date')}:</span> {formattedDate}
+                  <span className="text-[10px] font-semibold">{t('pages.invoice.date')}:</span> {formattedDate}
                 </p>
                 <p>
-                  <span className="font-semibold text-[10px]">{t('pages.invoice.status')}:</span> {order.status}
+                  <span className="text-[10px] font-semibold">{t('pages.invoice.status')}:</span> {order.status}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="mb-2">
-            <div className="grid grid-cols-4 bg-primary px-4 py-2 text-primary-foreground">
-              <div className='text-[8px] text-left'>{t('pages.invoice.item')}</div>
-              <div className="text-[8px] border-x text-center">{t('pages.invoice.quantity')}</div>
-              <div className="text-[8px] text-center">{t('pages.invoice.price')}</div>
-              <div className="text-[8px] border-l text-right">{t('pages.invoice.amount')}</div>
+            <div className="grid grid-cols-4 bg-primary px-4 py-0.5 text-primary-foreground">
+              <div className="text-left text-sm">{t('pages.invoice.item')}</div>
+              <div className="border-x text-center text-sm">{t('pages.invoice.quantity')}</div>
+              <div className="text-center text-sm">{t('pages.invoice.price')}</div>
+              <div className="border-l text-right text-sm">{t('pages.invoice.amount')}</div>
             </div>
             <div className="border-x border-b">
               {order.orderItems.map((item, idx) => (
-                <div key={idx} className="grid grid-cols-4 border-b px-4 py-2 last:border-b-0">
-                  <div className="text-[8px] border-x text-left">{item.product?.name || 'N/A'}</div>
-                  <div className="text-[8px] text-center">{item.quantity}</div>
-                  <div className="text-[8px] border-x text-center">{formatCurrency(item.price)}</div>
-                  <div className="text-[8px] border-l text-right">{formatCurrency(item.total)}</div>
+                <div key={idx} className="grid grid-cols-4 border-b px-4 py-0.5 last:border-b-0">
+                  <div className="border-r text-left text-sm">{item.product?.name || 'N/A'}</div>
+                  <div className="text-center text-sm">{item.quantity}</div>
+                  <div className="border-x text-center text-sm">{formatCurrency(item.price)}</div>
+                  <div className="border-l text-right text-sm">{formatCurrency(item.total)}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-primary">
-            <span className="text-[8px] font-bold">"ISLOMJON ILXOMJON STROY SERVICE"</span>
-            <span className="text-[8px] font-bold">+998-(90)-604-55-50</span>
-          </div>
-          <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-primary">
-            <span className="text-[8px] font-bold">{t('pages.invoice.total')}</span>
-            <span className="text-[8px] font-bold">{formatCurrency(order.total)}</span>
+          <div className="flex items-center justify-between">
+            <div className="mt-2 flex flex-col items-start justify-between rounded-md px-0.5 text-primary">
+              <span className="text-sm font-bold">"ISLOMJON ILXOMJON STROY SERVICE"</span>
+              <span className="text-sm font-bold">BABIROV MAKSUD</span>
+              <span className="text-sm font-bold">+998-(91)-530-55-50</span>
+              <span className="text-sm font-bold">+998-(98)-573-55-03</span>
+            </div>
+            <div className="mt-2 flex flex-col items-end justify-between rounded-md px-0.5 text-primary">
+              <span className="text-sm font-bold">{t('pages.invoice.total')}</span>
+              <span className="text-sm font-bold">{formatCurrency(order.total)}</span>
+            </div>
           </div>
 
           {order.discount > 0 && (
-            <div className="mt-2 px-0.5 flex items-center justify-between rounded-md text-red-500">
-              <span className="text-[8px] font-bold">{t('pages.invoice.discount')}</span>
-              <span className="text-[8px] font-bold">-{formatCurrency(order.discount)}</span>
+            <div className="mt-2 flex items-center justify-between rounded-md px-0.5 text-red-500">
+              <span className="text-sm font-bold">{t('pages.invoice.discount')}</span>
+              <span className="text-sm font-bold">-{formatCurrency(order.discount)}</span>
             </div>
           )}
 
