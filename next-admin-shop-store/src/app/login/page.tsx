@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'next/navigation';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(error);
 
@@ -31,13 +33,15 @@ const LoginPage = () => {
     e.preventDefault();
     setIsLoading(true);
     setLoginError(null);
-    
+
     try {
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
       });
+
+      console.log(result);
 
       if (result?.error) {
         setLoginError('Invalid email or password');
@@ -79,7 +83,12 @@ const LoginPage = () => {
                         {t('pages.login.forgot-password')}
                       </a>
                     </div>
-                    <Input id="password" type="password" placeholder="********" required value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <div className="relative">
+                      <Input id="password" type={showPassword ? 'text' : 'password'} placeholder="********" required value={password} onChange={(e) => setPassword(e.target.value)} />
+                      <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-1/2 -translate-y-1/2 text-muted-foreground hover:bg-transparent" onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <EyeOffIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
+                      </Button>
+                    </div>
                   </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? t('pages.login.login-button-loading') : t('pages.login.login-button')}
