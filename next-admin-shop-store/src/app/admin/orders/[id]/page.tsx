@@ -133,6 +133,9 @@ const InvoicePage = () => {
             <div className="flex flex-1 justify-center">
               <Image src={logo} alt="logo" width={128} height={128} className="object-contain" />
             </div>
+            <div className="flex flex-1 justify-center">
+              <Image src={qr_code} alt="logo" width={80} height={80} className="object-contain mb-2" />
+            </div>
             <div className="flex-1 text-right">
               <h2 className="mb-2 text-sm font-semibold">{t('pages.invoice.details')}</h2>
               <div className="mb-2 space-y-1 text-sm">
@@ -183,9 +186,6 @@ const InvoicePage = () => {
                 <span className="text-sm font-bold">BABIROV MAKSUD</span>
                 <span className="text-sm font-bold">+998-(91)-530-55-50</span>
                 <span className="text-sm font-bold">+998-(98)-573-55-03</span>
-              </div>
-              <div className="flex flex-1 justify-center">
-                <Image src={qr_code} alt="logo" width={80} height={80} className="object-contain" />
               </div>
               <div className="mt-2 flex flex-col items-end justify-between rounded-md px-0.5 text-primary">
                 <span className="text-sm font-bold">{t('pages.invoice.total')}</span>
